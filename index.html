@@ -92,6 +92,40 @@ p{margin:0}
 .gcard .best{font-size:12px;color:var(--cat);font-weight:800;filter:brightness(.8)}
 @media (max-width:420px){.tgrid{grid-template-columns:1fr}}
 
+/* players */
+.who-top{display:flex;align-items:center;gap:12px}
+.who-top .mascot{width:76px;height:68px}
+.plist{display:flex;flex-direction:column;gap:10px}
+.prow{display:grid;grid-template-columns:52px 1fr auto;gap:12px;align-items:center;text-align:left;background:var(--soft);border:3px solid var(--ink);border-radius:18px;padding:8px 14px 8px 8px;box-shadow:0 4px 0 var(--ink)}
+.prow:active{transform:translateY(3px);box-shadow:0 1px 0 var(--ink)}
+.prow .pav{width:52px;height:52px;font-size:30px}
+.prow strong{font-family:var(--f-display);font-size:22px;font-weight:800;line-height:1.1;display:block}
+.prow small{color:var(--muted)}
+.prow .go{font-family:var(--f-display);font-weight:800;color:var(--logic)}
+.newp{display:flex;flex-direction:column;gap:12px;border-top:3px dashed #D5DBEA;padding-top:16px}
+.newp .label{font-size:20px}
+.newp input{font:700 20px var(--f-body);color:var(--ink);background:#fff;border:3px solid var(--ink);border-radius:14px;padding:10px 14px;width:100%}
+.newp input:focus{outline:3px solid var(--logic);outline-offset:2px}
+.avs{display:grid;grid-template-columns:repeat(8,1fr);gap:6px}
+.avs button{aspect-ratio:1;max-width:100%;border:3px solid transparent;border-radius:14px;background:var(--soft);font-size:26px;padding:0}
+.avs button[aria-checked="true"]{border-color:var(--ink);background:var(--focus-soft);box-shadow:0 3px 0 var(--ink)}
+@media (max-width:420px){.avs{grid-template-columns:repeat(4,1fr)}}
+.pbar{padding:12px 14px;display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center}
+.pav{width:60px;height:60px;border-radius:50%;background:var(--focus-soft);border:3px solid var(--ink);display:grid;place-items:center;font-size:34px;line-height:1}
+.pinfo{min-width:0;display:flex;flex-direction:column;gap:3px}
+.pinfo strong{font-family:var(--f-display);font-size:22px;font-weight:800;line-height:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rank{font-weight:800;font-size:14px}
+.xpbar{height:12px;background:var(--soft);border:2px solid var(--ink);border-radius:7px;overflow:hidden}
+.xpbar i{display:block;height:100%;background:linear-gradient(90deg,var(--focus),var(--math));transition:width .8s}
+.pinfo small{color:var(--muted);font-size:12px}
+.pact{display:flex;flex-direction:column;gap:6px}
+.btn.sm{font-size:14px;padding:4px 12px;border-radius:12px;box-shadow:0 3px 0 var(--ink)}
+.btn.danger{background:var(--bad);color:#fff}
+.btn.ghost-danger{background:#fff;color:var(--bad)}
+.confirm{padding:16px;display:flex;flex-direction:column;gap:12px;background:#FFF1F1}
+.xpline{font-family:var(--f-display);font-weight:800;font-size:20px;color:var(--math)}
+.rankup{background:var(--logic);color:#fff;font-size:17px}
+
 /* intro / result / final panels */
 .panel{padding:24px 20px;display:flex;flex-direction:column;gap:16px;align-items:stretch}
 .panel .big-ic{width:84px;height:84px;border-radius:22px;background:var(--cat-soft);border:3px solid var(--ink);display:grid;place-items:center;font-size:48px;box-shadow:0 4px 0 var(--ink)}
@@ -294,7 +328,42 @@ p{margin:0}
 <div id="fx" aria-hidden="true"></div>
 <main class="app">
 
-  <section id="home" class="screen">
+  <section id="who" class="screen" hidden>
+    <div class="card panel">
+      <div class="who-top"><div id="whoMascot"></div><h2>Who's playing?</h2></div>
+      <div class="plist" id="plist"></div>
+      <form id="newForm" class="newp" autocomplete="off">
+        <label for="pname" class="label">New player</label>
+        <input id="pname" maxlength="16" placeholder="Your name" required>
+        <div class="avs" id="avs" role="radiogroup" aria-label="Pick an avatar"></div>
+        <button class="btn" type="submit">Start playing</button>
+        <p class="meta">Progress saves in this browser. Log out any time to switch players.</p>
+      </form>
+    </div>
+  </section>
+
+  <section id="home" class="screen" hidden>
+    <div class="card pbar">
+      <span class="pav" id="pAvatar"></span>
+      <div class="pinfo">
+        <strong id="pName"></strong>
+        <span class="rank" id="pRank"></span>
+        <div class="xpbar"><i id="pXP"></i></div>
+        <small id="pNext"></small>
+      </div>
+      <div class="pact">
+        <button class="btn ghost sm" id="logout">Log out</button>
+        <button class="btn ghost sm" id="resetBtn">Reset</button>
+      </div>
+    </div>
+    <div class="card confirm" id="resetConfirm" hidden>
+      <p>Reset all progress for <b id="rcName"></b>? Levels, best scores, XP and test history will be cleared. This can't be undone.</p>
+      <div class="row">
+        <button class="btn danger" id="rcReset">Reset progress</button>
+        <button class="btn danger ghost-danger" id="rcDelete">Delete player</button>
+        <button class="btn ghost" id="rcNo">Cancel</button>
+      </div>
+    </div>
     <div class="card hero">
       <button class="icon-btn sound" id="muteHome" aria-label="Sound on">🔊</button>
       <div class="hero-top">
@@ -359,7 +428,9 @@ p{margin:0}
       <div class="stars" id="resStars"></div>
       <div class="pts"><span id="resScore">0</span><small> points</small></div>
       <p class="meta" id="resMeta"></p>
+      <p class="xpline" id="resXP"></p>
       <span class="newbest" id="resBest" hidden>New best!</span>
+      <span class="newbest rankup" id="resRank" hidden></span>
       <div class="row">
         <button class="btn" id="resNext">Next</button>
         <button class="btn ghost" id="resHome">Home</button>
@@ -392,14 +463,19 @@ const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { c
 const clamp = n => Math.max(0, Math.min(100, Math.round(n)));
 const range = n => [...Array(n).keys()];
 
-/* ---------- storage (per-browser convenience only) ---------- */
-const KEY = 'brainrush:v3';
+/* ---------- storage: player profiles kept in this browser ---------- */
+const KEY = 'brainrush:v4', OLD_KEY = 'brainrush:v3';
 function load() {
-  try { const d = JSON.parse(localStorage.getItem(KEY)); if (d && d.best && d.history) return d; } catch {}
-  return { best: {}, history: [], diff: 1, muted: false };
+  try { const d = JSON.parse(localStorage.getItem(KEY)); if (d && d.profiles) return d; } catch {}
+  return { profiles: {}, current: null, muted: false };
 }
-function save(d) { try { localStorage.setItem(KEY, JSON.stringify(d)); } catch {} }
-let store = load();
+function save() { try { localStorage.setItem(KEY, JSON.stringify(db)); } catch {} }
+let db = load();
+let store = (db.current && db.profiles[db.current]) || null;   // the logged-in player's progress
+const blankProgress = () => ({ xp: 0, best: {}, levels: {}, history: [] });
+const RANKS = [[0, 'Rookie', '🐣'], [1500, 'Thinker', '🤔'], [5000, 'Sharp', '✏️'], [12000, 'Clever Clogs', '🧠'], [25000, 'Mastermind', '🎓'], [50000, 'Genius', '💡'], [100000, 'Brainiac', '👑']];
+const rankOf = xp => { let r = 0; RANKS.forEach(([min], i) => { if (xp >= min) r = i; }); return r; };
+const AVATARS = ['🦊', '🐼', '🐯', '🐸', '🦄', '🐙', '🐵', '🐧'];
 
 /* ---------- sound (synthesised, no files) ---------- */
 let AC = null;
@@ -409,7 +485,7 @@ function audio() {
   return AC;
 }
 function tone(freq, dur = .12, type = 'triangle', vol = .18, slide = 0, delay = 0) {
-  if (store.muted) return;
+  if (db.muted) return;
   const ac = audio(); if (!ac) return;
   const t = ac.currentTime + delay, o = ac.createOscillator(), g = ac.createGain();
   o.type = type; o.frequency.setValueAtTime(freq, t);
@@ -431,9 +507,9 @@ const SFX = {
   whoosh: () => tone(300, .25, 'sine', .08, 3)
 };
 function paintMute() {
-  ['#muteHome', '#mutePlay'].forEach(id => { const b = $(id); b.textContent = store.muted ? '🔇' : '🔊'; b.setAttribute('aria-label', store.muted ? 'Sound off' : 'Sound on'); });
+  ['#muteHome', '#mutePlay'].forEach(id => { const b = $(id); b.textContent = db.muted ? '🔇' : '🔊'; b.setAttribute('aria-label', db.muted ? 'Sound off' : 'Sound on'); });
 }
-function toggleMute() { store.muted = !store.muted; save(store); paintMute(); if (!store.muted) SFX.tap(); }
+function toggleMute() { db.muted = !db.muted; save(); paintMute(); if (!db.muted) SFX.tap(); }
 
 /* ---------- fx: particles, floating points, confetti ---------- */
 const FX_COLORS = ['#7C5CFF', '#FF7A1A', '#0FB3A2', '#FF4F8B', '#FFBE0B', '#2EA8FF'];
@@ -1089,7 +1165,6 @@ const GAMES = [
 ];
 const BY = Object.fromEntries(GAMES.map(g => [g.id, g]));
 const GAME_TIME = 45;
-const DIFF_LEVEL = [0, 4, 7];
 
 /* ---------- screens ---------- */
 function show(id) { document.querySelectorAll('.screen').forEach(s => s.hidden = s.id !== id); window.scrollTo(0, 0); }
@@ -1111,8 +1186,53 @@ function chartSVG(vals) {
     <circle class="pt" cx="${x(vals.length - 1)}" cy="${y(vals[vals.length - 1])}" r="5.5"/></svg>`;
 }
 
+/* ---------- players ---------- */
+let pickedAvatar = AVATARS[0];
+function renderWho() {
+  setCat(null);
+  $('#whoMascot').innerHTML = mascotSVG();
+  const list = Object.entries(db.profiles).sort((a, b) => (b[1].last || 0) - (a[1].last || 0));
+  $('#plist').innerHTML = '';
+  list.forEach(([id, p]) => {
+    const r = RANKS[rankOf(p.xp)], b = document.createElement('button');
+    b.className = 'prow';
+    b.innerHTML = `<span class="pav">${p.avatar}</span><span><strong></strong><small>${r[2]} ${r[1]} · ${p.xp.toLocaleString()} XP</small></span><span class="go">Play ›</span>`;
+    b.querySelector('strong').textContent = p.name;
+    b.onclick = () => { audio(); SFX.tap(); login(id); };
+    $('#plist').append(b);
+  });
+  $('#newForm').querySelector('.label').textContent = list.length ? 'New player' : 'Make your player';
+  $('#avs').innerHTML = AVATARS.map(a => `<button type="button" role="radio" aria-checked="${a === pickedAvatar}" aria-label="Avatar ${a}">${a}</button>`).join('');
+  $('#avs').querySelectorAll('button').forEach(b => b.onclick = () => { pickedAvatar = b.textContent; SFX.tap(); $('#avs').querySelectorAll('button').forEach(x => x.setAttribute('aria-checked', String(x === b))); });
+  $('#pname').value = '';
+  show('who');
+}
+function createPlayer(name, avatar) {
+  const id = 'p' + Date.now().toString(36);
+  const p = { name, avatar, created: Date.now(), last: Date.now(), ...blankProgress() };
+  // carry over scores saved by the previous version of the game
+  if (!Object.keys(db.profiles).length) {
+    try {
+      const old = JSON.parse(localStorage.getItem(OLD_KEY));
+      if (old && old.best) { p.best = old.best || {}; p.history = old.history || []; p.xp = Object.values(p.best).reduce((t, v) => t + v, 0); }
+      if (old && old.muted) db.muted = true;
+    } catch {}
+  }
+  db.profiles[id] = p;
+  login(id);
+}
+function login(id) { db.current = id; store = db.profiles[id]; store.last = Date.now(); save(); renderHome(); }
+function logout() { db.current = null; store = null; session = null; save(); renderWho(); }
+
 function renderHome() {
   setCat(null);
+  const r = rankOf(store.xp), next = RANKS[r + 1];
+  $('#pAvatar').textContent = store.avatar;
+  $('#pName').textContent = store.name;
+  $('#pRank').textContent = `${RANKS[r][2]} ${RANKS[r][1]} · ${store.xp.toLocaleString()} XP`;
+  $('#pXP').style.width = next ? `${100 * (store.xp - RANKS[r][0]) / (next[0] - RANKS[r][0])}%` : '100%';
+  $('#pNext').textContent = next ? `${(next[0] - store.xp).toLocaleString()} XP to ${next[1]} ${next[2]}` : 'Top rank reached';
+  $('#resetConfirm').hidden = true;
   const tests = store.history.filter(x => x.mode === 'test'), stress = store.history.filter(x => x.mode === 'stress');
   const s = [];
   if (tests.length) s.push(`<div class="stat"><b>${tests[tests.length - 1].index}%</b><small>Last brain test</small></div>`, `<div class="stat"><b>${Math.max(...tests.map(x => x.index))}%</b><small>Best</small></div>`);
@@ -1129,8 +1249,8 @@ function renderHome() {
     b.className = 'gcard';
     b.style.setProperty('--cat', `var(--${g.cat})`);
     b.style.setProperty('--cat-soft', `var(--${g.cat}-soft)`);
-    const bs = store.best[g.id];
-    b.innerHTML = `<span class="ic" aria-hidden="true">${g.icon}</span><span class="t"><strong>${g.name}</strong><small>${g.blurb}</small><span class="best">${CAT[g.cat].name}${bs != null ? ` · best ${bs}` : ''}</span></span>`;
+    const bs = store.best[g.id], lv = store.levels[g.id];
+    b.innerHTML = `<span class="ic" aria-hidden="true">${g.icon}</span><span class="t"><strong>${g.name}</strong><small>${g.blurb}</small><span class="best">${CAT[g.cat].name}${lv != null ? ` · Lv ${lv + 1}` : ''}${bs != null ? ` · best ${bs}` : ''}</span></span>`;
     b.onclick = () => { session = { mode: 'train', order: [g.id], i: 0, scores: {} }; intro(); };
     list.append(b);
   });
@@ -1147,14 +1267,16 @@ function intro() {
   $('#introChip').textContent = CAT[g.cat].name;
   $('#introName').textContent = g.name;
   $('#introHow').textContent = g.how;
-  const train = session.mode === 'train';
-  $('#diffSeg').hidden = !train;
-  const paint = () => $('#diffSeg').querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', String(Number(b.dataset.d) === store.diff)));
-  $('#diffSeg').querySelectorAll('button').forEach(b => b.onclick = () => { store.diff = Number(b.dataset.d); save(store); paint(); SFX.tap(); });
+  const train = session.mode === 'train', lv = store.levels[g.id] || 0;
+  session.fresh = false;
+  const seg = $('#diffSeg');
+  seg.hidden = !train || lv === 0;
+  seg.innerHTML = `<button data-f="0">Continue · Level ${lv + 1}</button><button data-f="1">Restart at Level 1</button>`;
+  const paint = () => seg.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', String((b.dataset.f === '1') === session.fresh)));
+  seg.querySelectorAll('button').forEach(b => b.onclick = () => { session.fresh = b.dataset.f === '1'; paint(); SFX.tap(); });
   paint();
-  $('#introMeta').textContent = train
-    ? `${GAME_TIME} seconds · fixed difficulty`
-    : `${session.mode === 'stress' ? 'Stress test' : 'Brain test'} · game ${session.i + 1} of ${session.order.length} · ${GAME_TIME} seconds`;
+  $('#introMeta').textContent = (train ? '' : `${session.mode === 'stress' ? 'Stress test' : 'Brain test'} · game ${session.i + 1} of ${session.order.length} · `)
+    + `${GAME_TIME} seconds · difficulty adapts as you play and your level is saved`;
   $('#introGo').onclick = () => { audio(); play(); };
   show('intro');
   $('#introGo').focus({ preventScroll: true });
@@ -1162,7 +1284,8 @@ function intro() {
 
 function play() {
   const g = BY[session.order[session.i]];
-  const adaptive = session.mode !== 'train';
+  const adaptive = true;
+  const startLevel = session.fresh ? 0 : Math.min(9, store.levels[g.id] || 0);
   const stage = $('#stage'), wrap = $('#wrap');
   stage.innerHTML = '';
   $('#playChip').textContent = CAT[g.cat].name;
@@ -1175,7 +1298,7 @@ function play() {
   $('#hudMascot').innerHTML = mascotSVG();
 
   const stats = { correct: 0, wrong: 0, points: 0, streak: 0, bestStreak: 0 };
-  const run = { g, stats, live: false, timers: new Set(), rafs: new Set(), frame: 0, unbug: null };
+  const run = { g, stats, live: false, timers: new Set(), rafs: new Set(), frame: 0, unbug: null, peak: startLevel };
   cur = run;
   let prog = 0;
   const lvlText = () => { $('#playLevel').textContent = `Level ${api.level + 1}`; };
@@ -1196,7 +1319,7 @@ function play() {
   const mult = () => Math.min(5, 1 + Math.floor(stats.streak / 3));
   const api = {
     stats,
-    level: adaptive ? 2 : DIFF_LEVEL[store.diff],
+    level: startLevel,
     onKey: null,
     live: () => cur === run && run.live,
     right(base, at) {
@@ -1209,7 +1332,7 @@ function play() {
       SFX.good(stats.streak);
       mood('#hudMascot', stats.streak >= 3 ? 'happy' : 'wow', 600);
       flash(true); paintScore(true);
-      if (adaptive && ++prog >= (g.lvlEvery || 2) && api.level < 9) { prog = 0; api.level++; api.toast(`Level ${api.level + 1}!`); api.later(SFX.level, 120); }
+      if (adaptive && ++prog >= (g.lvlEvery || 2) && api.level < 9) { prog = 0; api.level++; run.peak = Math.max(run.peak, api.level); api.toast(`Level ${api.level + 1}!`); api.later(SFX.level, 120); }
       lvlText();
     },
     wrong(at) {
@@ -1289,7 +1412,7 @@ function countUp(el, to, ms = 900) {
 }
 
 function finish() {
-  const { g, stats } = cur;
+  const { g, stats, api, peak } = cur;
   stop();
   cur = null;
   const rating = clamp(100 * (stats.correct - 0.5 * stats.wrong) / g.par);
@@ -1297,7 +1420,17 @@ function finish() {
   const prev = store.best[g.id];
   const isBest = stats.points > 0 && (prev == null || stats.points > prev);
   if (isBest) store.best[g.id] = stats.points;
-  save(store);
+  // keep the level you reached; one late slip only costs a level below your peak
+  const savedLv = Math.max(api.level, peak - 1);
+  store.levels[g.id] = savedLv;
+  const rankBefore = rankOf(store.xp);
+  store.xp += stats.points;
+  const rankAfter = rankOf(store.xp);
+  store.last = Date.now();
+  save();
+  $('#resXP').textContent = `+${stats.points.toLocaleString()} XP · Level ${savedLv + 1} saved`;
+  $('#resRank').hidden = rankAfter === rankBefore;
+  if (rankAfter !== rankBefore) $('#resRank').textContent = `Rank up! You're now ${RANKS[rankAfter][1]} ${RANKS[rankAfter][2]}`;
 
   $('#resChip').textContent = CAT[g.cat].name;
   $('#resName').textContent = g.name;
@@ -1305,7 +1438,7 @@ function finish() {
   countUp($('#resScore'), stats.points);
   $('#resMeta').textContent = `${stats.correct} right · ${stats.wrong} wrong · best streak ${stats.bestStreak}` + (prev != null && !isBest ? ` · your best is ${prev}` : '');
   $('#resBest').hidden = !(isBest && prev != null);
-  if (stars >= 2 || (isBest && prev != null)) { SFX.win(); confetti(stars === 3 ? 140 : 80); }
+  if (stars >= 2 || (isBest && prev != null) || rankAfter !== rankBefore) { SFX.win(); confetti(stars === 3 || rankAfter !== rankBefore ? 140 : 80); }
   else SFX.level();
 
   session.scores[g.cat] = { score: rating, game: g.id };
@@ -1339,7 +1472,7 @@ function final() {
   const prevBest = same.length ? Math.max(...same.map(x => x.index)) : null;
   store.history.push({ t: Date.now(), mode, index, scores: Object.fromEntries(CATS.map(c => [c.id, val(c)])) });
   store.history = store.history.slice(-60);
-  save(store);
+  save();
 
   $('#finLabel').textContent = mode === 'stress' ? 'Brain usage under stress' : 'Brain usage';
   countUp($('#finIndex'), index, 1200);
@@ -1376,12 +1509,24 @@ function start() {
   $('#muteHome').onclick = toggleMute;
   $('#mutePlay').onclick = toggleMute;
   $('#homeMascot').onclick = () => { audio(); SFX.good(4); mood('#homeMascot', 'happy', 900); };
+  $('#logout').onclick = () => { SFX.tap(); logout(); };
+  $('#resetBtn').onclick = () => { $('#rcName').textContent = store.name; $('#resetConfirm').hidden = false; $('#rcNo').focus({ preventScroll: true }); };
+  $('#rcNo').onclick = () => { $('#resetConfirm').hidden = true; };
+  $('#rcReset').onclick = () => { Object.assign(store, blankProgress()); save(); SFX.bad(); renderHome(); };
+  $('#rcDelete').onclick = () => { delete db.profiles[db.current]; SFX.bad(); logout(); };
+  $('#newForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const name = $('#pname').value.trim().slice(0, 16);
+    if (!name) { $('#pname').focus(); return; }
+    audio(); SFX.go();
+    createPlayer(name, pickedAvatar);
+  });
   paintMute();
   document.addEventListener('keydown', e => {
     if (cur && cur.live && cur.api.onKey && cur.api.onKey(e)) e.preventDefault();
   });
-  renderHome();
-  setTimeout(() => mood('#homeMascot', 'happy', 1000), 400);
+  if (store) renderHome(); else renderWho();
+  setTimeout(() => mood(store ? '#homeMascot' : '#whoMascot', 'happy', 1000), 400);
 }
 
 window.claude?.hot?.ready ? window.claude.hot.ready(start) : start();

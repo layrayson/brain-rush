@@ -27,8 +27,20 @@ Every game has combos, synthesised sound effects, star ratings and difficulty th
 - **Stress test**: the same test with bugs crawling over the board and the screen shaking.
 - **Free training**: any single game on Easy, Medium or Hard.
 
+## Progress
+
+Progress is saved in your browser, per player:
+
+- Make a player with a name and avatar. Several people can share one browser, each with their own player.
+- Every game remembers the level you reached and you continue from there. In free training you can also restart a game at level 1.
+- Points earned become XP, and XP moves you up the ranks: Rookie, Thinker, Sharp, Clever Clogs, Mastermind, Genius, Brainiac.
+- Best scores and brain test history are kept for each player.
+- **Log out** to switch players. **Reset** clears a player's progress, or deletes the player.
+
+Nothing leaves your device. Clearing your browser's site data clears your progress.
+
 ## Running it
 
-It's a single `index.html` with no build step. Open it in a browser, or serve the folder with any static server. Scores are saved in the browser's localStorage.
+It's a single `index.html` with no build step. Open it in a browser, or serve the folder with any static server.
 
 Not affiliated with Gameloft.

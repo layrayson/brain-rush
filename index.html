@@ -1,0 +1,1251 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Brain training in the style of Gameloft's Brain Challenge: eleven games across logic, math, memory, visual and focus.">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Brain Rush</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800&family=Figtree:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+/* Layout: one narrow app column; each category paints the UI in its own colour. */
+:root{
+  --bg:#EEF1F7; --surface:#FFFFFF; --sunk:#E4E8F1; --fg:#141A2E; --muted:#596079; --line:#CDD3E1;
+  --logic:#6A4FD6; --math:#E8590C; --memory:#0B8F80; --visual:#D6336C; --focus:#B7791F;
+  --on-cat:#FFFFFF; --good:#1E8E4E; --bad:#D9363E;
+  --s-red:#D92D2D; --s-blue:#2F5BD3; --s-green:#16884A; --s-purple:#8A3FD1;
+  --cat:#141A2E;
+  --f-display:"Unbounded","Arial Black",system-ui,sans-serif;
+  --f-body:"Figtree",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0E1120; --surface:#171B2D; --sunk:#0A0D19; --fg:#EBEEF7; --muted:#9BA2BF; --line:#2E3550;
+    --logic:#9D88FF; --math:#FF8A3D; --memory:#2CC9B5; --visual:#FF6B9A; --focus:#F2B53A;
+    --on-cat:#0E1120; --good:#3DD47F; --bad:#FF5A62;
+    --s-red:#FF5C5C; --s-blue:#6B8CFF; --s-green:#3FD07E; --s-purple:#B57CFF;
+    --cat:#EBEEF7; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0E1120; --surface:#171B2D; --sunk:#0A0D19; --fg:#EBEEF7; --muted:#9BA2BF; --line:#2E3550;
+  --logic:#9D88FF; --math:#FF8A3D; --memory:#2CC9B5; --visual:#FF6B9A; --focus:#F2B53A;
+  --on-cat:#0E1120; --good:#3DD47F; --bad:#FF5A62;
+  --s-red:#FF5C5C; --s-blue:#6B8CFF; --s-green:#3FD07E; --s-purple:#B57CFF;
+  --cat:#EBEEF7; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:16px;line-height:1.5}
+button{font:inherit;color:inherit;cursor:pointer}
+button:disabled{cursor:default}
+button:focus-visible{outline:3px solid var(--cat);outline-offset:2px}
+.app{max-width:580px;margin:0 auto;padding-inline:16px;padding-block:28px 56px;display:flex;flex-direction:column;gap:28px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.05}
+p{margin:0}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+
+/* buttons */
+.btn{border:0;border-radius:14px;padding:16px 22px;font-weight:700;font-size:17px;background:var(--cat);color:var(--on-cat);transition:transform .12s}
+.btn:active{transform:scale(.98)}
+.btn.ghost{background:transparent;color:var(--fg);border:1.5px solid var(--line)}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.row .btn{flex:1 1 160px}
+
+/* home */
+.screen{display:flex;flex-direction:column;gap:28px}
+.hero{display:flex;flex-direction:column;gap:18px}
+.hero h1{font-size:clamp(54px,16vw,92px);font-weight:800;letter-spacing:-.03em}
+.hero h1 span{display:block}
+.dots{display:flex;gap:8px}
+.dots i{width:28px;height:10px;border-radius:5px}
+.lede{color:var(--muted);max-width:46ch}
+.modes{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.mode{border-radius:18px;padding:18px;text-align:left;display:flex;flex-direction:column;gap:4px;border:1.5px solid var(--line);background:var(--surface)}
+.mode strong{font-family:var(--f-display);font-size:19px;font-weight:700}
+.mode small{color:var(--muted);font-size:14px;line-height:1.4}
+.mode.main{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.mode.main small{color:var(--bg);opacity:.75}
+@media (max-width:440px){.modes{grid-template-columns:1fr}}
+.stats{display:flex;gap:24px;flex-wrap:wrap}
+.stats div{display:flex;flex-direction:column}
+.stats b{font-family:var(--f-display);font-size:28px;font-weight:700}
+.stats small{color:var(--muted);font-size:13px}
+.chart{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px 16px;display:flex;flex-direction:column;gap:6px}
+.chart svg{width:100%;height:auto;display:block}
+.chart .ln{fill:none;stroke:var(--fg);stroke-width:2.5;stroke-linejoin:round}
+.chart .ar{fill:var(--sunk)}
+.chart .gl{stroke:var(--line);stroke-dasharray:3 4}
+.chart .pt{fill:var(--fg)}
+.chart .lb{fill:var(--muted);font:500 10px var(--f-mono)}
+.train{display:flex;flex-direction:column;gap:18px}
+.train>h2{font-size:15px;font-weight:700}
+.group{display:flex;flex-direction:column;gap:8px}
+.gamerow{display:grid;grid-template-columns:44px 1fr auto;gap:14px;align-items:center;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:10px 16px 10px 10px}
+.gamerow:hover{border-color:var(--cat)}
+.badge{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:var(--cat);color:var(--on-cat);font-family:var(--f-display);font-weight:700;font-size:15px}
+.gamerow .t{min-width:0}
+.gamerow strong{display:block;font-weight:700}
+.gamerow .t small{color:var(--muted);font-size:14px}
+.gamerow .best{text-align:right;font-size:12px;color:var(--muted)}
+.gamerow .best b{display:block;font-family:var(--f-mono);font-size:18px;color:var(--fg)}
+
+/* panels */
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:28px 22px;display:flex;flex-direction:column;gap:18px}
+.chip{align-self:flex-start;display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--cat);font-family:var(--f-body)}
+.chip::before{content:"";width:10px;height:10px;border-radius:3px;background:var(--cat)}
+.panel h2{font-size:clamp(30px,8vw,42px);font-weight:700}
+.panel .how{color:var(--muted);font-size:17px;max-width:48ch}
+.big{font-family:var(--f-display);font-weight:800;font-size:clamp(72px,24vw,120px);line-height:.9;color:var(--cat);letter-spacing:-.04em}
+.big small{font-size:.28em;color:var(--muted);letter-spacing:0;font-weight:500}
+.meta{color:var(--muted)}
+.newbest{align-self:flex-start;background:var(--cat);color:var(--on-cat);font-weight:700;font-size:13px;border-radius:999px;padding:4px 12px}
+.seg{display:flex;background:var(--sunk);border-radius:12px;padding:4px;gap:4px}
+.seg button{flex:1;border:0;background:transparent;border-radius:9px;padding:10px;font-weight:600;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--cat);box-shadow:0 1px 3px rgba(0,0,0,.15)}
+
+/* play */
+.top{display:grid;grid-template-columns:1fr auto;align-items:end;gap:8px}
+.top h2{font-size:22px;font-weight:700;margin-top:4px}
+.scorebox{text-align:right}
+.score{font-family:var(--f-display);font-weight:800;font-size:40px;line-height:1;color:var(--cat)}
+.score.bump{animation:bump .25s}
+.lvl{font-size:12px;color:var(--muted);font-family:var(--f-mono)}
+@keyframes bump{50%{transform:scale(1.18)}}
+.timer{display:flex;align-items:center;gap:12px}
+.track{flex:1;height:8px;border-radius:4px;background:var(--sunk);overflow:hidden}
+.fill{height:100%;width:100%;background:var(--cat);transform-origin:left;border-radius:4px}
+.timer .num{font-size:14px;color:var(--muted);min-width:3ch;text-align:right}
+.wrap{position:relative}
+.wrap.shake{animation:shake .45s}
+@keyframes shake{20%{transform:translateX(-7px)}40%{transform:translateX(7px)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}}
+.stage{background:var(--surface);border:2px solid var(--line);border-radius:22px;min-height:440px;padding:20px 16px;display:flex;flex-direction:column;justify-content:center;gap:18px;transition:border-color .15s}
+.wrap.ok .stage{border-color:var(--good)}
+.wrap.no .stage{border-color:var(--bad)}
+.quit{background:none;border:0;color:var(--muted);font-size:14px;padding:4px 0;align-self:flex-start;text-decoration:underline;text-underline-offset:3px}
+.count{font-family:var(--f-display);font-weight:800;font-size:110px;text-align:center;color:var(--cat);animation:pop .55s}
+@keyframes pop{from{transform:scale(1.4);opacity:.3}}
+.hint{text-align:center;color:var(--muted);font-weight:500;text-wrap:balance}
+.hint b{color:var(--fg)}
+.hint .tgt{color:var(--s-blue)}
+.hint .dec{color:var(--s-red)}
+
+.choices{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.choice{position:relative;background:var(--sunk);border:2px solid transparent;border-radius:14px;padding:14px 8px;font-family:var(--f-mono);font-weight:600;font-size:20px;display:flex;align-items:center;justify-content:center;gap:10px;min-height:60px}
+.choice:not(:disabled):hover{border-color:var(--cat)}
+.choice kbd{position:absolute;top:4px;left:8px;font-family:var(--f-mono);font-size:11px;color:var(--muted)}
+.choice.is-ok{background:var(--good);color:var(--surface);border-color:var(--good)}
+.choice.is-bad{background:var(--bad);color:var(--surface);border-color:var(--bad)}
+.choice.is-ok kbd,.choice.is-bad kbd{color:var(--surface)}
+.sw{width:22px;height:22px;border-radius:50%;display:inline-block;flex:none}
+
+/* balance */
+.scales{display:flex;flex-wrap:wrap;gap:4px 8px;justify-content:center}
+.scales svg{width:168px;max-width:47%;height:auto}
+.sc-beam{stroke:var(--muted);stroke-width:4;stroke-linecap:round}
+.sc-str{stroke:var(--muted);stroke-width:1.2}
+.sc-pan{stroke:var(--muted);stroke-width:3;stroke-linecap:round}
+.sc-post{fill:var(--line)}
+.sc-piv{fill:var(--muted)}
+
+/* grids for magic rule and reflection */
+.mg{display:grid;grid-template-columns:repeat(var(--n),1fr);gap:2px;width:var(--w,58px)}
+.mg i{aspect-ratio:1;background:var(--line);border-radius:2px}
+.mg i.f{background:var(--cat)}
+.choice .mg i:not(.f){background:var(--surface)}
+.rules{display:flex;flex-direction:column;gap:10px;align-items:center}
+.ex{display:flex;align-items:center;gap:14px}
+.ex .to{color:var(--muted);font-family:var(--f-mono);font-size:20px}
+.qbox{width:58px;aspect-ratio:1;border:2px dashed var(--cat);border-radius:6px;display:grid;place-items:center;font-family:var(--f-display);font-weight:700;color:var(--cat);font-size:22px}
+.mirror{display:flex;align-items:center;justify-content:center;gap:12px}
+.mirror.h{flex-direction:column}
+.mirror .line{align-self:stretch;border-left:3px dashed var(--cat);width:0}
+.mirror.h .line{border-left:0;border-top:3px dashed var(--cat);height:0;width:110px;align-self:center}
+.mirror .ghost{width:var(--w);aspect-ratio:1;border-radius:6px;background:repeating-linear-gradient(45deg,var(--sunk) 0 6px,transparent 6px 12px)}
+
+/* trout route */
+.trout{display:grid;grid-template-columns:repeat(var(--n),1fr);gap:6px;width:100%;max-width:360px;margin:0 auto}
+.tc{aspect-ratio:1;max-width:100%;border:0;border-radius:10px;background:var(--sunk);font-family:var(--f-mono);font-weight:600;font-size:clamp(15px,4.6vw,20px)}
+.tc.on{background:var(--cat);color:var(--on-cat)}
+.tc.cur{box-shadow:0 0 0 3px var(--fg)}
+.tc.is-bad{background:var(--bad);color:var(--surface)}
+
+/* missing number */
+.eq{font-family:var(--f-mono);font-weight:600;font-size:clamp(28px,8.5vw,44px);font-variant-numeric:tabular-nums;text-align:center}
+.slot{display:inline-block;min-width:1.6em;border-bottom:4px solid var(--cat);color:var(--cat);text-align:center}
+.slot.ok{color:var(--good);border-color:var(--good)}
+.slot.bad{color:var(--bad);border-color:var(--bad)}
+.keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;width:100%;max-width:320px;margin:0 auto}
+.key{border:0;border-radius:12px;background:var(--sunk);font-family:var(--f-mono);font-weight:600;font-size:22px;min-height:54px}
+.key:active{background:var(--line)}
+
+/* clocks */
+.clocks{display:flex;gap:20px;justify-content:center;flex-wrap:wrap}
+.clock{display:flex;flex-direction:column;align-items:center;gap:6px;font-weight:600;color:var(--muted);font-size:14px}
+.clock svg{width:132px;height:132px}
+.ck-face{fill:var(--sunk);stroke:var(--fg);stroke-width:3}
+.ck-tick{stroke:var(--muted);stroke-width:2}
+.ck-h{stroke:var(--fg);stroke-width:5;stroke-linecap:round}
+.ck-m{stroke:var(--cat);stroke-width:3;stroke-linecap:round}
+.ck-n{fill:var(--muted);font:600 10px var(--f-mono);text-anchor:middle;dominant-baseline:central}
+.ck-c{fill:var(--fg)}
+
+/* travelling */
+.arrowbox{height:130px;display:flex;align-items:center;justify-content:center;gap:4px;flex-wrap:wrap}
+.arrowbox svg{width:110px;height:110px}
+.arrowbox.small svg{width:34px;height:34px}
+.progress{display:flex;gap:6px;justify-content:center;min-height:12px}
+.progress i{width:12px;height:12px;border-radius:50%;background:var(--sunk);border:2px solid var(--line)}
+.progress i.f{background:var(--cat);border-color:var(--cat)}
+.dpad{display:grid;grid-template-columns:repeat(3,68px);grid-template-rows:repeat(2,64px);gap:8px;justify-content:center}
+.dpad button{border:0;border-radius:14px;background:var(--sunk);display:grid;place-items:center}
+.dpad button svg{width:30px;height:30px}
+.dpad button:disabled{opacity:.4}
+.dpad .up{grid-column:2;grid-row:1}.dpad .left{grid-column:1;grid-row:2}.dpad .down{grid-column:2;grid-row:2}.dpad .right{grid-column:3;grid-row:2}
+
+/* hocus pocus */
+.tunnel{position:relative;overflow:hidden;background:var(--sunk);border-radius:14px}
+.tunnel .col{position:absolute;left:10px;top:10px;display:flex;flex-direction:column;gap:4px;transition-property:transform;transition-timing-function:linear}
+.tunnel .col svg{display:block}
+.tunnel .bar{position:absolute;top:0;bottom:0;left:50%;width:84px;transform:translateX(-50%);z-index:2;background:repeating-linear-gradient(-45deg,var(--fg) 0 12px,var(--cat) 12px 24px);border-left:3px solid var(--fg);border-right:3px solid var(--fg)}
+
+/* ascending */
+.asc{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.asc button{position:relative;aspect-ratio:1;max-width:100%;border:2px solid transparent;border-radius:12px;background:var(--sunk);padding:4px}
+.asc button:not(:disabled):hover{border-color:var(--cat)}
+.asc svg{width:100%;height:100%;display:block}
+.asc .dot{fill:var(--fg)}
+.asc .ord{position:absolute;top:6px;right:6px;background:var(--cat);color:var(--on-cat);border-radius:999px;width:26px;height:26px;display:grid;place-items:center;font:700 13px var(--f-mono)}
+.asc .cnt{position:absolute;left:6px;bottom:6px;background:var(--surface);border-radius:8px;padding:0 7px;font:600 14px var(--f-mono)}
+.asc button.is-bad{border-color:var(--bad)}
+
+/* bouncing ball */
+canvas.bounce{width:100%;height:250px;display:block;background:var(--sunk);border-radius:14px}
+
+/* garage */
+.gscene{position:relative;height:150px;background:var(--sunk);border-radius:14px;overflow:hidden}
+.road{position:absolute;left:0;right:0;bottom:20px;height:3px;background:var(--line)}
+.garage{position:absolute;bottom:20px;left:50%;width:124px;height:100px;transform:translateX(-50%);z-index:2;background:var(--fg);clip-path:polygon(50% 0,100% 34%,100% 100%,0 100%,0 34%)}
+.garage::after{content:"";position:absolute;left:22%;right:22%;bottom:0;height:46%;background:repeating-linear-gradient(var(--cat) 0 6px,var(--fg) 6px 9px)}
+.car{position:absolute;bottom:23px;left:0;width:46px;height:24px;transition-property:transform;transition-timing-function:linear}
+.car svg{display:block}
+.startcount{font-family:var(--f-display);font-weight:800;font-size:56px;color:var(--cat);text-align:center;line-height:1}
+
+/* stress bugs */
+.bugs{position:absolute;inset:0;pointer-events:none;z-index:5;overflow:hidden;border-radius:22px}
+.bug{position:absolute;left:0;top:0;width:28px;height:28px}
+.bug svg{display:block}
+.bug-b{fill:var(--fg)}
+.bug-l{stroke:var(--fg);stroke-width:1.6;stroke-linecap:round}
+
+/* final */
+.bars{display:flex;flex-direction:column;gap:12px}
+.bar{display:grid;grid-template-columns:76px 1fr 40px;gap:12px;align-items:center;font-size:14px}
+.bar .track{height:12px;border-radius:6px}
+.bar .fill{border-radius:6px}
+.bar b{font-family:var(--f-mono);text-align:right}
+.bar small{display:block;color:var(--muted);font-size:12px;line-height:1.2}
+.verdict{font-size:20px;font-weight:700}
+.coach{background:var(--sunk);border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:6px}
+.coach p{max-width:52ch}
+
+@media (prefers-reduced-motion: reduce){.score.bump,.count,.wrap.shake{animation:none!important}}
+</style>
+</head>
+<body>
+<main class="app">
+
+  <section id="home" class="screen">
+    <div class="hero">
+      <p class="eyebrow">Logic · Math · Memory · Visual · Focus</p>
+      <h1><span>Brain</span><span>Rush</span></h1>
+      <div class="dots" aria-hidden="true">
+        <i style="background:var(--logic)"></i><i style="background:var(--math)"></i><i style="background:var(--memory)"></i><i style="background:var(--visual)"></i><i style="background:var(--focus)"></i>
+      </div>
+      <p class="lede">Eleven games across five areas. The brain test picks one game from each area, gets harder as you get answers right, and gives you a brain usage score at the end.</p>
+      <div class="modes">
+        <button class="mode main" id="startTest"><strong>Brain test</strong><small>Five games, about four minutes. Difficulty adapts as you play.</small></button>
+        <button class="mode" id="startStress"><strong>Stress test</strong><small>The same test with bugs crawling over the screen and the board shaking.</small></button>
+      </div>
+      <div class="stats" id="homeStats"></div>
+      <div class="chart" id="homeChart" hidden></div>
+    </div>
+    <div class="train" id="trainList">
+      <h2>Free training</h2>
+    </div>
+  </section>
+
+  <section id="intro" class="screen" hidden>
+    <div class="panel">
+      <span class="chip" id="introChip"></span>
+      <h2 id="introName"></h2>
+      <p class="how" id="introHow"></p>
+      <div class="seg" id="diffSeg" role="group" aria-label="Difficulty">
+        <button data-d="0" id="dEasy">Easy</button><button data-d="1" id="dMed">Medium</button><button data-d="2" id="dHard">Hard</button>
+      </div>
+      <p class="meta num" id="introMeta"></p>
+      <div class="row">
+        <button class="btn" id="introGo">Start</button>
+        <button class="btn ghost" id="introBack">Back</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="play" class="screen" hidden>
+    <div class="top">
+      <div>
+        <span class="chip" id="playChip"></span>
+        <h2 id="playName"></h2>
+      </div>
+      <div class="scorebox">
+        <div class="score num" id="playScore" aria-live="polite">0</div>
+        <div class="lvl" id="playLevel"></div>
+      </div>
+    </div>
+    <div class="timer">
+      <div class="track"><div class="fill" id="timeFill"></div></div>
+      <span class="num" id="timeLeft">0s</span>
+    </div>
+    <div class="wrap" id="wrap"><div class="stage" id="stage"></div></div>
+    <button class="quit" id="quit">Quit to home</button>
+  </section>
+
+  <section id="result" class="screen" hidden>
+    <div class="panel">
+      <span class="chip" id="resChip"></span>
+      <h2 id="resName"></h2>
+      <div class="big num"><span id="resScore">0</span><small> /100</small></div>
+      <p class="meta" id="resMeta"></p>
+      <span class="newbest" id="resBest" hidden>New best</span>
+      <div class="row">
+        <button class="btn" id="resNext">Next</button>
+        <button class="btn ghost" id="resHome">Home</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="final" class="screen" hidden>
+    <div class="panel">
+      <span class="eyebrow" id="finLabel">Brain usage</span>
+      <div class="big num"><span id="finIndex">0</span><small>%</small></div>
+      <p class="verdict" id="finVerdict"></p>
+      <p class="meta" id="finMeta"></p>
+      <div class="bars" id="finBars"></div>
+      <div class="coach" id="finCoach"></div>
+      <div class="row">
+        <button class="btn" id="finAgain">Take it again</button>
+        <button class="btn ghost" id="finHome">Home</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+const $ = s => document.querySelector(s);
+const rand = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
+const pick = a => a[Math.floor(Math.random() * a.length)];
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const clamp = n => Math.max(0, Math.min(100, Math.round(n)));
+const range = n => [...Array(n).keys()];
+
+/* ---------- storage (per-browser convenience only) ---------- */
+const KEY = 'brainrush:v2';
+function load() {
+  try { const d = JSON.parse(localStorage.getItem(KEY)); if (d && d.best && d.history) return d; } catch {}
+  return { best: {}, history: [], diff: 1 };
+}
+function save(d) { try { localStorage.setItem(KEY, JSON.stringify(d)); } catch {} }
+let store = load();
+
+/* ---------- shared drawing ---------- */
+const SHAPES = ['circle', 'square', 'triangle', 'diamond'];
+const SCOLORS = ['red', 'blue', 'green', 'purple'];
+function shape(kind, color, size, x, y) {
+  const st = `style="fill:var(--s-${color})"`, h = size / 2;
+  let inner;
+  if (kind === 'circle') inner = `<circle cx="${h}" cy="${h}" r="${h - 1.5}" ${st}/>`;
+  else if (kind === 'square') inner = `<rect x="2" y="2" width="${size - 4}" height="${size - 4}" rx="${size / 8}" ${st}/>`;
+  else if (kind === 'triangle') inner = `<polygon points="${h},1 ${size - 1},${size - 2} 1,${size - 2}" ${st}/>`;
+  else inner = `<polygon points="${h},0.5 ${size - 0.5},${h} ${h},${size - 0.5} 0.5,${h}" ${st}/>`;
+  const pos = x != null ? `x="${x}" y="${y}"` : '';
+  return `<svg ${pos} width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" aria-hidden="true">${inner}</svg>`;
+}
+const shapeAt = (i, size, x, y) => shape(SHAPES[i], SCOLORS[i], size, x, y);
+const NAMES = i => `${SCOLORS[i]} ${SHAPES[i]}`;
+
+function miniGrid(g, n, w) {
+  return `<div class="mg" style="--n:${n};--w:${w || 58}px">${g.map(v => `<i${v ? ' class="f"' : ''}></i>`).join('')}</div>`;
+}
+
+/* grid transforms (n×n boolean arrays) */
+const at = (g, n, r, c) => g[r * n + c];
+function gmap(n, f) { const o = []; for (let r = 0; r < n; r++) for (let c = 0; c < n; c++) o.push(f(r, c)); return o; }
+const TF = {
+  cw: (g, n) => gmap(n, (r, c) => at(g, n, n - 1 - c, r)),
+  ccw: (g, n) => gmap(n, (r, c) => at(g, n, c, n - 1 - r)),
+  r180: (g, n) => gmap(n, (r, c) => at(g, n, n - 1 - r, n - 1 - c)),
+  fh: (g, n) => gmap(n, (r, c) => at(g, n, r, n - 1 - c)),
+  fv: (g, n) => gmap(n, (r, c) => at(g, n, n - 1 - r, c)),
+  inv: g => g.map(v => !v),
+  sr: (g, n) => gmap(n, (r, c) => at(g, n, r, (c + n - 1) % n)),
+  sd: (g, n) => gmap(n, (r, c) => at(g, n, (r + n - 1) % n, c))
+};
+const gkey = g => g.map(v => v ? 1 : 0).join('');
+
+/* ---------- choice helpers ---------- */
+function choiceRow(box, items, onPick, cols) {
+  box.innerHTML = '';
+  if (cols) box.style.gridTemplateColumns = `repeat(${cols},1fr)`;
+  return items.map((it, i) => {
+    const b = document.createElement('button');
+    b.className = 'choice';
+    b.innerHTML = `<kbd>${i + 1}</kbd>${it.html}`;
+    if (it.label) b.setAttribute('aria-label', it.label);
+    b.onclick = () => onPick(i);
+    box.append(b);
+    return b;
+  });
+}
+function judge(api, btns, i, answer, next) {
+  const ok = i === answer;
+  btns.forEach(b => b.disabled = true);
+  btns[i].classList.add(ok ? 'is-ok' : 'is-bad');
+  if (!ok) btns[answer].classList.add('is-ok');
+  api.onKey = null;
+  ok ? api.right() : api.wrong();
+  api.later(next, ok ? 380 : 1100);
+}
+const keyPick = btns => e => {
+  const i = Number(e.key) - 1;
+  if (Number.isInteger(i) && i >= 0 && i < btns.length && !btns[i].disabled) { btns[i].click(); return true; }
+  return false;
+};
+function optionsAround(ans, cands, fmt = String) {
+  const pool = shuffle([...new Set(cands)].filter(n => Number.isInteger(n) && n > 0 && n !== ans)).slice(0, 3);
+  let k = 2; while (pool.length < 3) { if (!pool.includes(ans + k)) pool.push(ans + k); k++; }
+  const opts = shuffle([ans, ...pool]);
+  return { items: opts.map(n => ({ html: fmt(n) })), answer: opts.indexOf(ans) };
+}
+
+/* ============ LOGIC: Balance ============ */
+function genBalance(level) {
+  const n = level < 4 ? 3 : 4;
+  const maxW = n === 3 ? 10 : 8;
+  const maxPile = level < 2 ? 1 : level < 6 ? 2 : 3;
+  const sum = (side, w) => side.reduce((t, i) => t + w[i], 0);
+  const outcome = (sc, w) => Math.sign(sum(sc.left, w) - sum(sc.right, w));
+  const all = [];
+  (function build(pre) { if (pre.length === n) { all.push(pre); return; } for (let v = 1; v <= maxW; v++) build([...pre, v]); })([]);
+  const heaviest = space => {
+    let ans = null;
+    for (const a of space) {
+      const mx = Math.max(...a), i = a.indexOf(mx);
+      if (a.lastIndexOf(mx) !== i) return null;
+      if (ans === null) ans = i; else if (ans !== i) return null;
+    }
+    return ans;
+  };
+  for (let attempt = 0; attempt < 60; attempt++) {
+    const w = range(n).map(() => rand(1, maxW));
+    const mx = Math.max(...w);
+    if (w.filter(v => v === mx).length > 1) continue;
+    let space = all, scales = [];
+    for (let t = 0; t < 50 && scales.length < 5; t++) {
+      const k = shuffle(range(n));
+      let left, right;
+      if (level >= 6 && Math.random() < .4) { left = [k[0], k[1]]; right = Array(rand(1, maxPile)).fill(k[2]); }
+      else { left = Array(rand(1, maxPile)).fill(k[0]); right = Array(rand(1, maxPile)).fill(k[1]); }
+      if (Math.random() < .5) [left, right] = [right, left];
+      const sc = { left, right };
+      sc.out = outcome(sc, w);
+      const next = space.filter(a => outcome(sc, a) === sc.out);
+      if (next.length === space.length) continue;
+      space = next; scales.push(sc);
+      if (scales.length >= 2 && heaviest(space) !== null) break;
+    }
+    const ans = heaviest(space);
+    if (ans !== null && scales.length >= 2) return { n, scales, answer: ans };
+  }
+  // fallback: simple chain of single-item comparisons
+  const order = shuffle(range(n));
+  const scales = range(n - 1).map(i => ({ left: [order[i + 1]], right: [order[i]], out: 1 }));
+  return { n, scales: shuffle(scales), answer: order[n - 1] };
+}
+function scaleSVG(sc) {
+  const t = sc.out > 0 ? 11 : sc.out < 0 ? -11 : 0;
+  const py = 46, L = { x: 38, y: py + t }, R = { x: 162, y: py - t };
+  const side = (items, e) => {
+    const s = 16, panY = e.y + 34, w = items.length * (s + 2) - 2;
+    let out = `<line class="sc-str" x1="${e.x}" y1="${e.y}" x2="${e.x - 28}" y2="${panY}"/><line class="sc-str" x1="${e.x}" y1="${e.y}" x2="${e.x + 28}" y2="${panY}"/>`;
+    out += `<line class="sc-pan" x1="${e.x - 30}" y1="${panY}" x2="${e.x + 30}" y2="${panY}"/>`;
+    items.forEach((it, i) => { out += shapeAt(it, s, e.x - w / 2 + i * (s + 2), panY - s - 2); });
+    return out;
+  };
+  return `<svg viewBox="0 0 200 124" role="img" aria-label="Scale">
+    <rect class="sc-post" x="96" y="${py}" width="8" height="66" rx="2"/><rect class="sc-post" x="74" y="110" width="52" height="8" rx="3"/>
+    <line class="sc-beam" x1="${L.x}" y1="${L.y}" x2="${R.x}" y2="${R.y}"/><circle class="sc-piv" cx="100" cy="${py}" r="5"/>
+    ${side(sc.left, L)}${side(sc.right, R)}</svg>`;
+}
+function balanceGame(stage, api) {
+  function round() {
+    const P = genBalance(api.level);
+    stage.innerHTML = `<p class="hint">Which shape is the <b>heaviest</b>?</p><div class="scales">${P.scales.map(scaleSVG).join('')}</div><div class="choices"></div>`;
+    const items = range(P.n).map(i => ({ html: shapeAt(i, 30), label: NAMES(i) }));
+    const btns = choiceRow(stage.querySelector('.choices'), items, i => judge(api, btns, i, P.answer, round), P.n);
+    api.onKey = keyPick(btns);
+  }
+  round();
+}
+
+/* ============ LOGIC: Magic Rule ============ */
+const ALLT = ['cw', 'ccw', 'r180', 'fh', 'fv', 'inv', 'sr', 'sd'];
+function genMagic(level) {
+  const n = level < 5 ? 3 : 4;
+  const apply = (g, rule) => rule.reduce((x, t) => TF[t](x, n), g);
+  const randG = () => { const on = new Set(shuffle(range(n * n)).slice(0, rand(3, n * n - 4))); return range(n * n).map(i => on.has(i)); };
+  let rule;
+  if (level >= 7) { const a = pick(['cw', 'ccw', 'fh', 'fv', 'sr', 'sd']); rule = [a, pick(['inv', 'sr', 'sd', 'cw'].filter(x => x !== a))]; }
+  else rule = [pick(level < 3 ? ['fh', 'fv', 'cw', 'inv'] : ALLT)];
+  const cands = ALLT.map(t => [t]);
+  for (let i = 0; i < 24; i++) cands.push([pick(ALLT), pick(ALLT)]);
+  for (let tries = 0; tries < 300; tries++) {
+    const A1 = randG(), A2 = randG(), A3 = randG();
+    const B1 = apply(A1, rule), B2 = apply(A2, rule), ans = apply(A3, rule);
+    if (gkey(B1) === gkey(A1) || gkey(B2) === gkey(A2)) continue;
+    const seen = new Set([gkey(ans)]), wrong = [];
+    for (const c of shuffle(cands)) {
+      if (gkey(apply(A1, c)) === gkey(B1) && gkey(apply(A2, c)) === gkey(B2)) {
+        if (gkey(apply(A3, c)) !== gkey(ans)) { wrong.length = 99; break; } // examples don't pin the rule down
+        continue;
+      }
+      const o = apply(A3, c), k = gkey(o);
+      if (!seen.has(k)) { seen.add(k); wrong.push(o); }
+      if (wrong.length === 3) break;
+    }
+    if (wrong.length !== 3) continue;
+    const opts = shuffle([ans, ...wrong]);
+    return { n, ex: [[A1, B1], [A2, B2]], q: A3, opts, answer: opts.indexOf(ans) };
+  }
+  return genMagic(Math.max(0, level - 3));
+}
+function magicGame(stage, api) {
+  function round() {
+    const P = genMagic(api.level);
+    const row = (a, b) => `<div class="ex">${miniGrid(a, P.n)}<span class="to">→</span>${b}</div>`;
+    stage.innerHTML = `<p class="hint">Same rule every time. What does the last grid turn into?</p>
+      <div class="rules">${P.ex.map(([a, b]) => row(a, miniGrid(b, P.n))).join('')}${row(P.q, '<div class="qbox">?</div>')}</div>
+      <div class="choices"></div>`;
+    const btns = choiceRow(stage.querySelector('.choices'), P.opts.map(g => ({ html: miniGrid(g, P.n, 52) })), i => judge(api, btns, i, P.answer, round), 4);
+    api.onKey = keyPick(btns);
+  }
+  round();
+}
+
+/* ============ MATH: Trout Route ============ */
+function genTrout(level) {
+  const L = Math.min(4 + Math.floor(level / 3), 7), n = L <= 5 ? 4 : 5;
+  for (;;) {
+    let steps, ruleText;
+    if (level < 3) { const k = rand(2, 5); steps = Array(L).fill(k); ruleText = `+${k}`; }
+    else if (level < 6) { const k = rand(3, 9), s = Math.random() < .5 ? k : -k; steps = Array(L).fill(s); ruleText = s > 0 ? `+${k}` : `−${k}`; }
+    else { const a = rand(3, 9); let b = rand(2, 9); if (b === a) b = a === 9 ? 2 : a + 1; steps = range(L).map(i => i % 2 ? -b : a); ruleText = `+${a}, then −${b}, repeat`; }
+    let p = 0, lo = 0; steps.forEach(s => { p += s; lo = Math.min(lo, p); });
+    const start = rand(1 - lo, 30 - lo);
+    const vals = [start]; steps.forEach(s => vals.push(vals[vals.length - 1] + s));
+    if (new Set(vals).size !== vals.length) continue;
+    // self-avoiding walk
+    let path = null;
+    for (let t = 0; t < 200 && !path; t++) {
+      const pth = [rand(0, n * n - 1)];
+      while (pth.length < L + 1) {
+        const c = pth[pth.length - 1], r = Math.floor(c / n), col = c % n;
+        const nb = [[r - 1, col], [r + 1, col], [r, col - 1], [r, col + 1]].filter(([a, b]) => a >= 0 && b >= 0 && a < n && b < n).map(([a, b]) => a * n + b).filter(x => !pth.includes(x));
+        if (!nb.length) break;
+        pth.push(pick(nb));
+      }
+      if (pth.length === L + 1) path = pth;
+    }
+    if (!path) continue;
+    const used = new Set(vals), grid = Array(n * n).fill(null);
+    path.forEach((c, i) => grid[c] = vals[i]);
+    // traps: a near-miss value next to each step
+    path.slice(0, -1).forEach((c, i) => {
+      const r = Math.floor(c / n), col = c % n;
+      const nb = [[r - 1, col], [r + 1, col], [r, col - 1], [r, col + 1]].filter(([a, b]) => a >= 0 && b >= 0 && a < n && b < n).map(([a, b]) => a * n + b).filter(x => grid[x] === null);
+      const v = vals[i + 1] + pick([-1, 1, 2, -2]);
+      if (nb.length && !used.has(v) && v >= 0) grid[pick(nb)] = v;
+    });
+    const mn = Math.max(0, Math.min(...vals) - 10), mx = Math.max(...vals) + 10;
+    for (let i = 0; i < grid.length; i++) if (grid[i] === null) { let v; do v = rand(mn, mx); while (used.has(v)); grid[i] = v; }
+    return { n, path, grid, ruleText, start };
+  }
+}
+function troutGame(stage, api) {
+  let P, step, cells, done;
+  function round() {
+    P = genTrout(api.level); step = 0; done = false;
+    stage.innerHTML = `<p class="hint">Start at <b>${P.start}</b>. Each move: <b>${P.ruleText}</b>.<br>Go up, down, left or right.</p><div class="trout" style="--n:${P.n}"></div><p class="hint" id="tleft"></p>`;
+    const g = stage.querySelector('.trout');
+    cells = P.grid.map((v, i) => {
+      const b = document.createElement('button');
+      b.className = 'tc'; b.textContent = v;
+      b.onclick = () => tap(i);
+      g.append(b); return b;
+    });
+    cells[P.path[0]].classList.add('on', 'cur');
+    left();
+  }
+  const left = () => { const k = P.path.length - 1 - step; stage.querySelector('#tleft').textContent = `${k} move${k === 1 ? '' : 's'} to go`; };
+  function tap(i) {
+    if (done || P.path.slice(0, step + 1).includes(i)) return;
+    if (i === P.path[step + 1]) {
+      cells[P.path[step]].classList.remove('cur');
+      step++;
+      cells[i].classList.add('on', 'cur');
+      left();
+      if (step === P.path.length - 1) { done = true; api.right(); api.later(round, 550); }
+    } else {
+      cells[i].classList.add('is-bad');
+      api.wrong();
+      api.later(() => cells[i].classList.remove('is-bad'), 400);
+    }
+  }
+  api.onKey = e => {
+    const d = { ArrowUp: [-1, 0], ArrowDown: [1, 0], ArrowLeft: [0, -1], ArrowRight: [0, 1] }[e.key];
+    if (!d || done) return false;
+    const c = P.path[step], r = Math.floor(c / P.n) + d[0], col = c % P.n + d[1];
+    if (r >= 0 && col >= 0 && r < P.n && col < P.n) tap(r * P.n + col);
+    return true;
+  };
+  round();
+}
+
+/* ============ MATH: Missing Number ============ */
+function genMissing(level) {
+  const forms = ['add', 'add2', 'sub'];
+  if (level >= 3) forms.push('mul', 'subx', 'addbig');
+  if (level >= 6) forms.push('div', 'muladd', 'mulsub', 'mul');
+  let a, b, x, c, t;
+  switch (pick(forms)) {
+    case 'add': a = rand(2, 20); x = rand(2, 20); t = [a, '+', '?', '=', a + x]; break;
+    case 'add2': x = rand(2, 20); b = rand(2, 20); t = ['?', '+', b, '=', x + b]; break;
+    case 'sub': x = rand(2, 15); c = rand(2, 20); t = [x + c, '−', '?', '=', c]; break;
+    case 'mul': a = rand(2, 9); x = rand(2, level >= 6 ? 12 : 9); t = [a, '×', '?', '=', a * x]; break;
+    case 'subx': b = rand(2, 30); c = rand(2, 40); x = b + c; t = ['?', '−', b, '=', c]; break;
+    case 'addbig': a = rand(15, 60); x = rand(12, 60); t = [a, '+', '?', '=', a + x]; break;
+    case 'div': b = rand(2, 9); c = rand(2, 12); x = b * c; t = ['?', '÷', b, '=', c]; break;
+    case 'muladd': a = rand(2, 9); x = rand(2, 9); b = rand(1, 20); t = [a, '×', '?', '+', b, '=', a * x + b]; break;
+    default: a = rand(3, 9); x = rand(2, 9); b = rand(1, a * x - 1); t = [a, '×', '?', '−', b, '=', a * x - b];
+  }
+  return { t, answer: x };
+}
+function missingGame(stage, api) {
+  let P, typed, locked, slot;
+  function round() {
+    P = genMissing(api.level); typed = ''; locked = false;
+    stage.innerHTML = `<p class="hint">Fill in the missing number</p><div class="eq">${P.t.map(v => v === '?' ? '<span class="slot" id="slot">&nbsp;</span>' : v).join(' ')}</div>
+      <div class="keypad">${[1, 2, 3, 4, 5, 6, 7, 8, 9].map(d => `<button class="key" data-k="${d}">${d}</button>`).join('')}<button class="key" data-k="back" aria-label="Delete">⌫</button><button class="key" data-k="0">0</button><span></span></div>`;
+    slot = stage.querySelector('#slot');
+    stage.querySelectorAll('.key').forEach(b => b.onclick = () => press(b.dataset.k));
+  }
+  function press(k) {
+    if (locked) return;
+    if (k === 'back') typed = typed.slice(0, -1);
+    else if (typed.length < 4) typed += k;
+    slot.innerHTML = typed || '&nbsp;';
+    if (typed.length === String(P.answer).length) {
+      locked = true;
+      const ok = Number(typed) === P.answer;
+      slot.classList.add(ok ? 'ok' : 'bad');
+      if (!ok) api.later(() => { slot.textContent = P.answer; slot.className = 'slot ok'; }, 350);
+      ok ? api.right() : api.wrong();
+      api.later(round, ok ? 350 : 1300);
+    }
+  }
+  api.onKey = e => {
+    if (/^[0-9]$/.test(e.key)) { press(e.key); return true; }
+    if (e.key === 'Backspace') { press('back'); return true; }
+    return false;
+  };
+  round();
+}
+
+/* ============ MATH: Tick Tock ============ */
+function clockSVG(h, m) {
+  const hand = (ang, len, cls) => { const r = ang * Math.PI / 180; return `<line class="${cls}" x1="50" y1="50" x2="${(50 + len * Math.sin(r)).toFixed(1)}" y2="${(50 - len * Math.cos(r)).toFixed(1)}"/>`; };
+  let ticks = '';
+  for (let i = 0; i < 12; i++) { const r = i * Math.PI / 6; ticks += `<line class="ck-tick" x1="${50 + 40 * Math.sin(r)}" y1="${50 - 40 * Math.cos(r)}" x2="${50 + 45 * Math.sin(r)}" y2="${50 - 45 * Math.cos(r)}"/>`; }
+  const nums = [[12, 50, 15], [3, 85, 50], [6, 50, 85], [9, 15, 50]].map(([t, x, y]) => `<text class="ck-n" x="${x}" y="${y}">${t}</text>`).join('');
+  return `<svg viewBox="0 0 100 100" aria-hidden="true"><circle class="ck-face" cx="50" cy="50" r="47"/>${ticks}${nums}${hand(((h % 12) + m / 60) * 30, 24, 'ck-h')}${hand(m * 6, 36, 'ck-m')}<circle class="ck-c" cx="50" cy="50" r="3.5"/></svg>`;
+}
+const fmtDur = x => { const h = Math.floor(x / 60), m = x % 60; return h ? (m ? `${h}h ${m}m` : `${h}h`) : `${m}m`; };
+function tickGame(stage, api) {
+  function round() {
+    const L = api.level, step = L < 3 ? 30 : L < 6 ? 15 : 5;
+    const maxSteps = L < 3 ? 8 : L < 6 ? 20 : 66;
+    const h1 = rand(1, 12), m1 = step * rand(0, 60 / step - 1);
+    const d = step * rand(2, maxSteps);
+    const t2 = ((h1 % 12) * 60 + m1 + d) % 720;
+    const h2 = Math.floor(t2 / 60) || 12, m2 = t2 % 60;
+    const O = optionsAround(d, [d + step, d - step, d + 60, d - 60, 720 - d, d + 2 * step, d - 2 * step].filter(v => v < 720), fmtDur);
+    stage.innerHTML = `<p class="hint">How much time passed? (less than 12 hours)</p>
+      <div class="clocks"><div class="clock">${clockSVG(h1, m1)}From</div><div class="clock">${clockSVG(h2, m2)}To</div></div><div class="choices"></div>`;
+    const btns = choiceRow(stage.querySelector('.choices'), O.items, i => judge(api, btns, i, O.answer, round));
+    api.onKey = keyPick(btns);
+  }
+  round();
+}
+
+/* ============ MEMORY: Travelling ============ */
+const DEG = { up: 0, right: 90, down: 180, left: 270 };
+const arrowSVG = (dir, color) => `<svg viewBox="0 0 100 100" aria-hidden="true"><g transform="rotate(${DEG[dir]} 50 50)"><path d="M50 8 L88 50 H63 V92 H37 V50 H12 Z" style="fill:${color}"/></g></svg>`;
+function travelGame(stage, api) {
+  let seq, targets, pos, phase, box, prog, pad;
+  function round() {
+    const L = api.level, len = Math.min(3 + Math.floor(L / 2), 8), decoy = L >= 5;
+    targets = range(len).map(() => pick(Object.keys(DEG)));
+    seq = targets.map(d => ({ d, t: true }));
+    if (decoy) for (let i = 0; i < Math.floor(len / 2); i++) seq.splice(rand(1, seq.length), 0, { d: pick(Object.keys(DEG)), t: false });
+    const color = s => !decoy ? 'var(--cat)' : s.t ? 'var(--s-blue)' : 'var(--s-red)';
+    const showMs = Math.max(380, 720 - L * 35), gapMs = 160;
+    stage.innerHTML = `<p class="hint">${decoy ? 'Remember only the <b class="tgt">blue</b> arrows. Ignore the <b class="dec">red</b> ones.' : 'Remember the arrows in order'}</p>
+      <div class="arrowbox"></div><div class="progress">${targets.map(() => '<i></i>').join('')}</div>
+      <div class="dpad">${Object.keys(DEG).map(d => `<button class="${d}" data-d="${d}" aria-label="${d}" disabled>${arrowSVG(d, 'var(--fg)')}</button>`).join('')}</div>`;
+    box = stage.querySelector('.arrowbox'); prog = [...stage.querySelectorAll('.progress i')]; pad = [...stage.querySelectorAll('.dpad button')];
+    pad.forEach(b => b.onclick = () => input(b.dataset.d));
+    phase = 'show'; pos = 0;
+    seq.forEach((s, i) => {
+      api.later(() => { box.innerHTML = arrowSVG(s.d, color(s)); }, 500 + i * (showMs + gapMs));
+      api.later(() => { box.innerHTML = ''; }, 500 + i * (showMs + gapMs) + showMs);
+    });
+    api.later(() => { phase = 'input'; pad.forEach(b => b.disabled = false); stage.querySelector('.hint').textContent = decoy ? 'Repeat the blue arrows' : 'Now repeat them'; }, 500 + seq.length * (showMs + gapMs));
+  }
+  function input(d) {
+    if (phase !== 'input') return;
+    if (d === targets[pos]) {
+      prog[pos].classList.add('f'); pos++;
+      if (pos === targets.length) { phase = 'done'; api.right(); api.later(round, 600); }
+    } else {
+      phase = 'done'; api.wrong();
+      pad.forEach(b => b.disabled = true);
+      stage.querySelector('.hint').textContent = 'Not quite. The order was:';
+      box.className = 'arrowbox small';
+      box.innerHTML = targets.map(t => arrowSVG(t, 'var(--cat)')).join('');
+      api.later(round, 1800);
+    }
+  }
+  api.onKey = e => {
+    const d = { ArrowUp: 'up', ArrowDown: 'down', ArrowLeft: 'left', ArrowRight: 'right' }[e.key];
+    if (!d) return false;
+    input(d); return true;
+  };
+  round();
+}
+
+/* ============ MEMORY: Hocus Pocus ============ */
+function hocusGame(stage, api) {
+  function round() {
+    api.onKey = null;
+    const L = api.level, n = Math.min(3 + Math.floor(L / 2), 7);
+    let pool = [];
+    if (L >= 6) { const cols = shuffle(SCOLORS).slice(0, 2); cols.forEach(c => SHAPES.forEach(s => pool.push([s, c]))); }
+    else SHAPES.forEach(s => SCOLORS.forEach(c => pool.push([s, c])));
+    const blocks = shuffle(pool).slice(0, n), gone = rand(0, n - 1), size = 30;
+    const h = n * (size + 4) - 4 + 20;
+    stage.innerHTML = `<p class="hint">Watch the blocks go through the tunnel</p><div class="tunnel" style="height:${h}px"><div class="col">${blocks.map(b => `<span>${shape(b[0], b[1], size)}</span>`).join('')}</div><div class="bar"></div></div><div class="choices"></div>`;
+    const scene = stage.querySelector('.tunnel'), col = scene.querySelector('.col');
+    const W = scene.clientWidth, dist = W - size - 20, dur = Math.max(1500, 2700 - L * 120);
+    const tHit = dur * ((W / 2 - (10 + size / 2)) / dist);
+    col.style.transitionDuration = dur + 'ms';
+    api.raf(() => api.raf(() => { col.style.transform = `translateX(${dist}px)`; }));
+    api.later(() => {
+      const kids = [...col.children];
+      kids[gone].remove();
+      if (L >= 4) shuffle(kids.filter((_, i) => i !== gone)).forEach(k => col.append(k));
+    }, tHit);
+    api.later(() => {
+      stage.querySelector('.hint').textContent = 'Which block vanished in the tunnel?';
+      const btns = choiceRow(stage.querySelector('.choices'), blocks.map(b => ({ html: shape(b[0], b[1], 30), label: `${b[1]} ${b[0]}` })), i => judge(api, btns, i, gone, round), Math.min(n, 4));
+      api.onKey = keyPick(btns);
+    }, dur + 250);
+  }
+  round();
+}
+
+/* ============ VISUAL: Reflection ============ */
+function genReflect(level) {
+  const n = level < 5 ? 4 : 5;
+  for (;;) {
+    const k = rand(4, n === 4 ? 6 : 8), on = new Set([rand(0, n * n - 1)]);
+    while (on.size < k) {
+      const c = pick([...on]), r = Math.floor(c / n), col = c % n;
+      const nb = [[r - 1, col], [r + 1, col], [r, col - 1], [r, col + 1]].filter(([a, b]) => a >= 0 && b >= 0 && a < n && b < n).map(([a, b]) => a * n + b);
+      on.add(pick(nb));
+    }
+    const g = range(n * n).map(i => on.has(i));
+    const axis = pick(['v', 'h']);
+    const ans = axis === 'v' ? TF.fh(g, n) : TF.fv(g, n);
+    if (gkey(ans) === gkey(g)) continue;
+    const seen = new Set([gkey(ans)]), wrong = [];
+    for (const o of shuffle([g, axis === 'v' ? TF.fv(g, n) : TF.fh(g, n), TF.r180(g, n), TF.cw(g, n), TF.ccw(g, n)])) {
+      if (!seen.has(gkey(o))) { seen.add(gkey(o)); wrong.push(o); }
+    }
+    if (wrong.length < 3) continue;
+    const opts = shuffle([ans, ...wrong.slice(0, 3)]);
+    return { n, g, axis, opts, answer: opts.indexOf(ans) };
+  }
+}
+function reflectGame(stage, api) {
+  function round() {
+    const P = genReflect(api.level);
+    stage.innerHTML = `<p class="hint">What does the shape look like in the mirror?</p>
+      <div class="mirror ${P.axis}">${miniGrid(P.g, P.n, 104)}<span class="line"></span><span class="ghost" style="--w:104px"></span></div><div class="choices"></div>`;
+    const btns = choiceRow(stage.querySelector('.choices'), P.opts.map(g => ({ html: miniGrid(g, P.n, 64) })), i => judge(api, btns, i, P.answer, round), 4);
+    api.onKey = keyPick(btns);
+  }
+  round();
+}
+
+/* ============ VISUAL: Ascending ============ */
+function dotsSVG(count, r) {
+  for (let rr = r; ; rr *= .85) {
+    const pts = [];
+    for (let t = 0; t < 3000 && pts.length < count; t++) {
+      const x = rand(Math.ceil(rr + 4), Math.floor(96 - rr)), y = rand(Math.ceil(rr + 4), Math.floor(96 - rr));
+      if (pts.every(p => (p[0] - x) ** 2 + (p[1] - y) ** 2 > (2 * rr + 2.5) ** 2)) pts.push([x, y]);
+    }
+    if (pts.length === count) return `<svg viewBox="0 0 100 100" aria-hidden="true">${pts.map(p => `<circle class="dot" cx="${p[0]}" cy="${p[1]}" r="${rr.toFixed(1)}"/>`).join('')}</svg>`;
+  }
+}
+function ascendGame(stage, api) {
+  function round() {
+    const L = api.level, k = L < 3 ? 4 : L < 6 ? 5 : 6;
+    const [lo, hi, gap] = L < 3 ? [1, 14, 2] : L < 6 ? [2, 18, 1] : [6, 24, 1];
+    let counts;
+    do counts = shuffle(range(hi - lo + 1).map(i => i + lo)).slice(0, k); while ([...counts].sort((a, b) => a - b).some((v, i, s) => i && v - s[i - 1] < gap));
+    const sorted = [...counts].sort((a, b) => a - b);
+    let next = 0, over = false;
+    stage.innerHTML = `<p class="hint">Tap the boxes from <b>fewest</b> dots to <b>most</b></p><div class="asc"></div>`;
+    const grid = stage.querySelector('.asc');
+    const tiles = counts.map((c, i) => {
+      const b = document.createElement('button');
+      b.setAttribute('aria-label', `Box ${i + 1}`);
+      b.innerHTML = dotsSVG(c, L >= 6 ? pick([3.5, 5, 7]) : L >= 3 ? pick([4.5, 6]) : 5.5);
+      b.onclick = () => {
+        if (over || b.disabled) return;
+        if (c === sorted[next]) {
+          b.disabled = true;
+          b.insertAdjacentHTML('beforeend', `<span class="ord">${next + 1}</span>`);
+          next++;
+          if (next === k) { over = true; api.right(); api.later(round, 550); }
+        } else {
+          over = true; api.wrong();
+          b.classList.add('is-bad');
+          tiles.forEach((t, j) => { t.disabled = true; t.insertAdjacentHTML('beforeend', `<span class="cnt">${counts[j]}</span>`); });
+          api.later(round, 1500);
+        }
+      };
+      grid.append(b); return b;
+    });
+  }
+  round();
+}
+
+/* ============ FOCUS: Bouncing Ball ============ */
+const BALLC = ['--s-red', '--s-blue', '--s-green', '--s-purple', '--focus'];
+function bounceGame(stage, api) {
+  function round() {
+    api.onKey = null;
+    const L = api.level, n = L < 3 ? 3 : L < 6 ? 4 : 5;
+    const gap = L < 3 ? .22 : L < 6 ? .12 : .06;
+    const top = rand(72, 94) / 100;
+    const H = shuffle([top, ...range(n - 1).map(() => .22 + Math.random() * (top - gap - .22))]);
+    const answer = H.indexOf(top);
+    const speed = L >= 6 ? .78 : L >= 3 ? .9 : 1;
+    const T = H.map(h => (.55 + .8 * Math.sqrt(h)) * speed), ph = H.map(() => Math.random());
+    stage.innerHTML = `<p class="hint">Which ball bounces <b>highest</b>?</p><canvas class="bounce"></canvas><div class="choices"></div>`;
+    const cv = stage.querySelector('canvas'), dpr = window.devicePixelRatio || 1;
+    const w = cv.clientWidth, h = cv.clientHeight;
+    cv.width = w * dpr; cv.height = h * dpr;
+    const ctx = cv.getContext('2d'); ctx.scale(dpr, dpr);
+    const css = getComputedStyle(document.documentElement);
+    const cols = BALLC.map(v => css.getPropertyValue(v).trim()), line = css.getPropertyValue('--line').trim();
+    const ground = h - 18, r = 12, span = ground - r - 14, dur = 2900;
+    let t0 = null;
+    function draw(ts) {
+      if (t0 === null) t0 = ts;
+      const t = (ts - t0) / 1000, done = t * 1000 >= dur;
+      ctx.clearRect(0, 0, w, h);
+      ctx.fillStyle = line; ctx.fillRect(0, ground, w, 3);
+      H.forEach((hh, i) => {
+        const y = done ? 0 : hh * Math.abs(Math.sin(Math.PI * (t / T[i] + ph[i])));
+        ctx.beginPath(); ctx.arc((i + .5) * w / n, ground - r - y * span, r, 0, Math.PI * 2);
+        ctx.fillStyle = cols[i]; ctx.fill();
+      });
+      if (!done) api.raf(draw);
+      else {
+        const btns = choiceRow(stage.querySelector('.choices'), H.map((_, i) => ({ html: `<i class="sw" style="background:var(${BALLC[i]})"></i>`, label: `Ball ${i + 1}` })), i => judge(api, btns, i, answer, round), n);
+        api.onKey = keyPick(btns);
+      }
+    }
+    api.raf(draw);
+  }
+  round();
+}
+
+/* ============ FOCUS: Garage ============ */
+const carSVG = c => `<svg viewBox="0 0 46 24" width="46" height="24" aria-hidden="true"><path d="M11 9 L16 2 H31 L37 9Z" style="fill:var(${c})"/><rect x="2" y="8" width="42" height="10" rx="4" style="fill:var(${c})"/><circle cx="12" cy="19" r="4.2" style="fill:var(--fg)"/><circle cx="34" cy="19" r="4.2" style="fill:var(--fg)"/></svg>`;
+function garageGame(stage, api) {
+  function round() {
+    api.onKey = null;
+    const L = api.level;
+    let c = L < 5 ? rand(0, 3) : rand(1, 5);
+    const start = c, E = Math.min(4 + L, 13), gap = Math.max(420, 1000 - L * 60), dur = Math.round(gap * 1.15);
+    const events = range(E).map(() => {
+      if (L >= 5 && c > 0 && Math.random() < .35) return ['in', 'out'];
+      const k = c > 0 && Math.random() < .5 ? 'out' : 'in';
+      c += k === 'in' ? 1 : -1;
+      return [k];
+    });
+    const answer = c;
+    stage.innerHTML = `<p class="hint">Cars parked inside at the start</p><div class="startcount num">${start}</div><div class="gscene"><div class="road"></div><div class="garage"></div></div><p class="hint" id="gq">Keep count as they come and go</p><div class="choices"></div>`;
+    const scene = stage.querySelector('.gscene'), W = scene.clientWidth, mid = W / 2 - 23;
+    const spawn = k => {
+      const car = document.createElement('div');
+      car.className = 'car';
+      car.innerHTML = carSVG(pick(BALLC));
+      car.style.transitionDuration = dur + 'ms';
+      car.style.transform = `translateX(${k === 'in' ? -50 : mid}px)`;
+      scene.append(car);
+      api.raf(() => api.raf(() => { car.style.transform = `translateX(${k === 'in' ? mid : W + 10}px)`; }));
+      api.later(() => car.remove(), dur + 60);
+    };
+    const t0 = 1400;
+    events.forEach((ev, i) => api.later(() => ev.forEach(spawn), t0 + i * gap));
+    api.later(() => {
+      stage.querySelector('#gq').innerHTML = 'How many cars are <b>inside</b> now?';
+      const pool = shuffle([answer - 2, answer - 1, answer + 1, answer + 2, answer + 3].filter(v => v >= 0)).slice(0, 3);
+      const opts = [answer, ...pool].sort((a, b) => a - b);
+      const btns = choiceRow(stage.querySelector('.choices'), opts.map(v => ({ html: String(v) })), i => judge(api, btns, i, opts.indexOf(answer), round), 4);
+      api.onKey = keyPick(btns);
+    }, t0 + (E - 1) * gap + dur + 250);
+  }
+  round();
+}
+
+/* ---------- stress mode distractions ---------- */
+const BUG_SVG = `<svg viewBox="0 0 28 28" width="28" height="28" aria-hidden="true">
+  <g class="bug-l"><line x1="9" y1="11" x2="3" y2="7"/><line x1="19" y1="11" x2="25" y2="7"/><line x1="8" y1="15" x2="2" y2="15"/><line x1="20" y1="15" x2="26" y2="15"/><line x1="9" y1="19" x2="4" y2="24"/><line x1="19" y1="19" x2="24" y2="24"/></g>
+  <ellipse class="bug-b" cx="14" cy="16" rx="6" ry="8"/><circle class="bug-b" cx="14" cy="6.5" r="3.5"/></svg>`;
+function startBugs(wrap) {
+  const layer = document.createElement('div');
+  layer.className = 'bugs';
+  wrap.append(layer);
+  const W = () => wrap.clientWidth - 28, H = () => wrap.clientHeight - 28;
+  const bugs = range(4).map(() => {
+    const el = document.createElement('div');
+    el.className = 'bug'; el.innerHTML = BUG_SVG; layer.append(el);
+    return { el, x: Math.random() * W(), y: Math.random() * H(), a: Math.random() * 6.28, v: 45 + Math.random() * 55 };
+  });
+  let last = performance.now(), id, shakeT;
+  const loop = ts => {
+    const dt = Math.min(.05, (ts - last) / 1000); last = ts;
+    bugs.forEach(b => {
+      b.a += (Math.random() - .5) * 10 * dt;
+      b.x += Math.cos(b.a) * b.v * dt; b.y += Math.sin(b.a) * b.v * dt;
+      if (b.x < 0 || b.x > W()) { b.a = Math.PI - b.a; b.x = Math.max(0, Math.min(W(), b.x)); }
+      if (b.y < 0 || b.y > H()) { b.a = -b.a; b.y = Math.max(0, Math.min(H(), b.y)); }
+      b.el.style.transform = `translate(${b.x}px,${b.y}px) rotate(${b.a + Math.PI / 2}rad)`;
+    });
+    id = requestAnimationFrame(loop);
+  };
+  id = requestAnimationFrame(loop);
+  const shake = () => { wrap.classList.remove('shake'); void wrap.offsetWidth; wrap.classList.add('shake'); shakeT = setTimeout(shake, 4000 + Math.random() * 4000); };
+  shakeT = setTimeout(shake, 2500);
+  return () => { cancelAnimationFrame(id); clearTimeout(shakeT); layer.remove(); wrap.classList.remove('shake'); };
+}
+
+/* ---------- catalogue ---------- */
+const CATS = [
+  { id: 'logic', name: 'Logic', weak: 'Logic pulled you down. On the scales, rule shapes out one at a time instead of guessing, and on Magic Rule check your rule against both examples.' },
+  { id: 'math', name: 'Math', weak: 'Math was your weakest area. Speed comes from repetition, so run Missing Number and Tick Tock a few times in free training.' },
+  { id: 'memory', name: 'Memory', weak: 'Memory let you down. Try saying the sequence to yourself as it plays, like "up, up, left".' },
+  { id: 'visual', name: 'Visual', weak: 'Visual was the weak spot. Look at the whole picture for a second before you tap.' },
+  { id: 'focus', name: 'Focus', weak: 'Focus slipped. Pick one thing to track and let everything else on the screen go.' }
+];
+const CAT = Object.fromEntries(CATS.map(c => [c.id, c]));
+const GAMES = [
+  { id: 'balance', cat: 'logic', name: 'Balance', glyph: '⚖', par: 7, create: balanceGame,
+    blurb: 'Read the scales, find the heaviest shape.',
+    how: 'Each scale shows which side is heavier, or that both sides weigh the same. Put all the scales together to work out which shape is heaviest. Higher levels pile several shapes onto one pan.' },
+  { id: 'magic', cat: 'logic', name: 'Magic Rule', glyph: '✦', par: 7, create: magicGame,
+    blurb: 'Crack the hidden rule from two examples.',
+    how: 'Two examples show a grid before and after a hidden rule, such as a flip, a turn, a slide or swapped colours. Work out the rule and pick what the third grid becomes. From level 8 the rule combines two moves.' },
+  { id: 'trout', cat: 'math', name: 'Trout Route', glyph: '+3', par: 4, create: troutGame,
+    blurb: 'Swim through the grid by following the rule.',
+    how: 'Start on the highlighted number. Each move goes up, down, left or right to the number you get by applying the rule. Finish the route to score. Watch out for numbers that are one off. Arrow keys work too.' },
+  { id: 'missing', cat: 'math', name: 'Missing Number', glyph: '?', par: 12, create: missingGame,
+    blurb: 'Fill in the blank to make the sum true.',
+    how: 'Type the number that makes the equation true. It checks itself once you have typed enough digits. Your keyboard works too.' },
+  { id: 'ticktock', cat: 'math', name: 'Tick Tock', glyph: '◷', par: 8, create: tickGame,
+    blurb: 'Work out the time between two clocks.',
+    how: 'Two clocks show a start and an end time, less than 12 hours apart. Pick how much time passed. Higher levels use 5-minute steps.' },
+  { id: 'travel', cat: 'memory', name: 'Travelling', glyph: '↗', par: 5, create: travelGame,
+    blurb: 'Memorise a route of arrows and repeat it.',
+    how: 'Arrows flash up one at a time. When they stop, repeat them in order. From level 6, red decoy arrows appear and you repeat only the blue ones. Arrow keys work too.' },
+  { id: 'hocus', cat: 'memory', name: 'Hocus Pocus', glyph: '▮', par: 7, create: hocusGame,
+    blurb: 'One block vanishes in the tunnel. Which?',
+    how: 'A column of blocks slides through the tunnel and one never comes out. Pick the one that vanished. From level 5 they come out in a different order, so you have to remember what each block was, not where it was.' },
+  { id: 'reflect', cat: 'visual', name: 'Reflection', glyph: '◧', par: 10, create: reflectGame,
+    blurb: 'Pick the shape as it appears in the mirror.',
+    how: 'A shape sits beside a mirror line. Pick what its reflection looks like. Rotated versions are there to trip you up.' },
+  { id: 'ascend', cat: 'visual', name: 'Ascending', glyph: '⁘', par: 6, create: ascendGame,
+    blurb: 'Order the boxes from fewest dots to most.',
+    how: 'Each box holds some dots. Tap the boxes in order from fewest to most. At higher levels the dot sizes change, and bigger dots do not mean more of them.' },
+  { id: 'bounce', cat: 'focus', name: 'Bouncing Ball', glyph: '●', par: 7, create: bounceGame,
+    blurb: 'Spot the ball that bounces highest.',
+    how: 'Balls bounce at different heights and speeds. Watch closely and pick the one that went highest. The heights get closer together as you level up.' },
+  { id: 'garage', cat: 'focus', name: 'Garage', glyph: '⌂', par: 4, create: garageGame,
+    blurb: 'Count the cars going in and out.',
+    how: 'Cars drive into and out of the garage. Keep count, then say how many are inside at the end. From level 6 cars sometimes go in and out at the same time.' }
+];
+const BY = Object.fromEntries(GAMES.map(g => [g.id, g]));
+const GAME_TIME = 45;
+const DIFF_LEVEL = [0, 4, 7];
+const DIFF_NAME = ['Easy', 'Medium', 'Hard'];
+
+/* ---------- screens ---------- */
+function show(id) { document.querySelectorAll('.screen').forEach(s => s.hidden = s.id !== id); window.scrollTo(0, 0); }
+function setCat(cat) { if (cat) document.documentElement.style.setProperty('--cat', `var(--${cat})`); else document.documentElement.style.removeProperty('--cat'); }
+
+function chartSVG(vals) {
+  const w = 320, h = 96, px = 22, py = 10;
+  const x = i => px + (vals.length === 1 ? 0 : i * (w - px - 8) / (vals.length - 1));
+  const y = v => h - py - (v / 100) * (h - 2 * py);
+  const pts = vals.map((v, i) => `${x(i).toFixed(1)},${y(v).toFixed(1)}`).join(' ');
+  return `<svg viewBox="0 0 ${w} ${h}" role="img" aria-label="Brain usage over your last ${vals.length} tests">
+    ${[0, 50, 100].map(g => `<line class="gl" x1="${px}" x2="${w - 4}" y1="${y(g)}" y2="${y(g)}"/><text class="lb" x="0" y="${y(g) + 3}">${g}</text>`).join('')}
+    <polygon class="ar" points="${x(0)},${y(0)} ${pts} ${x(vals.length - 1)},${y(0)}"/>
+    <polyline class="ln" points="${pts}"/>
+    <circle class="pt" cx="${x(vals.length - 1)}" cy="${y(vals[vals.length - 1])}" r="4.5"/></svg>`;
+}
+
+function renderHome() {
+  setCat(null);
+  const tests = store.history.filter(x => x.mode === 'test'), stress = store.history.filter(x => x.mode === 'stress');
+  const s = [];
+  if (tests.length) s.push(`<div><b class="num">${tests[tests.length - 1].index}%</b><small>Last brain test</small></div>`, `<div><b class="num">${Math.max(...tests.map(x => x.index))}%</b><small>Best</small></div>`);
+  if (stress.length) s.push(`<div><b class="num">${Math.max(...stress.map(x => x.index))}%</b><small>Best under stress</small></div>`);
+  $('#homeStats').innerHTML = s.join('');
+  const ch = $('#homeChart');
+  if (tests.length >= 2) { const v = tests.slice(-14).map(x => x.index); ch.innerHTML = `<span class="eyebrow">Brain chart · last ${v.length} tests</span>${chartSVG(v)}`; ch.hidden = false; }
+  else ch.hidden = true;
+
+  const list = $('#trainList');
+  list.querySelectorAll('.group').forEach(r => r.remove());
+  CATS.forEach(c => {
+    const grp = document.createElement('div');
+    grp.className = 'group';
+    grp.style.setProperty('--cat', `var(--${c.id})`);
+    grp.innerHTML = `<span class="chip">${c.name}</span>`;
+    GAMES.filter(g => g.cat === c.id).forEach(g => {
+      const b = document.createElement('button');
+      b.className = 'gamerow';
+      const bs = store.best[g.id];
+      b.innerHTML = `<span class="badge" aria-hidden="true">${g.glyph}</span>
+        <span class="t"><strong>${g.name}</strong><small>${g.blurb}</small></span>
+        <span class="best">${bs != null ? `<b>${bs}</b>best` : '<b>–</b>new'}</span>`;
+      b.onclick = () => { session = { mode: 'train', order: [g.id], i: 0, scores: {} }; intro(); };
+      grp.append(b);
+    });
+    list.append(grp);
+  });
+  show('home');
+}
+
+let session = null;   // { mode: 'test'|'stress'|'train', order, i, scores }
+let cur = null;       // the running game
+
+function intro() {
+  const g = BY[session.order[session.i]];
+  setCat(g.cat);
+  $('#introChip').textContent = CAT[g.cat].name;
+  $('#introName').textContent = g.name;
+  $('#introHow').textContent = g.how;
+  const train = session.mode === 'train';
+  $('#diffSeg').hidden = !train;
+  const paint = () => $('#diffSeg').querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', String(Number(b.dataset.d) === store.diff)));
+  $('#diffSeg').querySelectorAll('button').forEach(b => b.onclick = () => { store.diff = Number(b.dataset.d); save(store); paint(); });
+  paint();
+  $('#introMeta').textContent = train
+    ? `${GAME_TIME} seconds · fixed difficulty`
+    : `${session.mode === 'stress' ? 'Stress test' : 'Brain test'} · game ${session.i + 1} of ${session.order.length} · ${GAME_TIME} seconds`;
+  $('#introGo').onclick = play;
+  show('intro');
+  $('#introGo').focus({ preventScroll: true });
+}
+
+function play() {
+  const g = BY[session.order[session.i]];
+  const adaptive = session.mode !== 'train';
+  const stage = $('#stage'), wrap = $('#wrap');
+  stage.innerHTML = '';
+  $('#playChip').textContent = CAT[g.cat].name;
+  $('#playName').textContent = g.name;
+  $('#playScore').textContent = '0';
+  $('#timeFill').style.transform = 'scaleX(1)';
+  $('#timeLeft').textContent = GAME_TIME + 's';
+
+  const stats = { correct: 0, wrong: 0 };
+  const run = { g, stats, live: false, timers: new Set(), rafs: new Set(), frame: 0, unbug: null };
+  cur = run;
+  const lvlText = () => { $('#playLevel').textContent = `Level ${api.level + 1}`; };
+  const flash = ok => {
+    wrap.classList.remove('ok', 'no'); void wrap.offsetWidth; wrap.classList.add(ok ? 'ok' : 'no');
+    const t = setTimeout(() => wrap.classList.remove('ok', 'no'), 240); run.timers.add(t);
+    const sc = $('#playScore');
+    sc.textContent = stats.correct;
+    sc.classList.remove('bump'); void sc.offsetWidth; if (ok) sc.classList.add('bump');
+    lvlText();
+  };
+  const api = {
+    stats,
+    level: adaptive ? 2 : DIFF_LEVEL[store.diff],
+    onKey: null,
+    live: () => cur === run && run.live,
+    right() { stats.correct++; if (adaptive) api.level = Math.min(9, api.level + 1); flash(true); },
+    wrong() { stats.wrong++; if (adaptive) api.level = Math.max(0, api.level - 1); flash(false); },
+    later(fn, ms) { const t = setTimeout(() => { run.timers.delete(t); if (api.live()) fn(); }, ms); run.timers.add(t); return t; },
+    raf(fn) { const id = requestAnimationFrame(ts => { run.rafs.delete(id); if (api.live()) fn(ts); }); run.rafs.add(id); return id; }
+  };
+  run.api = api;
+  lvlText();
+  show('play');
+
+  let n = 3;
+  const countdown = () => {
+    if (cur !== run) return;
+    if (n === 0) return begin();
+    stage.innerHTML = `<div class="count num">${n--}</div>`;
+    const t = setTimeout(countdown, 600); run.timers.add(t);
+  };
+  countdown();
+
+  function begin() {
+    stage.innerHTML = '';
+    run.live = true;
+    if (session.mode === 'stress') run.unbug = startBugs(wrap);
+    g.create(stage, api);
+    const start = performance.now();
+    const frame = () => {
+      if (!api.live()) return;
+      const left = GAME_TIME - (performance.now() - start) / 1000;
+      $('#timeFill').style.transform = `scaleX(${Math.max(0, left / GAME_TIME)})`;
+      $('#timeLeft').textContent = Math.max(0, Math.ceil(left)) + 's';
+      if (left <= 0) finish();
+      else run.frame = requestAnimationFrame(frame);
+    };
+    run.frame = requestAnimationFrame(frame);
+  }
+}
+
+function stop() {
+  if (!cur) return;
+  cur.live = false;
+  cancelAnimationFrame(cur.frame);
+  cur.timers.forEach(clearTimeout);
+  cur.rafs.forEach(cancelAnimationFrame);
+  if (cur.unbug) cur.unbug();
+  $('#wrap').classList.remove('ok', 'no', 'shake');
+}
+
+function finish() {
+  const { g, stats } = cur;
+  stop();
+  cur = null;
+  const score = clamp(100 * (stats.correct - 0.5 * stats.wrong) / g.par);
+  const prev = store.best[g.id];
+  const isBest = prev == null || score > prev;
+  if (isBest) store.best[g.id] = score;
+  save(store);
+
+  $('#resChip').textContent = CAT[g.cat].name;
+  $('#resName').textContent = g.name;
+  $('#resScore').textContent = score;
+  $('#resMeta').textContent = `${stats.correct} right · ${stats.wrong} wrong` + (prev != null && !isBest ? ` · best ${prev}` : '');
+  $('#resBest').hidden = !(isBest && prev != null);
+
+  session.scores[g.cat] = { score, game: g.id };
+  session.i++;
+  if (session.mode === 'train') {
+    $('#resNext').textContent = 'Play again';
+    $('#resNext').onclick = () => { session.i = 0; intro(); };
+  } else {
+    const done = session.i >= session.order.length;
+    $('#resNext').textContent = done ? 'See your brain usage' : `Next: ${BY[session.order[session.i]].name}`;
+    $('#resNext').onclick = () => done ? final() : intro();
+  }
+  show('result');
+  $('#resNext').focus({ preventScroll: true });
+}
+
+function verdict(i) {
+  if (i >= 90) return 'Razor sharp. Nothing got past you.';
+  if (i >= 75) return 'Quick thinker, strong across the board.';
+  if (i >= 60) return 'Warmed up and working well.';
+  if (i >= 40) return 'Getting there. A couple of areas pulled you down.';
+  return 'Slow start. Come back tomorrow and beat it.';
+}
+
+function final() {
+  setCat(null);
+  const mode = session.mode, sc = session.scores;
+  const index = Math.round(CATS.reduce((t, c) => t + (sc[c.id] ? sc[c.id].score : 0), 0) / CATS.length);
+  const same = store.history.filter(x => x.mode === mode);
+  const prevBest = same.length ? Math.max(...same.map(x => x.index)) : null;
+  store.history.push({ t: Date.now(), mode, index, scores: Object.fromEntries(CATS.map(c => [c.id, sc[c.id] ? sc[c.id].score : 0])) });
+  store.history = store.history.slice(-60);
+  save(store);
+
+  $('#finLabel').textContent = mode === 'stress' ? 'Brain usage under stress' : 'Brain usage';
+  $('#finIndex').textContent = index;
+  $('#finVerdict').textContent = verdict(index);
+  $('#finMeta').textContent = prevBest == null ? 'First result saved. Your next test will be compared to this one.' : index > prevBest ? `New best. Previous best was ${prevBest}%.` : `Your best is ${prevBest}%.`;
+  $('#finBars').innerHTML = CATS.map(c => `
+    <div class="bar" style="--cat:var(--${c.id})">
+      <span>${c.name}<small>${sc[c.id] ? BY[sc[c.id].game].name : ''}</small></span>
+      <div class="track"><div class="fill" style="transform:scaleX(${(sc[c.id] ? sc[c.id].score : 0) / 100})"></div></div>
+      <b>${sc[c.id] ? sc[c.id].score : 0}</b>
+    </div>`).join('');
+  const ranked = [...CATS].sort((a, b) => (sc[b.id]?.score || 0) - (sc[a.id]?.score || 0));
+  $('#finCoach').innerHTML = `<span class="eyebrow">Coach</span><p>Your strongest area today was <b>${ranked[0].name.toLowerCase()}</b>.</p><p>${ranked[ranked.length - 1].weak}</p>`;
+  $('#finAgain').onclick = () => startTest(mode);
+  show('final');
+}
+
+function startTest(mode) {
+  session = { mode, order: CATS.map(c => pick(GAMES.filter(g => g.cat === c.id)).id), i: 0, scores: {} };
+  intro();
+}
+
+function start() {
+  $('#startTest').onclick = () => startTest('test');
+  $('#startStress').onclick = () => startTest('stress');
+  $('#introBack').onclick = () => { session = null; renderHome(); };
+  $('#resHome').onclick = () => { session = null; renderHome(); };
+  $('#finHome').onclick = renderHome;
+  $('#quit').onclick = () => { stop(); cur = null; session = null; renderHome(); };
+  document.addEventListener('keydown', e => {
+    if (cur && cur.live && cur.api.onKey && cur.api.onKey(e)) e.preventDefault();
+  });
+  renderHome();
+}
+
+window.claude?.hot?.ready ? window.claude.hot.ready(start) : start();
+</script>
+</body>
+</html>

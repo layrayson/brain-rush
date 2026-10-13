@@ -6,17 +6,24 @@ A browser brain-training game inspired by Gameloft's *Brain Challenge*, the Java
 
 ## Games
 
-| Category | Games |
-|---|---|
-| Logic | Balance, Magic Rule |
-| Math | Trout Route, Missing Number, Tick Tock |
-| Memory | Travelling, Hocus Pocus |
-| Visual | Reflection, Ascending |
-| Focus | Bouncing Ball, Garage |
+| Area | Game | What you do |
+|---|---|---|
+| Logic | Pipe Flow | Turn pipe tiles to get water from the tap to the plant |
+| Logic | Fruit Scales | Read tipping scales to find the heaviest fruit |
+| Math | Bubble Sum | Pop rising bubbles that add up to the target |
+| Math | Shop Till | Give customers exact change in naira |
+| Memory | Burger Bar | Memorise an order, then build the burger layer by layer |
+| Memory | Speed Match | Is this card the same as the last one? (then 2 back) |
+| Visual | Shadow Snap | Match a silhouette to its picture, fast |
+| Visual | Shelf Swap | The lights go out and one item changes. Which one? |
+| Focus | Whack-a-Rule | Whack only the critters the rule allows, while the rules change |
+| Focus | Bus Stop | Count passengers getting on and off |
+
+Every game has combos, synthesised sound effects, star ratings and difficulty that adapts in the brain test.
 
 ## Modes
 
-- **Brain test**: one random game per category, with difficulty that adapts as you play. Ends with a brain usage score, a coach note and a chart of past tests.
+- **Brain test**: one random game per area, with adaptive difficulty. Ends with a brain usage score, a coach note and a chart of past tests.
 - **Stress test**: the same test with bugs crawling over the board and the screen shaking.
 - **Free training**: any single game on Easy, Medium or Hard.
 

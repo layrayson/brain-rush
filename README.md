@@ -1,46 +1,37 @@
 # Brain Rush
 
-A browser brain-training game inspired by Gameloft's *Brain Challenge*, the Java phone game from around 2007.
+Logic training for maths, built for an SS1 student who can do the sums but finds the reasoning hard: turning word problems into steps, spotting patterns, and checking an answer instead of guessing.
 
 **Play it:** https://layrayson.github.io/brain-rush/
 
 ## Games
 
-| Area | Game | What you do |
+| Skill | Game | What it trains |
 |---|---|---|
-| Logic | Pipe Flow | Turn pipe tiles to get water from the tap to the plant |
-| Logic | Fruit Scales | Read tipping scales to find the heaviest fruit |
-| Math | Bubble Sum | Pop rising bubbles that add up to the target |
-| Math | Shop Till | Give customers exact change in naira |
-| Memory | Burger Bar | Memorise an order, then build the burger layer by layer |
-| Memory | Speed Match | Is this card the same as the last one? (then 2 back) |
-| Visual | Shadow Snap | Match a silhouette to its picture, fast |
-| Visual | Shelf Swap | The lights go out and one item changes. Which one? |
-| Focus | Whack-a-Rule | Whack only the critters the rule allows, while the rules change |
-| Focus | Bus Stop | Count passengers getting on and off |
+| Word problems | Bar Builder | Pick the bar model that matches a story (part-whole, compare, change, "twice as many"), then solve it |
+| Word problems | Step by Step | Plan the first step of a multi-step problem, then finish it (naira change, buses, sharing, fencing, ages) |
+| Patterns | Next in Line | Name the rule that fits every jump, then continue the sequence |
+| Patterns | Undo Machine | Work backwards through a number machine, last step first |
+| Deduction | Number Detective | Use clues to cross out numbers until one is left |
+| Deduction | Fruit Algebra | Emoji equations: find each fruit's value, with BODMAS and simultaneous-equation style elimination at higher levels |
+| Deduction | Fruit Scales | Combine scale clues to find the heaviest fruit |
+| Checking | Spot the Slip | Find the first wrong line in a classmate's working (BODMAS, equations, money), then give the right answer |
+| Checking | Sense Check | Estimate whether someone's answer makes sense, then pick the right one |
 
-Every game has combos, synthesised sound effects, star ratings and difficulty that adapts in the brain test.
+## How it teaches
 
-## Modes
+- **No timer.** Time pressure pushes students towards guessing, so every game is a set of 5 or 6 puzzles to think through.
+- **Reason first, answer second.** Most puzzles ask for the plan before the number: the bar model, the rule, the first step, the line with the mistake.
+- **Mistake-specific hints.** A first wrong answer gets a hint aimed at that mistake, for example "+3 works for the first jump, but check the others". A second wrong answer shows a worked explanation that finishes with a check.
+- **Scoring rewards thinking.** Full points for a first-try answer, half with a hint, none for guessing through. Difficulty rises after correct answers and eases off after mistakes.
+- **Bar models** (schema-based instruction) are used for word problems because they have the best evidence base for students who struggle with them.
 
-- **Brain test**: one random game per area, with adaptive difficulty. Ends with a brain usage score, a coach note and a chart of past tests.
-- **Stress test**: the same test with bugs crawling over the board and the screen shaking.
-- **Free training**: any single game on Easy, Medium or Hard.
+## Modes and progress
 
-## Progress
-
-Progress is saved in your browser, per player:
-
-- Make a player with a name and avatar. Several people can share one browser, each with their own player.
-- Every game remembers the level you reached and you continue from there. In free training you can also restart a game at level 1.
-- Points earned become XP, and XP moves you up the ranks: Rookie, Thinker, Sharp, Clever Clogs, Mastermind, Genius, Brainiac.
-- Best scores and brain test history are kept for each player.
-- **Log out** to switch players. **Reset** clears a player's progress, or deletes the player.
-
-Nothing leaves your device. Clearing your browser's site data clears your progress.
+- **Today's workout:** one game from each skill, about 15 minutes, ending with a logic score, per-skill bars and a coach tip.
+- **Practise one game:** continue from your saved level, or restart at level 1.
+- Progress is saved per player in the browser: levels, XP and ranks, best scores, and a chart of workout scores. Log out to switch players. Reset clears or deletes a player. Nothing leaves the device.
 
 ## Running it
 
 It's a single `index.html` with no build step. Open it in a browser, or serve the folder with any static server.
-
-Not affiliated with Gameloft.

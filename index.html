@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@600;700;800&display=swap">
 <style>
-/* Layout: one chunky app column on a bright dotted sky; each area paints the board in its own colour. Single bright theme by design. */
+/* Layout: one chunky app column on a bright dotted sky; each skill area paints the board in its own colour. Single bright theme by design. */
 :root{
   --bg:#EAF5FF; --dots:#CFE6FB; --card:#FFFFFF; --ink:#1B1B3A; --muted:#565C80; --soft:#F2F5FB;
   --logic:#7C5CFF; --math:#FF7A1A; --memory:#0FB3A2; --visual:#FF4F8B; --focus:#FFBE0B;
@@ -26,19 +26,25 @@ body{background-color:var(--bg);background-image:radial-gradient(var(--dots) 2px
 button{font:inherit;color:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
 button:disabled{cursor:default}
 button:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
-.app{max-width:600px;margin:0 auto;padding-inline:16px;padding-block:20px 56px;display:flex;flex-direction:column;gap:22px}
+.app{max-width:620px;margin:0 auto;padding-inline:16px;padding-block:20px 56px;display:flex;flex-direction:column;gap:22px}
 h1,h2,h3{font-family:var(--f-display);margin:0;line-height:1;text-wrap:balance}
 p{margin:0}
 .card{background:var(--card);border:3px solid var(--ink);border-radius:24px;box-shadow:0 6px 0 var(--ink)}
 .btn{border:3px solid var(--ink);border-radius:16px;padding:12px 20px;font-family:var(--f-display);font-weight:800;font-size:20px;background:var(--cat);color:var(--on-cat);box-shadow:0 5px 0 var(--ink);transition:transform .07s,box-shadow .07s}
 .btn:active{transform:translateY(4px);box-shadow:0 1px 0 var(--ink)}
+.btn:disabled{opacity:.45;transform:none;box-shadow:0 5px 0 var(--ink)}
 .btn.ghost{background:var(--card);color:var(--ink)}
+.btn.sm{font-size:14px;padding:4px 12px;border-radius:12px;box-shadow:0 3px 0 var(--ink)}
+.btn.danger{background:var(--bad);color:#fff}
+.btn.ghost-danger{background:#fff;color:var(--bad)}
 .row{display:flex;gap:12px;flex-wrap:wrap}
 .row .btn{flex:1 1 150px}
 .chip{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-display);font-weight:800;font-size:13px;letter-spacing:.08em;text-transform:uppercase;background:var(--cat);color:var(--on-cat);border:2px solid var(--ink);border-radius:999px;padding:1px 10px;align-self:flex-start}
 .screen{display:flex;flex-direction:column;gap:22px}
 .icon-btn{border:3px solid var(--ink);background:var(--card);border-radius:14px;width:46px;height:46px;font-size:20px;box-shadow:0 4px 0 var(--ink);flex:none}
 .icon-btn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--ink)}
+.label{font-family:var(--f-display);font-weight:800;font-size:22px}
+.meta{color:var(--muted)}
 
 /* mascot */
 .mascot{display:block;overflow:visible}
@@ -53,57 +59,19 @@ p{margin:0}
 @keyframes hop{40%{transform:translateY(-8px) scale(1.06)}}
 @keyframes wobble{25%{transform:rotate(-8deg)}75%{transform:rotate(8deg)}}
 
-/* home */
-.hero{padding:22px 20px 20px;display:flex;flex-direction:column;gap:16px;position:relative}
-.hero-top{display:flex;align-items:center;gap:14px}
-.hero-top .mascot{width:92px;height:84px;flex:none}
-.logo{font-size:clamp(50px,14vw,82px);font-weight:800;letter-spacing:-.01em;line-height:.85}
-.logo span{display:inline-block;-webkit-text-stroke:3px var(--ink);paint-order:stroke fill;text-shadow:0 4px 0 var(--ink)}
-.logo .w{display:block;white-space:nowrap}
-.hero .sound{position:absolute;top:14px;right:14px}
-.lede{color:var(--muted);max-width:46ch;font-size:16px}
-.modes{display:grid;grid-template-columns:1.25fr 1fr;gap:12px}
-.mode{border:3px solid var(--ink);border-radius:20px;padding:14px 16px;text-align:left;display:flex;flex-direction:column;gap:2px;box-shadow:0 5px 0 var(--ink);transition:transform .07s,box-shadow .07s}
-.mode:active{transform:translateY(4px);box-shadow:0 1px 0 var(--ink)}
-.mode strong{font-family:var(--f-display);font-size:24px;font-weight:800;line-height:1.05}
-.mode small{font-size:14px;line-height:1.35}
-.mode.main{background:var(--logic);color:#fff}
-.mode.stress{background:var(--focus)}
-@media (max-width:440px){.modes{grid-template-columns:1fr}}
-.stats{display:flex;gap:10px;flex-wrap:wrap}
-.stat{background:var(--soft);border:2px solid var(--ink);border-radius:14px;padding:6px 14px;display:flex;flex-direction:column}
-.stat b{font-family:var(--f-display);font-size:26px;font-weight:800;line-height:1.1}
-.stat small{color:var(--muted);font-size:13px}
-.chart{padding:14px 16px;display:flex;flex-direction:column;gap:6px}
-.chart svg{width:100%;height:auto;display:block}
-.chart .ln{fill:none;stroke:var(--logic);stroke-width:3.5;stroke-linejoin:round;stroke-linecap:round}
-.chart .ar{fill:var(--logic-soft)}
-.chart .gl{stroke:#D5DBEA;stroke-dasharray:3 5}
-.chart .pt{fill:var(--logic);stroke:var(--ink);stroke-width:2}
-.chart .lb{fill:var(--muted);font:700 10px var(--f-body)}
-.label{font-family:var(--f-display);font-weight:800;font-size:22px}
-.tgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.gcard{border:3px solid var(--ink);border-radius:20px;background:var(--card);box-shadow:0 5px 0 var(--ink);padding:12px;text-align:left;display:grid;grid-template-columns:52px 1fr;gap:10px;align-items:center;transition:transform .07s,box-shadow .07s}
-.gcard:active{transform:translateY(4px);box-shadow:0 1px 0 var(--ink)}
-.gcard .ic{width:52px;height:52px;border-radius:14px;background:var(--cat-soft);border:2px solid var(--ink);display:grid;place-items:center;font-size:28px}
-.gcard .t{min-width:0;display:flex;flex-direction:column}
-.gcard strong{font-family:var(--f-display);font-size:19px;font-weight:800;line-height:1.1}
-.gcard small{color:var(--muted);font-size:13px;line-height:1.3}
-.gcard .best{font-size:12px;color:var(--cat);font-weight:800;filter:brightness(.8)}
-@media (max-width:420px){.tgrid{grid-template-columns:1fr}}
-
 /* players */
 .who-top{display:flex;align-items:center;gap:12px}
 .who-top .mascot{width:76px;height:68px}
 .plist{display:flex;flex-direction:column;gap:10px}
+.plist:empty{display:none}
 .prow{display:grid;grid-template-columns:52px 1fr auto;gap:12px;align-items:center;text-align:left;background:var(--soft);border:3px solid var(--ink);border-radius:18px;padding:8px 14px 8px 8px;box-shadow:0 4px 0 var(--ink)}
 .prow:active{transform:translateY(3px);box-shadow:0 1px 0 var(--ink)}
 .prow .pav{width:52px;height:52px;font-size:30px}
 .prow strong{font-family:var(--f-display);font-size:22px;font-weight:800;line-height:1.1;display:block}
 .prow small{color:var(--muted)}
 .prow .go{font-family:var(--f-display);font-weight:800;color:var(--logic)}
-.newp{display:flex;flex-direction:column;gap:12px;border-top:3px dashed #D5DBEA;padding-top:16px}
-.newp .label{font-size:20px}
+.newp{display:flex;flex-direction:column;gap:12px}
+.plist:not(:empty)+.newp{border-top:3px dashed #D5DBEA;padding-top:16px}
 .newp input{font:700 20px var(--f-body);color:var(--ink);background:#fff;border:3px solid var(--ink);border-radius:14px;padding:10px 14px;width:100%}
 .newp input:focus{outline:3px solid var(--logic);outline-offset:2px}
 .avs{display:grid;grid-template-columns:repeat(8,1fr);gap:6px}
@@ -119,21 +87,55 @@ p{margin:0}
 .xpbar i{display:block;height:100%;background:linear-gradient(90deg,var(--focus),var(--math));transition:width .8s}
 .pinfo small{color:var(--muted);font-size:12px}
 .pact{display:flex;flex-direction:column;gap:6px}
-.btn.sm{font-size:14px;padding:4px 12px;border-radius:12px;box-shadow:0 3px 0 var(--ink)}
-.btn.danger{background:var(--bad);color:#fff}
-.btn.ghost-danger{background:#fff;color:var(--bad)}
 .confirm{padding:16px;display:flex;flex-direction:column;gap:12px;background:#FFF1F1}
-.xpline{font-family:var(--f-display);font-weight:800;font-size:20px;color:var(--math)}
-.rankup{background:var(--logic);color:#fff;font-size:17px}
 
-/* intro / result / final panels */
+/* home */
+.hero{padding:22px 20px 20px;display:flex;flex-direction:column;gap:16px;position:relative}
+.hero-top{display:flex;align-items:center;gap:14px}
+.hero-top .mascot{width:92px;height:84px;flex:none}
+.logo{font-size:clamp(50px,14vw,82px);font-weight:800;letter-spacing:-.01em;line-height:.85}
+.logo span{display:inline-block;-webkit-text-stroke:3px var(--ink);paint-order:stroke fill;text-shadow:0 4px 0 var(--ink)}
+.logo .w{display:block;white-space:nowrap}
+.hero .sound{position:absolute;top:14px;right:14px}
+.lede{color:var(--muted);max-width:48ch;font-size:16px}
+.mode{border:3px solid var(--ink);border-radius:20px;padding:14px 16px;text-align:left;display:flex;flex-direction:column;gap:2px;box-shadow:0 5px 0 var(--ink);transition:transform .07s,box-shadow .07s;background:var(--logic);color:#fff}
+.mode:active{transform:translateY(4px);box-shadow:0 1px 0 var(--ink)}
+.mode strong{font-family:var(--f-display);font-size:26px;font-weight:800;line-height:1.05}
+.mode small{font-size:14px;line-height:1.35;opacity:.9}
+.stats{display:flex;gap:10px;flex-wrap:wrap}
+.stats:empty{display:none}
+.stat{background:var(--soft);border:2px solid var(--ink);border-radius:14px;padding:6px 14px;display:flex;flex-direction:column}
+.stat b{font-family:var(--f-display);font-size:26px;font-weight:800;line-height:1.1}
+.stat small{color:var(--muted);font-size:13px}
+.skills{padding:16px;display:flex;flex-direction:column;gap:10px}
+.skill{display:grid;grid-template-columns:120px 1fr 54px;gap:10px;align-items:center}
+.skill span{font-family:var(--f-display);font-weight:800;font-size:16px;line-height:1.1}
+.skill .track{height:16px}
+.skill b{font-family:var(--f-display);font-size:15px;text-align:right}
+.chart{padding:14px 16px;display:flex;flex-direction:column;gap:6px}
+.chart svg{width:100%;height:auto;display:block}
+.chart .ln{fill:none;stroke:var(--logic);stroke-width:3.5;stroke-linejoin:round;stroke-linecap:round}
+.chart .ar{fill:var(--logic-soft)}
+.chart .gl{stroke:#D5DBEA;stroke-dasharray:3 5}
+.chart .pt{fill:var(--logic);stroke:var(--ink);stroke-width:2}
+.chart .lb{fill:var(--muted);font:700 10px var(--f-body)}
+.tgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.gcard{border:3px solid var(--ink);border-radius:20px;background:var(--card);box-shadow:0 5px 0 var(--ink);padding:12px;text-align:left;display:grid;grid-template-columns:52px 1fr;gap:10px;align-items:center;transition:transform .07s,box-shadow .07s}
+.gcard:active{transform:translateY(4px);box-shadow:0 1px 0 var(--ink)}
+.gcard .ic{width:52px;height:52px;border-radius:14px;background:var(--cat-soft);border:2px solid var(--ink);display:grid;place-items:center;font-size:28px}
+.gcard .t{min-width:0;display:flex;flex-direction:column}
+.gcard strong{font-family:var(--f-display);font-size:19px;font-weight:800;line-height:1.1}
+.gcard small{color:var(--muted);font-size:13px;line-height:1.3}
+.gcard .best{font-size:12px;color:var(--ink);font-weight:800;opacity:.75}
+@media (max-width:420px){.tgrid{grid-template-columns:1fr}.skill{grid-template-columns:104px 1fr 50px}}
+
+/* panels */
 .panel{padding:24px 20px;display:flex;flex-direction:column;gap:16px;align-items:stretch}
 .panel .big-ic{width:84px;height:84px;border-radius:22px;background:var(--cat-soft);border:3px solid var(--ink);display:grid;place-items:center;font-size:48px;box-shadow:0 4px 0 var(--ink)}
 .panel h2{font-size:clamp(36px,10vw,52px);font-weight:800}
-.how{color:var(--muted);font-size:17px;max-width:50ch}
-.meta{color:var(--muted)}
+.how{color:var(--muted);font-size:17px;max-width:52ch}
 .seg{display:flex;background:var(--soft);border:2px solid var(--ink);border-radius:14px;padding:4px;gap:4px}
-.seg button{flex:1;border:0;background:transparent;border-radius:10px;padding:8px;font-family:var(--f-display);font-weight:800;font-size:17px;color:var(--muted)}
+.seg button{flex:1;border:0;background:transparent;border-radius:10px;padding:8px;font-family:var(--f-display);font-weight:800;font-size:16px;color:var(--muted)}
 .seg button[aria-pressed="true"]{background:var(--cat);color:var(--on-cat)}
 .stars{display:flex;gap:6px;font-size:48px;line-height:1}
 .stars span{display:inline-block;animation:starpop .45s backwards}
@@ -142,6 +144,10 @@ p{margin:0}
 .pts{font-family:var(--f-display);font-weight:800;font-size:clamp(64px,20vw,96px);line-height:.9;color:var(--cat);-webkit-text-stroke:3px var(--ink);paint-order:stroke fill;text-shadow:0 5px 0 var(--ink)}
 .pts small{font-size:.3em;-webkit-text-stroke:0;text-shadow:none;color:var(--muted)}
 .newbest{align-self:flex-start;background:var(--focus);border:2px solid var(--ink);font-family:var(--f-display);font-weight:800;border-radius:999px;padding:2px 12px;animation:starpop .5s .3s backwards}
+.rankup{background:var(--logic);color:#fff;font-size:17px}
+.xpline{font-family:var(--f-display);font-weight:800;font-size:20px;color:var(--math)}
+.tally{display:flex;gap:8px;flex-wrap:wrap}
+.tally span{border:2px solid var(--ink);border-radius:12px;padding:2px 10px;font-weight:800;font-size:14px}
 
 /* play */
 .hud{padding:10px 14px;display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center}
@@ -154,60 +160,103 @@ p{margin:0}
 .combo{font-family:var(--f-display);font-weight:800;font-size:14px;background:var(--focus);border:2px solid var(--ink);border-radius:999px;padding:0 8px;visibility:hidden}
 .combo.on{visibility:visible;animation:bump .25s}
 .lvl{font-size:12px;color:var(--muted);font-weight:800}
-.timer{display:flex;align-items:center;gap:10px}
+.progress{display:flex;align-items:center;gap:10px}
 .track{flex:1;height:16px;border-radius:9px;background:var(--card);border:3px solid var(--ink);overflow:hidden}
-.fill{height:100%;width:100%;background:var(--cat);transform-origin:left}
-.timer .secs{font-family:var(--f-display);font-weight:800;font-size:20px;min-width:3ch;text-align:right}
-.timer.hurry .fill{background:var(--bad);animation:pulse .5s infinite alternate}
-.timer.hurry .secs{color:var(--bad)}
-@keyframes pulse{to{opacity:.55}}
+.fill{height:100%;width:100%;background:var(--cat);transform-origin:left;transition:transform .4s}
+.progress .count{font-family:var(--f-display);font-weight:800;font-size:18px;white-space:nowrap}
 .wrap{position:relative}
-.wrap.shake{animation:shake .4s}
-@keyframes shake{20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(3px)}}
-.stage{background:var(--cat-soft);min-height:460px;padding:16px 14px;display:flex;flex-direction:column;justify-content:center;gap:14px;transition:background-color .15s;position:relative;overflow:hidden}
+.stage{background:var(--cat-soft);min-height:420px;padding:16px 14px;display:flex;flex-direction:column;gap:14px;transition:background-color .15s;position:relative}
 .wrap.ok .stage{background:#DFF8E7}
 .wrap.no .stage{background:#FFE1E1}
-.count{font-family:var(--f-display);font-weight:800;font-size:120px;text-align:center;color:var(--cat);-webkit-text-stroke:4px var(--ink);paint-order:stroke fill;text-shadow:0 6px 0 var(--ink);animation:pop .5s}
-@keyframes pop{from{transform:scale(1.6);opacity:.2}}
 .toast{position:absolute;top:12px;left:50%;z-index:8;background:var(--ink);color:#fff;font-family:var(--f-display);font-weight:800;font-size:20px;padding:4px 18px;border-radius:999px;white-space:nowrap;animation:toast 1.4s forwards;pointer-events:none}
 @keyframes toast{0%{transform:translate(-50%,-10px) scale(.6);opacity:0}15%{transform:translate(-50%,0) scale(1.08);opacity:1}25%{transform:translate(-50%,0) scale(1)}80%{opacity:1}100%{opacity:0}}
 .quit{background:none;border:0;color:var(--muted);font-weight:700;font-size:14px;padding:4px 0;align-self:flex-start;text-decoration:underline;text-underline-offset:3px}
-.hint{text-align:center;color:var(--muted);font-weight:700;text-wrap:balance}
-.hint b{color:var(--ink)}
 
-/* fx */
-#fx{position:fixed;inset:0;pointer-events:none;z-index:50;overflow:hidden}
-.pt{position:fixed;width:10px;height:10px;border-radius:3px;margin:-5px 0 0 -5px;border:1.5px solid var(--ink);animation:pt .65s ease-out forwards}
-@keyframes pt{to{transform:translate(var(--dx),var(--dy)) rotate(200deg) scale(.3);opacity:0}}
-.float{position:fixed;transform:translate(-50%,-50%);font-family:var(--f-display);font-weight:800;font-size:26px;color:#fff;-webkit-text-stroke:3px var(--ink);paint-order:stroke fill;animation:fl .9s ease-out forwards;white-space:nowrap}
-.float.bad{color:var(--bad)}
-.float.small{font-size:18px}
-@keyframes fl{0%{transform:translate(-50%,-30%) scale(.6)}20%{transform:translate(-50%,-60%) scale(1.15)}100%{transform:translate(-50%,-170%) scale(1);opacity:0}}
-.cf{position:fixed;top:-20px;width:10px;height:15px;border:1.5px solid var(--ink);border-radius:2px;animation:fall var(--t) linear forwards}
-@keyframes fall{to{transform:translate(var(--sx),110vh) rotate(var(--r))}}
+/* puzzle engine */
+.ptop{display:flex;flex-direction:column;gap:12px}
+.story{background:#fff;border:3px solid var(--ink);border-radius:16px;padding:12px 14px;font-size:18px;line-height:1.5;max-width:100%}
+.story b{color:var(--ink);background:var(--focus-soft);border-radius:6px;padding:0 4px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.pstep{display:flex;flex-direction:column;gap:12px}
+.pshow{display:flex;justify-content:center}
+.q{font-family:var(--f-display);font-weight:800;font-size:21px;line-height:1.2;text-wrap:balance}
+.hintbox{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start;background:var(--focus-soft);border:3px solid var(--ink);border-radius:16px;padding:10px 14px;font-size:16px;animation:slidein .3s ease-out}
+.hintbox span{font-size:24px;line-height:1}
+@keyframes slidein{from{transform:translateY(-8px);opacity:0}}
+.explain{background:#fff;border:3px solid var(--ink);border-radius:18px;padding:14px 16px;display:flex;flex-direction:column;gap:10px;animation:slidein .3s ease-out}
+.ex-head{display:flex;align-items:center;gap:10px;font-family:var(--f-display);font-weight:800;font-size:22px}
+.ex-head .mascot{width:48px;height:44px}
+.explain ol{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:6px;font-size:17px}
+.explain li::marker{font-family:var(--f-display);font-weight:800;color:var(--cat)}
+.ex-ans{font-family:var(--f-display);font-weight:800;font-size:19px;display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.ex-ans b{background:var(--good);color:#fff;border:2px solid var(--ink);border-radius:10px;padding:0 10px}
+.ex-ans .bm{background:#fff}
 
-/* choices */
 .choices{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.choice{position:relative;background:var(--card);border:3px solid var(--ink);border-radius:16px;box-shadow:0 4px 0 var(--ink);padding:10px 6px;font-family:var(--f-display);font-weight:800;font-size:22px;display:flex;align-items:center;justify-content:center;gap:8px;min-height:62px;transition:transform .07s,box-shadow .07s}
+.choice{position:relative;background:var(--card);border:3px solid var(--ink);border-radius:16px;box-shadow:0 4px 0 var(--ink);padding:10px 8px;font-family:var(--f-display);font-weight:800;font-size:22px;display:flex;align-items:center;justify-content:center;gap:8px;min-height:58px;transition:transform .07s,box-shadow .07s;min-width:0}
 .choice:not(:disabled):active{transform:translateY(3px);box-shadow:0 1px 0 var(--ink)}
 .choice kbd{position:absolute;top:2px;left:7px;font-family:var(--f-body);font-size:11px;color:var(--muted)}
-.choice.is-ok{background:var(--good)}
-.choice.is-bad{background:var(--bad)}
+.choice.wide{justify-content:flex-start;text-align:left;padding:10px 14px 10px 26px;font-family:var(--f-body);font-size:17px;font-weight:700;line-height:1.3}
+.choice.is-ok{background:#BDF5CF}
+.choice.is-bad{background:#FFC9C9;text-decoration:line-through;text-decoration-thickness:2px}
+.choice.wide.is-bad .bm{opacity:.5}
+.choice:disabled:not(.is-ok):not(.is-bad){opacity:.6}
 .emo{font-size:40px;line-height:1}
 
-/* pipe flow */
-.pipes{display:grid;gap:4px;width:100%;max-width:420px;margin:0 auto;align-items:center}
-.pipe{aspect-ratio:1;max-width:100%;border:2.5px solid var(--ink);border-radius:10px;background:#fff;padding:0;overflow:hidden}
-.pipe svg{width:100%;height:100%;display:block;transition:transform .16s ease-out}
-.pipe .p{fill:#B3BBD2}
-.pipe.wet .p{fill:var(--water)}
-.pipe.wet{background:#E8F6FF}
-.endcap{font-size:26px;text-align:center;line-height:1}
-.endcap.bloom{animation:bump .5s 2}
+/* keypad answer */
+.entry{align-self:center;min-width:150px;text-align:center;background:#fff;border:3px solid var(--ink);border-radius:16px;padding:4px 18px;font-family:var(--f-display);font-weight:800;font-size:38px;line-height:1.2}
+.entry .empty{color:#C3C9DA}
+.entry.ok{background:#BDF5CF}
+.entry.bad{background:#FFC9C9;animation:shake .4s}
+.entry.shown{background:#BDF5CF}
+@keyframes shake{20%{transform:translateX(-7px)}40%{transform:translateX(7px)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}}
+.keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;width:100%;max-width:340px;margin:0 auto}
+.key{border:3px solid var(--ink);border-radius:14px;background:#fff;font-family:var(--f-display);font-weight:800;font-size:24px;min-height:52px;box-shadow:0 3px 0 var(--ink)}
+.key:active{transform:translateY(2px);box-shadow:0 1px 0 var(--ink)}
+.key.go{background:var(--good);color:#fff;font-size:19px}
 
-/* fruit scales */
-.scales{display:flex;flex-wrap:wrap;gap:2px 6px;justify-content:center}
-.scales svg{width:200px;max-width:49%;height:auto}
+/* bar models */
+.bm{width:100%;max-width:340px;height:auto;display:block}
+.bm-s{fill:var(--cat-soft);stroke:var(--ink);stroke-width:2}
+.bm-u{fill:#DCD3FF;stroke:var(--ink);stroke-width:2}
+.bm-h{fill:url(#hatch);stroke:var(--ink);stroke-width:2}
+.bm-d{fill:#fff;stroke:var(--ink);stroke-width:2;stroke-dasharray:5 4}
+.bm-n{font:800 13px var(--f-body);fill:var(--ink);text-anchor:end;dominant-baseline:central}
+.bm-l{font:800 13px var(--f-body);fill:var(--ink);text-anchor:middle;dominant-baseline:central}
+.bm-e{font:800 15px var(--f-display);fill:var(--ink);dominant-baseline:central}
+.bm-b{fill:none;stroke:var(--ink);stroke-width:2.5;stroke-linejoin:round}
+.bm-bl{font:800 15px var(--f-display);fill:var(--ink);dominant-baseline:central}
+
+/* patterns */
+.seq{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;align-items:center}
+.seq span{font-family:var(--f-display);font-weight:800;font-size:24px;background:#fff;border:3px solid var(--ink);border-radius:12px;padding:4px 12px;min-width:52px;text-align:center}
+.seq span.ask{background:var(--cat);color:var(--on-cat)}
+.jumps{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;font-weight:800;color:var(--muted)}
+.jumps i{font-style:normal;background:var(--focus-soft);border:2px solid var(--ink);border-radius:8px;padding:0 8px;color:var(--ink)}
+.machine{display:flex;flex-wrap:wrap;gap:6px;align-items:center;justify-content:center;font-family:var(--f-display);font-weight:800;font-size:22px}
+.machine .mb{background:#fff;border:3px solid var(--ink);border-radius:12px;padding:2px 14px;min-width:54px;text-align:center}
+.machine .mq{background:var(--cat);color:var(--on-cat)}
+.machine .mo{background:var(--focus);border:3px solid var(--ink);border-radius:999px;padding:0 12px}
+.machine .ar{color:var(--muted)}
+
+/* deduction */
+.clues{margin:0;padding:12px 14px 12px 34px;background:#fff;border:3px solid var(--ink);border-radius:16px;display:flex;flex-direction:column;gap:4px;font-size:17px}
+.det{display:grid;gap:4px}
+.dn{aspect-ratio:1;max-width:100%;border:2px solid var(--ink);border-radius:8px;background:#fff;font-family:var(--f-display);font-weight:800;font-size:clamp(13px,3.6vw,17px);padding:0;position:relative}
+.dn.x{background:var(--soft);color:#B4BBCF;border-color:#C9CFDF}
+.dn.x::after{content:"";position:absolute;left:18%;right:18%;top:50%;height:2.5px;background:var(--bad);transform:rotate(-35deg)}
+.dn.win{background:var(--good);color:#fff}
+.det-act{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.det-act .meta{font-weight:800}
+.eqs{display:flex;flex-direction:column;gap:8px;background:#fff;border:3px solid var(--ink);border-radius:16px;padding:12px}
+.eqr{display:flex;align-items:center;justify-content:center;gap:6px;font-family:var(--f-display);font-weight:800;font-size:22px;flex-wrap:wrap}
+.eqr .fe{font-size:34px;line-height:1}
+.eqr .op{color:var(--muted)}
+.eqr .eqv{margin-left:4px}
+.solved{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.solved:empty{display:none}
+.solved span{background:#BDF5CF;border:2px solid var(--ink);border-radius:12px;padding:0 10px;font-family:var(--f-display);font-weight:800;font-size:20px;animation:starpop .35s}
+.scales{display:flex;flex-wrap:wrap;gap:2px 6px;justify-content:center;background:#fff;border:3px solid var(--ink);border-radius:16px;padding:6px}
+.scales svg{width:200px;max-width:48%;height:auto}
 .sc-beam{stroke:var(--ink);stroke-width:5;stroke-linecap:round}
 .sc-str{stroke:var(--ink);stroke-width:1.5}
 .sc-pan{stroke:var(--ink);stroke-width:4;stroke-linecap:round}
@@ -218,100 +267,27 @@ p{margin:0}
 .tilted .beam{transform:rotate(var(--a))}
 .tilted .panL,.tilted .panR{transform:translateY(var(--dy))}
 
-/* bubble sum */
-.sumbar{display:flex;justify-content:space-between;align-items:center;gap:10px}
-.sumbar span{font-family:var(--f-display);font-weight:800;font-size:18px;background:var(--card);border:3px solid var(--ink);border-radius:14px;padding:2px 12px}
-.sumbar b{font-size:30px;margin-left:4px}
-.sumbar .tg{color:var(--math)}
-.arena{position:relative;height:350px;border-radius:18px;background:linear-gradient(#A8DBFF,#E6F5FF);overflow:hidden;border:3px solid var(--ink);touch-action:manipulation}
-.bubble{position:absolute;left:0;top:0;width:62px;height:62px;margin:-31px 0 0 -31px;border-radius:50%;border:3px solid var(--ink);background:radial-gradient(circle at 32% 30%,#fff 0 11%,#BDE6FF 12% 100%);font-family:var(--f-display);font-weight:800;font-size:24px;display:grid;place-items:center;color:var(--ink);padding:0;will-change:transform}
-.bubble.picked{background:radial-gradient(circle at 32% 30%,#fff 0 11%,var(--math) 12% 100%);color:#fff;-webkit-text-stroke:1px var(--ink)}
+/* checking */
+.work{background:#fff;border:3px solid var(--ink);border-radius:16px;padding:12px 14px;display:flex;flex-direction:column;gap:4px;font-family:var(--f-display);font-weight:700;font-size:19px;background-image:repeating-linear-gradient(transparent 0 31px,#E3EAF6 31px 33px)}
+.work .wq{font-weight:800;border-bottom:2px solid var(--ink);padding-bottom:4px;margin-bottom:2px}
+.work .wl{display:flex;gap:10px;align-items:baseline}
+.work .ln{font-size:13px;color:var(--muted);background:var(--soft);border:2px solid #C9CFDF;border-radius:6px;padding:0 6px;font-family:var(--f-body)}
+.claim{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:center;background:#fff;border:3px solid var(--ink);border-radius:16px;padding:10px 14px;font-size:18px}
+.claim .face{font-size:40px;line-height:1}
 
-/* shop till */
-.counter{display:flex;align-items:center;gap:12px}
-.face{font-size:64px;line-height:1;animation:slidein .45s cubic-bezier(.3,1.4,.5,1)}
-@keyframes slidein{from{transform:translateX(-80px);opacity:0}}
-.speech{position:relative;flex:1;background:#fff;border:3px solid var(--ink);border-radius:16px;padding:8px 14px;font-weight:800}
-.speech::before{content:"";position:absolute;left:-11px;top:50%;width:16px;height:16px;background:#fff;border-left:3px solid var(--ink);border-bottom:3px solid var(--ink);transform:translateY(-50%) rotate(45deg)}
-.items{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
-.item{background:#fff;border:3px solid var(--ink);border-radius:14px;padding:6px 12px;display:flex;flex-direction:column;align-items:center;font-size:38px;line-height:1.1}
-.item small{font-family:var(--f-display);font-weight:800;font-size:16px;background:var(--focus);border:2px solid var(--ink);border-radius:8px;padding:0 6px;margin-top:4px}
-.till{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;background:var(--ink);color:#fff;border-radius:14px;padding:8px 14px;font-family:var(--f-display);font-weight:700;font-size:17px}
-.till b{color:#7CFFB2;font-size:22px}
-.notes{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-.note{border:2.5px solid var(--ink);border-radius:10px;padding:10px 2px;font-family:var(--f-display);font-weight:800;font-size:18px;box-shadow:0 3px 0 var(--ink)}
-.note:active{transform:translateY(2px);box-shadow:0 1px 0 var(--ink)}
-.note.clr{background:#fff}
-
-/* burger bar */
-.ticket{background:#FFFBEA;border:3px dashed var(--ink);border-radius:16px;padding:16px;display:flex;flex-direction:column;align-items:center;gap:14px}
-.stack{display:flex;flex-direction:column;align-items:center}
-.stack span{font-size:48px;line-height:1;margin-bottom:-22px;position:relative}
-.stack span:last-child{margin-bottom:0}
-.stack span.drop{animation:drop .3s cubic-bezier(.3,1.6,.6,1)}
-@keyframes drop{from{transform:translateY(-70px);opacity:0}}
-.stack.topple{animation:topple .7s forwards}
-@keyframes topple{to{transform:rotate(28deg) translate(50px,20px);opacity:.25}}
-.memo{width:100%;height:12px;background:#fff;border:2px solid var(--ink);border-radius:8px;overflow:hidden}
-.memo i{display:block;height:100%;background:var(--cat);animation:memo linear forwards}
-@keyframes memo{from{width:100%}to{width:0}}
-.plate{min-height:220px;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:6px;position:relative;padding-bottom:16px}
-.plate::after{content:"";position:absolute;bottom:0;width:190px;height:22px;border-radius:50%;background:#fff;border:3px solid var(--ink)}
-.plate .stack{position:relative;z-index:1}
-.pantry{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-.ing{font-size:34px;line-height:1;background:#fff;border:3px solid var(--ink);border-radius:14px;padding:8px 0;box-shadow:0 4px 0 var(--ink)}
-.ing:active{transform:translateY(3px);box-shadow:0 1px 0 var(--ink)}
-
-/* speed match */
-.cardzone{height:210px;display:grid;place-items:center}
-.mcard{width:150px;height:186px;background:#fff;border:3px solid var(--ink);border-radius:20px;box-shadow:0 6px 0 var(--ink);display:grid;place-items:center;font-size:92px;line-height:1;animation:cardin .22s ease-out}
-@keyframes cardin{from{transform:translateX(70px) rotate(10deg);opacity:0}}
-.yn{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.yn .btn{font-size:24px;padding:16px}
-.yn .no{background:var(--bad);color:#fff}
-.yn .yes{background:var(--good);color:#fff}
-
-/* shadow snap */
-.silbox{height:190px;display:grid;place-items:center;background:#fff;border:3px solid var(--ink);border-radius:20px}
-.sil{font-size:132px;line-height:1;filter:brightness(0);user-select:none;display:inline-block}
-
-/* shelf swap */
-.shelf{display:grid;gap:8px;background:#C98A4B;border:3px solid var(--ink);border-radius:16px;padding:10px;position:relative}
-.slot2{background:#F6E1BF;border:2px solid #8A5A2B;border-radius:10px;font-size:40px;line-height:1;aspect-ratio:1.15;max-width:100%;padding:0}
-.slot2:not(:disabled):active{transform:scale(.94)}
-.slot2.ring{background:var(--good);border-color:var(--ink)}
-.slot2.is-bad{background:var(--bad);border-color:var(--ink)}
-.shelf .dark{position:absolute;inset:0;background:#0B0B1E;border-radius:13px;opacity:0;transition:opacity .2s;pointer-events:none;display:grid;place-items:center;font-size:44px}
-.shelf.off .dark{opacity:.97}
-
-/* whack-a-rule */
-.rule{display:flex;align-items:center;justify-content:center;gap:10px;background:var(--ink);color:#fff;border-radius:16px;padding:6px 14px;font-family:var(--f-display);font-weight:800;font-size:21px;min-height:56px}
-.rule .e{font-size:34px;line-height:1}
-.rule.flash{animation:rflash .7s}
-@keyframes rflash{0%,50%{background:var(--bad);transform:scale(1.06)}}
-.holes{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;background:#8BD46A;border:3px solid var(--ink);border-radius:18px;padding:10px}
-.hole{position:relative;aspect-ratio:1;max-width:100%;border:0;background:transparent;padding:0;touch-action:manipulation}
-.pit{position:absolute;left:8%;right:8%;bottom:8%;height:30%;background:#4A2E14;border:3px solid var(--ink);border-radius:50%}
-.mask{position:absolute;left:0;right:0;top:0;bottom:22%;overflow:hidden}
-.critter{position:absolute;left:0;right:0;bottom:-4px;text-align:center;font-size:clamp(42px,12vw,62px);line-height:1;transform:translateY(110%);transition:transform .13s ease-out}
-.hole.up .critter{transform:translateY(0)}
-.hole.bonk .critter{transform:translateY(30%) scaleY(.6)}
-
-/* bus stop */
-.onboard{font-family:var(--f-display);font-weight:800;font-size:60px;text-align:center;line-height:1;color:var(--focus);-webkit-text-stroke:3px var(--ink);paint-order:stroke fill;text-shadow:0 4px 0 var(--ink)}
-.bscene{position:relative;height:190px;background:linear-gradient(#A8DBFF 0 68%,#6E7488 68% 100%);border:3px solid var(--ink);border-radius:18px;overflow:hidden}
-.bscene::after{content:"";position:absolute;left:0;right:0;bottom:12%;height:5px;background:repeating-linear-gradient(90deg,#fff 0 22px,transparent 22px 40px)}
-.bus{position:absolute;bottom:22%;left:0;font-size:96px;line-height:1;z-index:2}
-.stopsign{position:absolute;bottom:30%;left:4%;font-size:48px;line-height:1}
-.pax{position:absolute;bottom:28%;left:0;font-size:38px;line-height:1;z-index:3}
-
-/* stress bugs */
-.bugs{position:absolute;inset:0;pointer-events:none;z-index:6;overflow:hidden;border-radius:22px}
-.bug{position:absolute;left:0;top:0;font-size:30px;line-height:1}
+/* fx */
+#fx{position:fixed;inset:0;pointer-events:none;z-index:50;overflow:hidden}
+.pt{position:fixed;width:10px;height:10px;border-radius:3px;margin:-5px 0 0 -5px;border:1.5px solid var(--ink);animation:pt .65s ease-out forwards}
+@keyframes pt{to{transform:translate(var(--dx),var(--dy)) rotate(200deg) scale(.3);opacity:0}}
+.float{position:fixed;transform:translate(-50%,-50%);font-family:var(--f-display);font-weight:800;font-size:26px;color:#fff;-webkit-text-stroke:3px var(--ink);paint-order:stroke fill;animation:fl .9s ease-out forwards;white-space:nowrap}
+.float.small{font-size:18px}
+@keyframes fl{0%{transform:translate(-50%,-30%) scale(.6)}20%{transform:translate(-50%,-60%) scale(1.15)}100%{transform:translate(-50%,-170%) scale(1);opacity:0}}
+.cf{position:fixed;top:-20px;width:10px;height:15px;border:1.5px solid var(--ink);border-radius:2px;animation:fall var(--t) linear forwards}
+@keyframes fall{to{transform:translate(var(--sx),110vh) rotate(var(--r))}}
 
 /* final */
 .bars{display:flex;flex-direction:column;gap:10px}
-.bar{display:grid;grid-template-columns:96px 1fr 40px;gap:10px;align-items:center}
+.bar{display:grid;grid-template-columns:112px 1fr 40px;gap:10px;align-items:center}
 .bar span{font-family:var(--f-display);font-weight:800;font-size:17px;line-height:1.1}
 .bar small{display:block;color:var(--muted);font-family:var(--f-body);font-size:12px;font-weight:700}
 .bar .track{height:18px}
@@ -321,8 +297,10 @@ p{margin:0}
 .coach .mascot{width:60px;height:54px}
 .coach p+p{margin-top:4px}
 
-@media (prefers-reduced-motion: reduce){.count,.score.bump,.wrap.shake,.happy .mascot,.sad .mascot,.cf,.toast{animation-duration:.01s!important}}
+@media (prefers-reduced-motion: reduce){.score.bump,.happy .mascot,.sad .mascot,.cf,.toast,.entry.bad,.hintbox,.explain{animation-duration:.01s!important}.beam,.panL,.panR{transition-duration:.01s}}
 </style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="8" height="8" fill="#fff"/><line x1="0" y1="0" x2="0" y2="8" stroke="#FF4F8B" stroke-width="3"/></pattern></defs></svg>
 </head>
 <body>
 <div id="fx" aria-hidden="true"></div>
@@ -357,10 +335,10 @@ p{margin:0}
       </div>
     </div>
     <div class="card confirm" id="resetConfirm" hidden>
-      <p>Reset all progress for <b id="rcName"></b>? Levels, best scores, XP and test history will be cleared. This can't be undone.</p>
+      <p>Reset all progress for <b id="rcName"></b>? Levels, best scores, XP and workout history will be cleared. This can't be undone.</p>
       <div class="row">
         <button class="btn danger" id="rcReset">Reset progress</button>
-        <button class="btn danger ghost-danger" id="rcDelete">Delete player</button>
+        <button class="btn ghost-danger" id="rcDelete">Delete player</button>
         <button class="btn ghost" id="rcNo">Cancel</button>
       </div>
     </div>
@@ -370,15 +348,13 @@ p{margin:0}
         <div id="homeMascot"></div>
         <h1 class="logo" aria-label="Brain Rush"><span class="w"><span style="color:var(--logic)">B</span><span style="color:var(--math)">r</span><span style="color:var(--memory)">a</span><span style="color:var(--visual)">i</span><span style="color:var(--focus)">n</span></span><span class="w"><span style="color:var(--visual)">R</span><span style="color:var(--focus)">u</span><span style="color:var(--logic)">s</span><span style="color:var(--math)">h</span></span></h1>
       </div>
-      <p class="lede">Ten games across logic, math, memory, visual and focus. Pipes, fruit scales, a burger bar, a shop till, a bus to keep track of and moles to whack.</p>
-      <div class="modes">
-        <button class="mode main" id="startTest"><strong>Brain test</strong><small>One game from each area, about four minutes. Gets harder as you nail it.</small></button>
-        <button class="mode stress" id="startStress"><strong>Stress test</strong><small>Same test, but with bugs crawling over the board.</small></button>
-      </div>
+      <p class="lede">Logic for maths. Word problems, number patterns, detective puzzles and spotting mistakes. There's no timer, so think it through. Get stuck and you get a hint, not a telling-off.</p>
+      <button class="mode" id="startWorkout"><strong>Today's workout</strong><small>One game from each skill, about 15 minutes. Puzzles get harder as you get them right.</small></button>
       <div class="stats" id="homeStats"></div>
     </div>
+    <div class="card skills" id="skills"></div>
     <div class="card chart" id="homeChart" hidden></div>
-    <h2 class="label">Free training</h2>
+    <h2 class="label">Practise one game</h2>
     <div class="tgrid" id="trainList"></div>
   </section>
 
@@ -388,9 +364,7 @@ p{margin:0}
       <span class="chip" id="introChip"></span>
       <h2 id="introName"></h2>
       <p class="how" id="introHow"></p>
-      <div class="seg" id="diffSeg" role="group" aria-label="Difficulty">
-        <button data-d="0">Easy</button><button data-d="1">Medium</button><button data-d="2">Hard</button>
-      </div>
+      <div class="seg" id="diffSeg" role="group" aria-label="Starting level"></div>
       <p class="meta" id="introMeta"></p>
       <div class="row">
         <button class="btn" id="introGo">Let's go</button>
@@ -412,9 +386,9 @@ p{margin:0}
         <span class="lvl" id="playLevel"></span>
       </div>
     </div>
-    <div class="timer" id="timer">
-      <div class="track"><div class="fill" id="timeFill"></div></div>
-      <span class="secs" id="timeLeft">45</span>
+    <div class="progress">
+      <div class="track"><div class="fill" id="progFill"></div></div>
+      <span class="count" id="progText"></span>
       <button class="icon-btn" id="mutePlay" aria-label="Sound on">🔊</button>
     </div>
     <div class="wrap" id="wrap"><div class="card stage" id="stage"></div></div>
@@ -427,7 +401,7 @@ p{margin:0}
       <h2 id="resName"></h2>
       <div class="stars" id="resStars"></div>
       <div class="pts"><span id="resScore">0</span><small> points</small></div>
-      <p class="meta" id="resMeta"></p>
+      <div class="tally" id="resTally"></div>
       <p class="xpline" id="resXP"></p>
       <span class="newbest" id="resBest" hidden>New best!</span>
       <span class="newbest rankup" id="resRank" hidden></span>
@@ -440,14 +414,14 @@ p{margin:0}
 
   <section id="final" class="screen" hidden>
     <div class="card panel">
-      <span class="chip" id="finLabel">Brain usage</span>
+      <span class="chip">Logic score</span>
       <div class="pts"><span id="finIndex">0</span><small>%</small></div>
       <p class="verdict" id="finVerdict"></p>
       <p class="meta" id="finMeta"></p>
       <div class="bars" id="finBars"></div>
       <div class="coach" id="finCoach"></div>
       <div class="row">
-        <button class="btn" id="finAgain">Take it again</button>
+        <button class="btn" id="finAgain">Another workout</button>
         <button class="btn ghost" id="finHome">Home</button>
       </div>
     </div>
@@ -462,6 +436,7 @@ const pick = a => a[Math.floor(Math.random() * a.length)];
 const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
 const clamp = n => Math.max(0, Math.min(100, Math.round(n)));
 const range = n => [...Array(n).keys()];
+const naira = v => '₦' + v.toLocaleString('en-NG');
 
 /* ---------- storage: player profiles kept in this browser ---------- */
 const KEY = 'brainrush:v4', OLD_KEY = 'brainrush:v3';
@@ -495,15 +470,13 @@ function tone(freq, dur = .12, type = 'triangle', vol = .18, slide = 0, delay = 
 }
 const SFX = {
   good: c => { const f = 523 * Math.pow(2, Math.min(c, 14) / 12); tone(f, .1, 'triangle', .2); tone(f * 1.5, .14, 'sine', .1, 0, .05); },
-  bad: () => { tone(200, .28, 'sawtooth', .1, .45); tone(150, .28, 'square', .05, .5); },
+  step: () => { tone(784, .07, 'triangle', .13); tone(1047, .09, 'triangle', .1, 0, .06); },
+  hmm: () => { tone(392, .12, 'triangle', .12); tone(330, .2, 'triangle', .1, 0, .11); },
+  bad: () => { tone(200, .28, 'sawtooth', .09, .45); tone(150, .28, 'square', .04, .5); },
   tap: () => tone(620, .05, 'square', .05, 1.4),
-  pop: () => tone(880, .09, 'sine', .18, .35),
-  coin: () => { tone(1320, .06, 'square', .06); tone(1760, .1, 'square', .05, 0, .05); },
-  tick: () => tone(1250, .04, 'square', .07),
-  count: () => tone(440, .1, 'triangle', .14),
-  go: () => { tone(660, .1, 'triangle', .16); tone(990, .2, 'triangle', .16, 0, .08); },
   level: () => [523, 659, 784, 1047].forEach((f, i) => tone(f, .12, 'triangle', .14, 0, i * .07)),
   win: () => [392, 523, 659, 784, 1047, 1319].forEach((f, i) => tone(f, .2, 'triangle', .15, 0, i * .09)),
+  go: () => { tone(660, .1, 'triangle', .16); tone(990, .2, 'triangle', .16, 0, .08); },
   whoosh: () => tone(300, .25, 'sine', .08, 3)
 };
 function paintMute() {
@@ -514,7 +487,7 @@ function toggleMute() { db.muted = !db.muted; save(); paintMute(); if (!db.muted
 /* ---------- fx: particles, floating points, confetti ---------- */
 const FX_COLORS = ['#7C5CFF', '#FF7A1A', '#0FB3A2', '#FF4F8B', '#FFBE0B', '#2EA8FF'];
 function centerOf(at) {
-  if (at && at.getBoundingClientRect) { const r = at.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2 }; }
+  if (at && at.getBoundingClientRect) { const r = at.getBoundingClientRect(); return { x: r.left + r.width / 2, y: Math.min(window.innerHeight - 60, Math.max(60, r.top + r.height / 2)) }; }
   if (at && at.x != null) return at;
   return centerOf($('#stage'));
 }
@@ -567,134 +540,552 @@ function mood(holder, m, ms = 700) {
   if (ms) moodT = setTimeout(() => mood(el, 'idle', 0), ms);
 }
 
-/* ---------- shared helpers ---------- */
-function choiceRow(box, items, onPick, cols) {
-  box.innerHTML = '';
-  if (cols) box.style.gridTemplateColumns = `repeat(${cols},1fr)`;
-  return items.map((it, i) => {
-    const b = document.createElement('button');
-    b.className = 'choice';
-    b.innerHTML = `<kbd>${i + 1}</kbd>${it.html}`;
-    if (it.label) b.setAttribute('aria-label', it.label);
-    b.onclick = () => onPick(i);
-    box.append(b);
-    return b;
-  });
-}
-function judge(api, btns, i, answer, next, base = 20, quick = false) {
-  const ok = i === answer;
-  btns.forEach(b => b.disabled = true);
-  btns[i].classList.add(ok ? 'is-ok' : 'is-bad');
-  if (!ok) btns[answer].classList.add('is-ok');
-  api.onKey = null;
-  ok ? api.right(base, btns[i]) : api.wrong(btns[i]);
-  api.later(next, ok ? (quick ? 220 : 420) : 1100);
-}
+/* ---------- shared content ---------- */
+const NAMES = ['Ada', 'Chiamaka', 'Zainab', 'Kemi', 'Ngozi', 'Halima', 'Amaka', 'Sade', 'Funmi', 'Aisha', 'Tunde', 'Emeka', 'Musa', 'Ifeanyi', 'Tobi', 'Yusuf', 'Chidi', 'Segun', 'Femi', 'Bayo'];
+const twoNames = () => shuffle(NAMES).slice(0, 2);
+const THINGS = ['oranges', 'sweets', 'pencils', 'mangoes', 'stickers', 'marbles', 'biscuits'];
+const FACES = ['🧑🏾', '👩🏾', '👨🏿', '👧🏾', '🧕🏾', '👦🏾', '👩🏽‍🦱', '🧔🏿'];
+const nextNote = v => [500, 1000, 2000, 5000, 10000].find(n => n > v);
+const isPrime = n => { if (n < 2) return false; for (let i = 2; i * i <= n; i++) if (n % i === 0) return false; return true; };
+const times = k => k === 2 ? 'twice' : `${k} times`;
 const keyPick = btns => e => {
   const i = Number(e.key) - 1;
   if (Number.isInteger(i) && i >= 0 && i < btns.length && !btns[i].disabled) { btns[i].click(); return true; }
   return false;
 };
-function aroundInts(ans) {
-  const pool = shuffle([ans - 2, ans - 1, ans + 1, ans + 2, ans + 3].filter(v => v >= 0)).slice(0, 3);
-  return [ans, ...pool].sort((a, b) => a - b);
+// number options: the answer plus three distinct plausible wrong ones
+function numberOpts(ans, cands, fmt = String, must = null) {
+  const ok = n => Number.isInteger(n) && n > 0 && n !== ans;
+  const pool = [...(ok(must) ? [must] : []), ...shuffle([...new Set(cands)].filter(n => ok(n) && n !== must))].slice(0, 3);
+  let k = 1; while (pool.length < 3) { if (!pool.includes(ans + k) && ans + k > 0) pool.push(ans + k); k = k > 0 ? -k : -k + 1; }
+  const opts = shuffle([ans, ...pool]);
+  return { items: opts.map(n => ({ html: fmt(n) })), answer: opts.indexOf(ans), values: opts };
 }
 
-/* ============ LOGIC: Pipe Flow ============ */
-const N_ = 1, E_ = 2, S_ = 4, W_ = 8;
-const DIRS = [[N_, -1, 0, S_], [E_, 0, 1, W_], [S_, 1, 0, N_], [W_, 0, -1, E_]];
-const rotm = (m, k) => { k = ((k % 4) + 4) % 4; for (let i = 0; i < k; i++) m = ((m << 1) | (m >> 3)) & 15; return m; };
-function pipeFlow(P) {
-  const n = P.n, eff = P.base.map((m, i) => rotm(m, P.rot[i])), wet = new Set(), s = P.r0 * n;
-  if (!(eff[s] & W_)) return { wet, done: false };
-  const q = [s]; wet.add(s);
-  while (q.length) {
-    const i = q.shift(), r = Math.floor(i / n), c = i % n;
-    for (const [b, dr, dc, opp] of DIRS) {
-      if (!(eff[i] & b)) continue;
-      const nr = r + dr, nc = c + dc;
-      if (nr < 0 || nc < 0 || nr >= n || nc >= n) continue;
-      const j = nr * n + nc;
-      if (wet.has(j) || !(eff[j] & opp)) continue;
-      wet.add(j); q.push(j);
-    }
+/* ============================================================
+   Puzzle engine: every puzzle is a short list of steps.
+   First wrong answer on a step -> a hint (aimed at that mistake).
+   Second wrong answer -> a worked explanation, then move on.
+   Perfect puzzle = full points; solved with a hint = half.
+   ============================================================ */
+function stepPuzzle(stage, api, P, done) {
+  let si = 0, mistakes = 0, failed = false;
+  stage.innerHTML = `<div class="ptop">${P.top}</div><div class="pstep"></div>`;
+  if (P.mounted) P.mounted(stage, api);
+  const area = stage.querySelector('.pstep');
+  const next = () => { if (si < P.steps.length - 1) { si++; step(); } else end(); };
+  function end() {
+    if (failed) return done();
+    if (mistakes === 0) api.right(P.base || 30, area); else api.assist(Math.round((P.base || 30) / 2), area);
+    api.later(done, 900);
   }
-  const d = P.r1 * n + n - 1;
-  return { wet, done: wet.has(d) && !!(eff[d] & E_) };
-}
-function genPipes(level) {
-  const n = level < 3 ? 4 : level < 6 ? 5 : 6, minLen = n + (level < 3 ? 1 : level < 6 ? 3 : 5);
-  for (;;) {
-    const r0 = rand(0, n - 1), path = [[r0, 0]], seen = new Set([r0 * n]);
-    let steps = 0;
-    const dfs = () => {
-      if (++steps > 4000) return false;
-      const [r, c] = path[path.length - 1];
-      if (c === n - 1 && path.length >= minLen) return true;
-      for (const [, dr, dc] of shuffle(DIRS)) {
-        const nr = r + dr, nc = c + dc, k = nr * n + nc;
-        if (nr < 0 || nc < 0 || nr >= n || nc >= n || seen.has(k)) continue;
-        seen.add(k); path.push([nr, nc]);
-        if (dfs()) return true;
-        path.pop(); seen.delete(k);
+  function step() {
+    const S = P.steps[si];
+    let tries = 0, locked = false;
+    area.innerHTML = `${S.show ? `<div class="pshow">${S.show}</div>` : ''}<p class="q">${S.q}</p><div class="hintbox" hidden></div><div class="pin"></div>`;
+    const pin = area.querySelector('.pin'), hb = area.querySelector('.hintbox');
+    const submit = (ok, el, why) => {
+      if (locked) return 'locked';
+      if (ok) {
+        locked = true; api.onKey = null;
+        if (S.onRight) S.onRight(stage);
+        if (si < P.steps.length - 1) { SFX.step(); api.later(next, 550); } else end();
+        return 'ok';
       }
+      tries++; mistakes++;
+      if (tries === 1) {
+        api.nudge(el);
+        hb.innerHTML = `<span>💡</span><p>${why || S.hint}</p>`;
+        hb.hidden = false;
+        const r = hb.getBoundingClientRect();
+        if (r.top < 0 || r.bottom > window.innerHeight) hb.scrollIntoView({ block: 'center', behavior: 'smooth' });
+        return 'hint';
+      }
+      locked = true; failed = true; api.onKey = null;
+      api.wrong(el);
+      api.later(() => explain(S), 700);
+      return 'fail';
+    };
+    MOUNT[S.kind](pin, S, submit, api);
+    if (si > 0) api.later(() => area.scrollIntoView({ block: 'nearest', behavior: 'smooth' }), 60);
+  }
+  function explain(S) {
+    area.innerHTML = `<div class="explain"><div class="ex-head">${mascotSVG()}<span>Here's how</span></div>
+      <ol>${S.explain.map(l => `<li>${l}</li>`).join('')}</ol>
+      <p class="ex-ans">Answer: ${S.answerHTML || `<b>${S.answerText ?? S.answer}</b>`}</p>
+      <button class="btn" id="gotit">Got it →</button></div>`;
+    const b = area.querySelector('#gotit');
+    b.onclick = () => { SFX.tap(); next(); };
+    api.onKey = e => { if (e.key === 'Enter') { b.click(); return true; } return false; };
+    area.scrollIntoView({ block: 'start', behavior: 'smooth' });
+  }
+  step();
+}
+const MOUNT = {
+  choice(pin, S, submit, api) {
+    const wide = S.cols === 1;
+    pin.innerHTML = `<div class="choices" style="grid-template-columns:repeat(${S.cols || 2},minmax(0,1fr))"></div>`;
+    const box = pin.firstChild;
+    const btns = S.items.map((it, i) => {
+      const b = document.createElement('button');
+      b.className = 'choice' + (wide ? ' wide' : '');
+      b.innerHTML = `<kbd>${i + 1}</kbd>${it.html}`;
+      if (it.label) b.setAttribute('aria-label', it.label);
+      b.onclick = () => {
+        const r = submit(i === S.answer, b, S.whys && S.whys[i]);
+        if (r === 'ok') { b.classList.add('is-ok'); btns.forEach(x => x.disabled = true); }
+        else if (r === 'hint') { b.classList.add('is-bad'); b.disabled = true; }
+        else if (r === 'fail') { b.classList.add('is-bad'); btns[S.answer].classList.add('is-ok'); btns.forEach(x => x.disabled = true); }
+      };
+      box.append(b);
+      return b;
+    });
+    api.onKey = keyPick(btns);
+  },
+  keypad(pin, S, submit, api) {
+    pin.innerHTML = `<div class="entry" aria-live="polite"><span class="ent"></span></div>
+      <div class="keypad">${[1, 2, 3, 4, 5, 6, 7, 8, 9].map(d => `<button class="key" data-k="${d}">${d}</button>`).join('')}<button class="key" data-k="back" aria-label="Delete">⌫</button><button class="key" data-k="0">0</button><button class="key go" data-k="ok">Check</button></div>`;
+    pin.style.display = 'flex'; pin.style.flexDirection = 'column'; pin.style.gap = '12px';
+    let val = '', locked = false;
+    const ent = pin.querySelector('.ent'), box = pin.querySelector('.entry');
+    const paint = () => { ent.textContent = val || '?'; ent.classList.toggle('empty', !val); };
+    const press = k => {
+      if (locked) return;
+      if (k === 'back') val = val.slice(0, -1);
+      else if (k === 'ok') {
+        if (!val) return;
+        const v = Number(val);
+        const r = submit(v === S.answer, box, S.whyNum && S.whyNum(v));
+        if (r === 'ok') { locked = true; box.classList.add('ok'); }
+        else if (r === 'hint') { box.classList.remove('bad'); void box.offsetWidth; box.classList.add('bad'); val = ''; }
+        else if (r === 'fail') { locked = true; val = String(S.answer); box.classList.remove('bad'); box.classList.add('shown'); }
+      } else if (val.length < 7) { val += k; SFX.tap(); }
+      paint();
+    };
+    pin.querySelectorAll('.key').forEach(b => b.onclick = () => press(b.dataset.k));
+    api.onKey = e => {
+      if (/^[0-9]$/.test(e.key)) { press(e.key); return true; }
+      if (e.key === 'Backspace') { press('back'); return true; }
+      if (e.key === 'Enter') { press('ok'); return true; }
       return false;
     };
-    if (!dfs()) continue;
-    const base = Array(n * n).fill(0), onPath = new Set();
-    const bit = (a, b) => { const dr = b[0] - a[0], dc = b[1] - a[1]; return dr === -1 ? N_ : dr === 1 ? S_ : dc === 1 ? E_ : W_; };
-    path.forEach((p, i) => {
-      const k = p[0] * n + p[1];
-      base[k] = (i === 0 ? W_ : bit(p, path[i - 1])) | (i === path.length - 1 ? E_ : bit(p, path[i + 1]));
-      onPath.add(k);
-    });
-    for (let i = 0; i < n * n; i++) if (!onPath.has(i)) base[i] = pick([N_ | S_, N_ | E_, N_ | E_, N_ | E_ | S_]);
-    const P = { n, r0, r1: path[path.length - 1][0], base, rot: base.map(() => rand(0, 3)) };
-    if (!pipeFlow(P).done) return P;
-  }
-}
-function pipeSVG(mask) {
-  const arms = { 1: '<rect class="p" x="35" y="-2" width="30" height="52"/>', 2: '<rect class="p" x="50" y="35" width="52" height="30"/>', 4: '<rect class="p" x="35" y="50" width="30" height="52"/>', 8: '<rect class="p" x="-2" y="35" width="52" height="30"/>' };
-  return `<svg viewBox="0 0 100 100" aria-hidden="true">${[1, 2, 4, 8].filter(b => mask & b).map(b => arms[b]).join('')}<circle class="p" cx="50" cy="50" r="17"/></svg>`;
-}
-function pipesGame(stage, api) {
-  function round() {
-    const P = genPipes(api.level), n = P.n;
-    let solved = false, plant;
-    stage.innerHTML = `<p class="hint">Tap pipes to turn them. Get the water from the tap to the plant.</p><div class="pipes" style="grid-template-columns:30px repeat(${n},1fr) 30px"></div>`;
-    const grid = stage.querySelector('.pipes'), tiles = [];
-    for (let r = 0; r < n; r++) {
-      const lc = document.createElement('div'); lc.className = 'endcap'; lc.textContent = r === P.r0 ? '🚰' : ''; grid.append(lc);
-      for (let c = 0; c < n; c++) {
-        const i = r * n + c, b = document.createElement('button');
-        b.className = 'pipe'; b.setAttribute('aria-label', `Pipe row ${r + 1} column ${c + 1}`);
-        b.innerHTML = pipeSVG(P.base[i]);
-        b.firstChild.style.transform = `rotate(${P.rot[i] * 90}deg)`;
-        b.onclick = () => turn(i);
-        grid.append(b); tiles.push(b);
-      }
-      const rc = document.createElement('div'); rc.className = 'endcap';
-      if (r === P.r1) { rc.textContent = '🌱'; plant = rc; }
-      grid.append(rc);
-    }
-    const paint = () => { const f = pipeFlow(P); tiles.forEach((t, i) => t.classList.toggle('wet', f.wet.has(i))); return f.done; };
-    function turn(i) {
-      if (solved) return;
-      P.rot[i]++;
-      tiles[i].firstChild.style.transform = `rotate(${P.rot[i] * 90}deg)`;
-      SFX.tap();
-      if (paint()) {
-        solved = true;
-        api.later(() => { plant.textContent = '🌻'; plant.classList.add('bloom'); api.right(100 + api.level * 20, plant); burst(centerOf(plant), ['#2EA8FF', '#7CD3FF', '#FFBE0B'], 22); }, 180);
-        api.later(round, 1300);
-      }
-    }
     paint();
+  },
+  custom(pin, S, submit, api) { S.mount(pin, submit, api); }
+};
+
+/* ============ WORD PROBLEMS: Bar Builder ============ */
+const R = (name, segs, end) => ({ name, segs, end });
+const Sg = (u, label, kind) => ({ u, label, kind });
+const units = (k, label) => range(k).map(i => Sg(1, i === 0 ? label : '', 'u'));
+function barSVG(m) {
+  const w = 320, nameW = 64, rh = 30, gap = 14, top = 6, right = m.brace ? 64 : 40;
+  const lenOf = (r, i) => Math.max(r.segs.reduce((t, s) => t + s.u, 0), m.diff && m.diff.row === i ? m.diff.to : 0);
+  const maxU = Math.max(...m.rows.map(lenOf));
+  const sc = (w - nameW - right) / maxU;
+  let y = top, out = '';
+  const ys = [];
+  m.rows.forEach((r, ri) => {
+    let x = nameW;
+    out += `<text class="bm-n" x="${nameW - 8}" y="${y + rh / 2}">${r.name}</text>`;
+    r.segs.forEach(s => {
+      const sw = s.u * sc;
+      out += `<rect class="bm-${s.kind || 's'}" x="${x}" y="${y}" width="${sw}" height="${rh}" rx="3"/>`;
+      if (s.label !== '' && s.label != null) out += `<text class="bm-l" x="${x + sw / 2}" y="${y + rh / 2}">${s.label}</text>`;
+      x += sw;
+    });
+    if (m.diff && m.diff.row === ri) {
+      const x1 = nameW + m.diff.from * sc, x2 = nameW + m.diff.to * sc;
+      out += `<rect class="bm-d" x="${x1}" y="${y}" width="${x2 - x1}" height="${rh}" rx="3"/><text class="bm-l" x="${(x1 + x2) / 2}" y="${y + rh / 2}">${m.diff.label}</text>`;
+      x = Math.max(x, x2);
+    }
+    if (r.end != null) out += `<text class="bm-e" x="${x + 6}" y="${y + rh / 2}">${r.end}</text>`;
+    ys.push(y); y += rh + gap;
+  });
+  if (m.brace) {
+    const [a, b] = m.brace.rows, y1 = ys[a], y2 = ys[b] + rh, bx = nameW + maxU * sc + 6, mid = (y1 + y2) / 2;
+    out += `<path class="bm-b" d="M${bx} ${y1} q7 0 7 7 V${mid - 6} l6 6 l-6 6 V${y2 - 7} q0 7 -7 7"/><text class="bm-bl" x="${bx + 17}" y="${mid}">${m.brace.label}</text>`;
   }
-  round();
+  const H = y - gap + top;
+  return `<svg class="bm" viewBox="0 0 ${w} ${H}" role="img" aria-label="Bar model">${out}</svg>`;
+}
+function genBar(L) {
+  const pool = L < 1 ? ['ctot', 'cpart'] : L < 3 ? ['ctot', 'cpart', 'cmore', 'cless', 'cdiff'] : L < 5 ? ['cmore', 'cless', 'cdiff', 'chEnd', 'chStart', 'uKnown'] : L < 7 ? ['chStart', 'uKnown', 'uTotal', 'uDiff'] : ['uTotal', 'uDiff', 'uTotalA', 'chStart'];
+  const t = pick(pool), [A, B] = twoNames(), th = pick(THINGS), big = L < 3 ? 40 : L < 6 ? 90 : 180;
+  let story, ask, model, wrongs, ans, exp, h1, h2;
+  if (t === 'ctot') {
+    const a = rand(5, big / 2 | 0); let b = rand(5, big / 2 | 0); if (b === a) b++;
+    story = `${A} has ${a} ${th}. ${B} has ${b} ${th}.`; ask = `How many ${th} do they have altogether?`;
+    model = { rows: [R(A, [Sg(a, a)]), R(B, [Sg(b, b)])], brace: { rows: [0, 1], label: '?' } };
+    wrongs = [{ rows: [R(A, [Sg(a, a)]), R(B, [Sg(b, b)])], diff: { row: a > b ? 1 : 0, from: Math.min(a, b), to: Math.max(a, b), label: '?' } },
+              { rows: [R(A, [Sg(a, a)]), R(B, [Sg(b, b)])], brace: { rows: [0, 0], label: '?' } }];
+    ans = a + b; exp = [`The brace goes round both bars, so add them.`, `${a} + ${b} = ${a + b}`];
+    h1 = `"Altogether" means the total of both bars, so the brace has to cover both of them.`; h2 = `Add the two bars together.`;
+  } else if (t === 'cpart') {
+    const a = rand(5, big / 2 | 0), b = rand(5, big / 2 | 0), T = a + b;
+    story = `${A} and ${B} have ${T} ${th} altogether. ${A} has ${a}.`; ask = `How many ${th} does ${B} have?`;
+    model = { rows: [R(A, [Sg(a, a)]), R(B, [Sg(b, '?')])], brace: { rows: [0, 1], label: T } };
+    wrongs = [{ rows: [R(A, [Sg(a, a)]), R(B, [Sg(T, T)])], brace: { rows: [0, 1], label: '?' } },
+              { rows: [R(A, [Sg(a, a)]), R(B, [Sg(b, '?')])], brace: { rows: [1, 1], label: T } }];
+    ans = b; exp = [`${T} is the total for both bars. ${A}'s part is ${a}.`, `${T} − ${a} = ${b}`, `Check: ${a} + ${b} = ${T} ✓`];
+    h1 = `${T} is how many they have together, so it belongs on a brace round both bars.`; h2 = `Total − the part you know = the missing part.`;
+  } else if (t === 'cmore') {
+    const a = rand(5, big / 2 | 0), d = rand(3, big / 3 | 0);
+    story = `${A} has ${a} ${th}. ${B} has ${d} more than ${A}.`; ask = `How many ${th} does ${B} have?`;
+    model = { rows: [R(A, [Sg(a, a)]), R(B, [Sg(a, a)], '?')], diff: { row: 1, from: a, to: a + d, label: d } };
+    wrongs = [{ rows: [R(A, [Sg(a, a)]), R(B, [Sg(a, a)], '?')], diff: { row: 0, from: a, to: a + d, label: d } },
+              { rows: [R(A, [Sg(a, a)]), R(B, [Sg(d, d)])], brace: { rows: [0, 1], label: '?' } }];
+    ans = a + d; exp = [`${B}'s bar is the same as ${A}'s bar, plus ${d} more.`, `${a} + ${d} = ${a + d}`];
+    h1 = `"${d} more than ${A}" means ${B}'s bar is ${A}'s bar with an extra piece on the end.`; h2 = `Start with ${A}'s ${a} and add the extra ${d}.`;
+  } else if (t === 'cless') {
+    const a = rand(12, Math.max(14, big / 2 | 0)), d = rand(3, a - 4);
+    story = `${A} has ${a} ${th}. ${B} has ${d} fewer than ${A}.`; ask = `How many ${th} does ${B} have?`;
+    model = { rows: [R(A, [Sg(a - d, ''), Sg(d, d, 'd')], a), R(B, [Sg(a - d, '?')])] };
+    wrongs = [{ rows: [R(A, [Sg(a, a)]), R(B, [Sg(a, a)], '?')], diff: { row: 1, from: a, to: a + d, label: d } },
+              { rows: [R(A, [Sg(a, a)]), R(B, [Sg(d, d)])], brace: { rows: [0, 1], label: '?' } }];
+    ans = a - d; exp = [`${B} has ${d} fewer, so ${B}'s bar is ${A}'s bar with ${d} cut off.`, `${a} − ${d} = ${a - d}`];
+    h1 = `"Fewer than" means ${B}'s bar is shorter than ${A}'s.`; h2 = `Take ${d} away from ${A}'s ${a}.`;
+  } else if (t === 'cdiff') {
+    const a = rand(15, Math.max(18, big / 2 | 0)), b = rand(5, a - 3);
+    story = `${A} has ${a} ${th}. ${B} has ${b} ${th}.`; ask = `How many more ${th} does ${A} have than ${B}?`;
+    model = { rows: [R(A, [Sg(a, a)]), R(B, [Sg(b, b)])], diff: { row: 1, from: b, to: a, label: '?' } };
+    wrongs = [{ rows: [R(A, [Sg(a, a)]), R(B, [Sg(b, b)])], brace: { rows: [0, 1], label: '?' } },
+              { rows: [R(A, [Sg(a, a)]), R(B, [Sg(b, b)])], diff: { row: 0, from: a, to: a + b, label: '?' } }];
+    ans = a - b; exp = [`Line the two bars up. The gap between them is how many more.`, `${a} − ${b} = ${a - b}`];
+    h1 = `"How many more" asks about the gap between the two bars, not the total.`; h2 = `Bigger − smaller = the gap.`;
+  } else if (t === 'chEnd') {
+    const s = rand(20, big), g = rand(5, s - 5);
+    story = `${A} had ${s} ${th} and gave ${g} of them to ${B}.`; ask = `How many ${th} does ${A} have left?`;
+    model = { rows: [R(A, [Sg(s - g, '?'), Sg(g, `gave ${g}`, 'h')])], brace: { rows: [0, 0], label: s } };
+    wrongs = [{ rows: [R(A, [Sg(s, s), Sg(g, g)])], brace: { rows: [0, 0], label: '?' } },
+              { rows: [R(A, [Sg(s, s)]), R(B, [Sg(g, g)])], brace: { rows: [0, 1], label: '?' } }];
+    ans = s - g; exp = [`${A} started with ${s}, and ${g} went to ${B}.`, `${s} − ${g} = ${s - g}`];
+    h1 = `Giving some away takes a piece out of ${A}'s bar. The whole bar is what ${A} started with.`; h2 = `Start − given away = left.`;
+  } else if (t === 'chStart') {
+    const r = rand(8, big / 2 | 0); let g = rand(5, big / 2 | 0); if (g === r) g++;
+    story = `${A} gave ${g} ${th} to ${B} and now has ${r} left.`; ask = `How many ${th} did ${A} have at first?`;
+    model = { rows: [R(A, [Sg(r, r), Sg(g, `gave ${g}`, 'h')])], brace: { rows: [0, 0], label: '?' } };
+    wrongs = [{ rows: [R(A, [Sg(r, '?'), Sg(g, `gave ${g}`, 'h')])], brace: { rows: [0, 0], label: r } },
+              { rows: [R(A, [Sg(r, r)]), R(B, [Sg(g, g)])], diff: { row: r > g ? 1 : 0, from: Math.min(r, g), to: Math.max(r, g), label: '?' } }];
+    ans = r + g; exp = [`Work backwards: put back the ${g} that ${A} gave away.`, `${r} + ${g} = ${r + g}`, `Check: ${r + g} − ${g} = ${r} ✓`];
+    h1 = `At first ${A} had the part that's left AND the part given away, so the whole bar is unknown.`; h2 = `Left + given away = what ${A} had at first.`;
+  } else if (t === 'uKnown') {
+    const k = rand(2, 4), b = rand(3, L < 5 ? 12 : 25);
+    story = `${B} has ${b} ${th}. ${A} has ${times(k)} as many as ${B}.`; ask = `How many ${th} does ${A} have?`;
+    model = { rows: [R(A, units(k, ''), '?'), R(B, units(1, b))] };
+    wrongs = [{ rows: [R(A, units(k + 1, ''), '?'), R(B, units(1, b))] },
+              { rows: [R(A, [Sg(1, b, 'u'), Sg(.8, k, 'd')], '?'), R(B, units(1, b))] }];
+    ans = k * b; exp = [`${B} is 1 box worth ${b}. ${A} has ${k} boxes the same size.`, `${k} × ${b} = ${k * b}`];
+    h1 = `"${times(k)} as many" means ${A} has ${k} equal boxes for every 1 box of ${B}'s.`; h2 = `Every box is worth ${b}.`;
+  } else if (t === 'uTotal' || t === 'uTotalA') {
+    const k = rand(2, 4), u = rand(3, L < 7 ? 12 : 30), T = (k + 1) * u, askA = t === 'uTotalA';
+    story = `${A} has ${times(k)} as many ${th} as ${B}. Together they have ${T}.`; ask = `How many ${th} does ${askA ? A : B} have?`;
+    model = { rows: [R(A, units(k, ''), askA ? '?' : null), R(B, units(1, askA ? '' : '?'))], brace: { rows: [0, 1], label: T } };
+    wrongs = [{ rows: [R(A, units(k, ''), T), R(B, units(1, '?'))] },
+              { rows: [R(A, units(k + 1, '')), R(B, units(1, '?'))], brace: { rows: [0, 1], label: T } }];
+    ans = askA ? k * u : u;
+    exp = [`${A} has ${k} boxes and ${B} has 1 box: ${k + 1} boxes altogether.`, `${k + 1} boxes = ${T}, so 1 box = ${T} ÷ ${k + 1} = ${u}`, ...(askA ? [`${A} has ${k} boxes: ${k} × ${u} = ${k * u}`] : []), `Check: ${k * u} + ${u} = ${T} ✓`];
+    h1 = `Draw ${A} as ${k} equal boxes and ${B} as 1 box. ${T} is for both of them, so the brace goes round both bars.`; h2 = `Count all the boxes, then share ${T} equally between them.`;
+  } else {
+    const k = rand(2, 4), u = rand(3, L < 7 ? 15 : 30), d = (k - 1) * u, extra = k === 2 ? 2 : 1;
+    story = `${A} has ${times(k)} as many ${th} as ${B}. ${A} has ${d} more than ${B}.`; ask = `How many ${th} does ${B} have?`;
+    model = { rows: [R(A, [Sg(1, '', 'u'), Sg(k - 1, `${d} more`, 'd')]), R(B, units(1, '?'))] };
+    wrongs = [{ rows: [R(A, units(k, '')), R(B, units(1, '?'))], brace: { rows: [0, 1], label: d } },
+              { rows: [R(A, [Sg(1, '', 'u'), Sg(extra, `${d} more`, 'd')]), R(B, units(1, '?'))] }];
+    ans = u; exp = [`${A} has ${k - 1} more box${k > 2 ? 'es' : ''} than ${B}, and that extra is ${d}.`, `1 box = ${d} ÷ ${k - 1} = ${u}`, `${B} has 1 box, so ${B} has ${u}.`, `Check: ${A} has ${k * u}, and ${k * u} − ${u} = ${d} ✓`];
+    h1 = `${A} has ${k} boxes and ${B} has 1. The boxes ${A} has extra are the "${d} more".`; h2 = `The extra boxes are worth ${d} together. What is 1 box worth?`;
+  }
+  const opts = shuffle([model, ...wrongs]);
+  return {
+    top: `<p class="story">${story} <b>${ask}</b></p>`,
+    steps: [
+      { kind: 'choice', cols: 1, q: 'Which bar model matches the story?', items: opts.map(m => ({ html: barSVG(m) })), answer: opts.indexOf(model), hint: h1, explain: [h1], answerHTML: barSVG(model) },
+      { kind: 'keypad', show: barSVG(model), q: `Now solve it. ${ask}`, answer: ans, hint: h2, explain: exp }
+    ]
+  };
 }
 
-/* ============ LOGIC: Fruit Scales ============ */
+/* ============ WORD PROBLEMS: Step by Step ============ */
+const BUYS = [['pens', 50, 200], ['exercise books', 100, 400], ['meat pies', 100, 300], ['bottles of water', 50, 200], ['loaves of bread', 300, 900]];
+function genSteps(L) {
+  const pool = ['change', 'bus'];
+  if (L >= 2) pool.push('share'); if (L >= 3) pool.push('half'); if (L >= 4) pool.push('tickets'); if (L >= 5) pool.push('fence'); if (L >= 6) pool.push('age', 'save');
+  const t = pick(pool), [A, B] = twoNames();
+  let story, ask, first, ans, exp, h1, h2, whyNum;
+  if (t === 'change') {
+    const [item, lo, hi] = pick(BUYS), n = rand(2, L < 3 ? 4 : 7), p = L < 2 ? 50 * rand(Math.max(1, lo / 50), hi / 50) : 10 * rand(lo / 10, hi / 10);
+    const C = n * p, N = nextNote(C);
+    story = `${A} buys ${n} ${item} at ${naira(p)} each and pays with a ${naira(N)} note.`; ask = `How much change does ${A} get?`;
+    first = [[`${n} × ${naira(p)}, the cost of all the ${item}`, ''], [`${naira(N)} − ${naira(p)}`, `That's the change for just one. ${A} bought ${n}.`], [`${naira(N)} ÷ ${n}`, `Dividing the note doesn't tell you what anything costs.`], [`${n} + ${naira(p)}`, `Adding the number of items to a price doesn't give a cost.`]];
+    ans = N - C; exp = [`Total cost: ${n} × ${p} = ${C}`, `Change: ${N} − ${C} = ${N - C}`, `Check: ${C} + ${N - C} = ${N} ✓`];
+    h1 = `You can't work out the change until you know the total cost.`; h2 = `Change = money paid − total cost.`;
+    whyNum = v => v === N - p ? `That's the change for one. ${A} bought ${n}.` : v === N + C ? `Change is less than the note, not more.` : null;
+  } else if (t === 'bus') {
+    const s = rand(15, 45), a = rand(3, 12), b = rand(2, 15);
+    story = `A bus leaves the park with ${s} passengers. At the first stop, ${a} get off and ${b} get on.`; ask = `How many passengers are on the bus now?`;
+    first = [[`${s} − ${a}, the people still on after some got off`, ''], [`${s} + ${a}`, `People getting off means fewer, not more.`], [`${a} + ${b}`, `That adds the two groups that moved, and forgets the ${s} already on the bus.`], [`${s} × ${b}`, `Nothing in the story is being multiplied.`]];
+    ans = s - a + b; exp = [`After ${a} get off: ${s} − ${a} = ${s - a}`, `Then ${b} get on: ${s - a} + ${b} = ${ans}`];
+    h1 = `Follow the story in order. What happens first at the stop?`; h2 = `Now add the people who got on.`;
+    whyNum = v => v === s + a + b ? `${a} people got OFF. Take them away.` : v === s - a - b ? `${b} people got ON. Add them.` : null;
+  } else if (t === 'share') {
+    let n, k, total, divs;
+    do { n = rand(2, 6); k = rand(6, 12); total = n * k; divs = range(11).map(i => i + 2).filter(m => total % m === 0 && m !== n && m !== k && m < total); } while (!divs.length);
+    const m = pick(divs), each = total / m;
+    story = `${A} has ${n} boxes with ${k} oranges in each box. The oranges are shared equally among ${m} children.`; ask = `How many oranges does each child get?`;
+    first = [[`${n} × ${k}, the total number of oranges`, ''], [`${k} ÷ ${m}`, `That only shares out one box. There are ${n} boxes.`], [`${n} + ${k}`, `Adding boxes and oranges mixes up two different things.`], [`${n} × ${m}`, `Multiply the boxes by the oranges in each box, not by the children.`]];
+    ans = each; exp = [`Total: ${n} × ${k} = ${total}`, `Each child: ${total} ÷ ${m} = ${each}`, `Check: ${m} × ${each} = ${total} ✓`];
+    h1 = `Before you can share, you need to know how many oranges there are altogether.`; h2 = `Share the total equally among ${m} children.`;
+    whyNum = v => v === total ? `That's all the oranges. Now share them among ${m} children.` : null;
+  } else if (t === 'half') {
+    const M = pick([1000, 2000, 5000]), b = 50 * rand(2, M / 100);
+    story = `${A} has ${naira(M)}, buys a bag for ${naira(b)}, then spends half of the money left on food.`; ask = `How much money does ${A} have now?`;
+    first = [[`${naira(M)} − ${naira(b)}, the money left after the bag`, ''], [`${naira(M)} ÷ 2`, `It's half of the money LEFT, and the bag was bought first.`], [`${naira(b)} ÷ 2`, `The half is of the money left, not of the bag's price.`], [`${naira(M)} + ${naira(b)}`, `Buying a bag means less money, not more.`]];
+    ans = (M - b) / 2; exp = [`After the bag: ${M} − ${b} = ${M - b}`, `Half goes on food: ${M - b} ÷ 2 = ${ans}`, `So ${A} has ${naira(ans)} left.`];
+    h1 = `Things happen in order: first the bag, then the food.`; h2 = `Half of the money left is spent, so half is still there.`;
+    whyNum = v => v === M - b ? `That's before the food. Half of it was spent.` : v === M / 2 - b ? `Buy the bag first, then halve what's left.` : null;
+  } else if (t === 'tickets') {
+    const p = 50 * rand(4, 12), q = 50 * rand(2, p / 50 - 1), a = rand(1, 3), c = rand(2, 4), C = a * p + c * q, N = nextNote(C);
+    story = `Tickets cost ${naira(p)} for adults and ${naira(q)} for children. A family of ${a} adult${a > 1 ? 's' : ''} and ${c} children pays with ${naira(N)}.`; ask = `How much change do they get?`;
+    first = [[`${a} × ${naira(p)} + ${c} × ${naira(q)}, the total cost`, ''], [`(${a} + ${c}) × ${naira(p)}`, `That charges the children the adult price.`], [`${naira(N)} − ${naira(p)} − ${naira(q)}`, `That only pays for one adult and one child.`], [`${naira(p)} + ${naira(q)}`, `That's one adult and one child. Count everybody.`]];
+    ans = N - C; exp = [`Adults: ${a} × ${p} = ${a * p}`, `Children: ${c} × ${q} = ${c * q}`, `Total: ${a * p} + ${c * q} = ${C}`, `Change: ${N} − ${C} = ${ans}`];
+    h1 = `Work out the total cost of all the tickets first.`; h2 = `Change = money paid − total cost.`;
+    whyNum = v => v === N - p - q ? `That only pays for one adult and one child.` : null;
+  } else if (t === 'fence') {
+    const l = rand(6, 20), w = rand(3, l - 2), p = 50 * rand(2, 10), P = 2 * (l + w), cost = P * p;
+    story = `A rectangular garden is ${l} m long and ${w} m wide. Fencing costs ${naira(p)} per metre.`; ask = `How much does it cost to fence all the way round?`;
+    first = [[`2 × (${l} + ${w}), the distance all the way round`, ''], [`${l} × ${w}`, `Length × width is the area inside. A fence goes round the edge.`], [`${l} + ${w}`, `That's only two sides. A rectangle has four.`], [`${naira(p)} × ${l}`, `That only fences one side.`]];
+    ans = cost; exp = [`Distance round (perimeter): 2 × (${l} + ${w}) = ${P} m`, `Cost: ${P} × ${p} = ${cost}`];
+    h1 = `First find how many metres of fence you need.`; h2 = `Multiply the metres of fence by the cost of each metre.`;
+    whyNum = v => v === l * w * p ? `That uses the area. A fence goes round the edge (the perimeter).` : v === (l + w) * p ? `That's only two of the four sides.` : null;
+  } else if (t === 'age') {
+    let k, y, f; do { k = rand(2, 4); y = rand(3, 9); f = rand(2, 10); } while (new Set([k, y, f]).size < 3);
+    story = `${A} is ${k} times as old as ${B}. ${B} is ${y} years old.`; ask = `How old will ${A} be in ${f} years' time?`;
+    first = [[`${k} × ${y}, ${A}'s age now`, ''], [`${y} + ${f}`, `That's ${B}'s age in ${f} years, not ${A}'s.`], [`${k} + ${y}`, `"${k} times as old" means multiply, not add.`], [`${y} × ${f}`, `Years from now get added on, not multiplied.`]];
+    ans = k * y + f; exp = [`${A} now: ${k} × ${y} = ${k * y}`, `In ${f} years: ${k * y} + ${f} = ${ans}`];
+    h1 = `Find ${A}'s age now before thinking about the future.`; h2 = `Add the ${f} years to ${A}'s age now.`;
+    whyNum = v => v === k * (y + f) ? `Work out ${A}'s age now first, then add ${f}.` : null;
+  } else {
+    const s = 50 * rand(2, 10), w = rand(3, 10), x = 50 * rand(1, s * w / 50 - 1);
+    story = `${A} saves ${naira(s)} every week. After ${w} weeks, ${A} spends ${naira(x)} on a present.`; ask = `How much is left?`;
+    first = [[`${w} × ${naira(s)}, the total saved`, ''], [`${naira(s)} − ${naira(x)}`, `That only counts one week of savings.`], [`${w} + ${naira(s)}`, `Weeks × savings per week, not plus.`], [`${naira(x)} ÷ ${w}`, `The present isn't shared out over the weeks.`]];
+    ans = s * w - x; exp = [`Saved: ${w} × ${s} = ${s * w}`, `Left: ${s * w} − ${x} = ${ans}`];
+    h1 = `Find out how much was saved altogether first.`; h2 = `Take the present away from the total saved.`;
+    whyNum = v => null;
+  }
+  const order = shuffle(range(4));
+  return {
+    top: `<p class="story">${story} <b>${ask}</b></p>`,
+    steps: [
+      // options show only the calculation, so the right one doesn't stand out by its description
+      { kind: 'choice', cols: 1, q: 'Plan it: what should you work out first?', items: order.map(i => ({ html: first[i][0].split(', ')[0] })), answer: order.indexOf(0), whys: order.map(i => first[i][1]), hint: h1, explain: [h1, `So first: ${first[0][0]}.`], answerText: first[0][0].split(', ')[0] },
+      { kind: 'keypad', q: `Now finish it. ${ask}`, answer: ans, hint: h2, whyNum, explain: exp }
+    ]
+  };
+}
+
+/* ============ PATTERNS: Next in Line ============ */
+const RULES = {
+  add: k => ({ text: k > 0 ? `Add ${k} each time` : `Take away ${-k} each time`, gen: (s0, n) => range(n).map(i => s0 + k * i) }),
+  mul: r => ({ text: `Multiply by ${r} each time`, gen: (s0, n) => range(n).map(i => s0 * r ** i) }),
+  incr: d => ({ text: `Add 1 more each time (+${d}, +${d + 1}, +${d + 2} …)`, gen: (s0, n) => { const o = [s0]; for (let i = 1; i < n; i++) o.push(o[i - 1] + d + i - 1); return o; } }),
+  sq: k => ({ text: `Square numbers (${k}², ${k + 1}², ${k + 2}² …)`, gen: (s0, n) => range(n).map(i => (k + i) ** 2) }),
+  alt: (p, q) => ({ text: `Add ${p}, then take away ${q}, and repeat`, gen: (s0, n) => { const o = [s0]; for (let i = 1; i < n; i++) o.push(o[i - 1] + (i % 2 ? p : -q)); return o; } }),
+  fib: s1 => ({ text: `Add the two numbers before`, gen: (s0, n) => { const o = [s0, s1]; while (o.length < n) o.push(o[o.length - 1] + o[o.length - 2]); return o.slice(0, n); } }),
+  dbl: () => ({ text: `Double, then add 1`, gen: (s0, n) => { const o = [s0]; for (let i = 1; i < n; i++) o.push(o[i - 1] * 2 + 1); return o; } })
+};
+function genNext(L) {
+  const pools = [['add', 'sub'], ['add', 'sub', 'mul', 'incr'], ['mul', 'incr', 'sq', 'alt'], ['incr', 'sq', 'alt', 'fib', 'dbl']];
+  const type = pick(pools[L < 2 ? 0 : L < 4 ? 1 : L < 7 ? 2 : 3]);
+  let rule, s0, nextLine;
+  if (type === 'add') { const k = rand(2, L < 2 ? 6 : 12); s0 = rand(1, 20); rule = RULES.add(k); }
+  else if (type === 'sub') { const k = rand(2, 9); s0 = rand(6 * k, 6 * k + 30); rule = RULES.add(-k); }
+  else if (type === 'mul') { const r = rand(2, 3); s0 = rand(1, 4); rule = RULES.mul(r); }
+  else if (type === 'incr') { const d = rand(1, 4); s0 = rand(1, 12); rule = RULES.incr(d); }
+  else if (type === 'sq') { const k = rand(1, 6); s0 = k * k; rule = RULES.sq(k); }
+  else if (type === 'alt') { const p = rand(4, 9), q = rand(1, p - 1); s0 = rand(1, 15); rule = RULES.alt(p, q); }
+  else if (type === 'fib') { s0 = rand(1, 4); const s1 = rand(s0, 7); rule = RULES.fib(s1); }
+  else { s0 = rand(1, 4); rule = RULES.dbl(); }
+  const s = rule.gen(s0, 6), shown = s.slice(0, 5), ans = s[5];
+  const jumps = range(4).map(i => shown[i + 1] - shown[i]);
+  const fmtJ = j => j >= 0 ? `+${j}` : `−${-j}`;
+  // wrong rules that look tempting but break somewhere in the sequence
+  const cands = [RULES.add(jumps[0]), RULES.add(jumps[3]), RULES.add(jumps[0] + 1), RULES.mul(2), RULES.mul(3), RULES.incr(Math.max(1, jumps[0])), RULES.dbl(), RULES.alt(Math.abs(jumps[0]) + 1, 1)];
+  const seen = new Set([rule.text]), wrong = [];
+  for (const c of cands) {
+    if (seen.has(c.text)) continue;
+    const g = c.gen(shown[0], 5), bad = g.findIndex((v, i) => v !== shown[i]);
+    if (bad < 0) continue;
+    seen.add(c.text);
+    const firstJumpOnly = c.text === RULES.add(jumps[0]).text && bad > 1;
+    wrong.push({ text: c.text, why: firstJumpOnly ? `That works for the first jump, but check the others: ${jumps.map(fmtJ).join(', ')}.` : `Test it: that rule would give ${g[bad]} where the pattern has ${shown[bad]}.` });
+  }
+  const opts = shuffle([{ text: rule.text, why: '' }, ...shuffle(wrong.slice(0, 2)).concat(shuffle(wrong.slice(2)).slice(0, 1))]).slice(0, 4);
+  if (!opts.some(o => o.text === rule.text)) opts[0] = { text: rule.text, why: '' };
+  nextLine = type === 'mul' ? `${shown[4]} × ${s[1] / s[0]} = ${ans}` : type === 'sq' ? `The next square: ${Math.round(Math.sqrt(ans))}² = ${ans}` : type === 'fib' ? `${shown[3]} + ${shown[4]} = ${ans}` : type === 'dbl' ? `${shown[4]} × 2 + 1 = ${ans}` : `${shown[4]} ${fmtJ(ans - shown[4]).replace(/^([+−])/, '$1 ')} = ${ans}`;
+  const jumpsHTML = `<div class="jumps">Jumps: ${jumps.map(j => `<i>${fmtJ(j)}</i>`).join('')}</div>`;
+  const relHint = type === 'fib' ? `Look at how each number relates to the TWO numbers before it.` : type === 'mul' || type === 'dbl' ? `The jumps keep growing fast: ${jumps.map(fmtJ).join(', ')}. Try multiplying.` : `A rule has to work for every jump, not just the first. The jumps are ${jumps.map(fmtJ).join(', ')}.`;
+  return {
+    top: `<p class="story">What comes next?</p><div class="seq">${shown.map(v => `<span>${v}</span>`).join('')}<span class="ask">?</span></div>`,
+    steps: [
+      { kind: 'choice', cols: 1, q: 'First, which rule makes this pattern?', items: opts.map(o => ({ html: o.text })), answer: opts.findIndex(o => o.text === rule.text), whys: opts.map(o => o.why), hint: relHint, explain: [`The jumps are ${jumps.map(fmtJ).join(', ')}.`, `Only one rule fits every jump: ${rule.text.toLowerCase()}.`], answerText: rule.text },
+      { kind: 'keypad', show: jumpsHTML, q: `Use the rule. What comes after ${shown[4]}?`, answer: ans, hint: `Apply "${rule.text.toLowerCase()}" to the last number, ${shown[4]}.`, explain: [`The rule: ${rule.text.toLowerCase()}.`, nextLine] }
+    ]
+  };
+}
+
+/* ============ PATTERNS: Undo Machine ============ */
+const OPS = {
+  '+': { f: (a, k) => a + k, inv: '−', say: k => `adds ${k}`, name: k => `Add ${k}` },
+  '−': { f: (a, k) => a - k, inv: '+', say: k => `takes away ${k}`, name: k => `Subtract ${k}` },
+  '×': { f: (a, k) => a * k, inv: '÷', say: k => `multiplies it by ${k}`, name: k => `Multiply by ${k}` },
+  '÷': { f: (a, k) => a / k, inv: '×', say: k => `divides it by ${k}`, name: k => `Divide by ${k}` }
+};
+function genUndo(L) {
+  const nOps = L < 2 ? 1 : L < 5 ? 2 : 3, A = pick(NAMES);
+  for (;;) {
+    const x = rand(2, L < 5 ? 12 : 20);
+    let cur = x; const ops = [];
+    for (let i = 0; i < nOps; i++) {
+      let op = pick(['+', '−', '×', '÷'].filter(o => !ops.length || o !== ops[ops.length - 1].op)), k;
+      if (op === '÷') { const ds = [2, 3, 4, 5].filter(d => cur % d === 0 && cur / d > 1); if (ds.length) k = pick(ds); else op = '×'; }
+      if (op === '−') { if (cur > 4) k = rand(1, Math.min(cur - 2, 15)); else op = '+'; }
+      if (op === '+') k = rand(2, 15);
+      if (op === '×') k = rand(2, L < 5 ? 4 : 6);
+      ops.push({ op, k });
+      cur = OPS[op].f(cur, k);
+    }
+    if (cur < 1 || cur > 400) continue;
+    const R0 = cur, last = ops[ops.length - 1], firstOp = ops[0];
+    const inv = o => ({ op: OPS[o.op].inv, k: o.k });
+    const label = o => OPS[o.op].name(o.k);
+    const right = label(inv(last));
+    const cand = [[label(last), `That does the last step again instead of undoing it. Do the opposite.`]];
+    if (ops.length > 1) cand.push([label(inv(firstOp)), `That undoes the FIRST step. Working backwards, the last step gets undone first.`]);
+    const otherOp = pick(Object.keys(OPS).filter(o => o !== last.op && o !== OPS[last.op].inv));
+    cand.push([label({ op: otherOp, k: last.k }), `Look at the last step in the machine. What is its opposite?`]);
+    cand.push([label({ op: OPS[last.op].inv, k: last.k + 1 }), `Close, but undo exactly what the last step did.`]);
+    const wrong = [], seen = new Set([right]);
+    cand.forEach(([t, w]) => { if (!seen.has(t) && wrong.length < 3) { seen.add(t); wrong.push([t, w]); } });
+    const opts = shuffle([[right, ''], ...wrong]);
+    // backwards working and a forwards check
+    let b = R0; const back = [];
+    [...ops].reverse().forEach(o => { const i = inv(o), nb = OPS[i.op].f(b, i.k); back.push(`${b} ${i.op} ${i.k} = ${nb}`); b = nb; });
+    let f = x; const fwd = ops.map(o => { const nf = OPS[o.op].f(f, o.k), s = `${f} ${o.op} ${o.k} = ${nf}`; f = nf; return s; });
+    let fr = R0; ops.forEach(o => { fr = OPS[o.op].f(fr, o.k); });
+    const machine = `<div class="machine"><span class="mb mq">?</span>${ops.map(o => `<span class="ar">→</span><span class="mo">${o.op}${o.k}</span>`).join('')}<span class="ar">→</span><span class="mb">${R0}</span></div>`;
+    return {
+      top: `<p class="story">${A} thinks of a number. ${A} ${ops.map(o => OPS[o.op].say(o.k)).join(', then ')}. <b>The answer is ${R0}. What was the number?</b></p>${machine}`,
+      steps: [
+        { kind: 'choice', cols: 1, q: 'Work backwards from the answer. What do you do first?', items: opts.map(o => ({ html: o[0] })), answer: opts.findIndex(o => o[0] === right), whys: opts.map(o => o[1]), hint: `Start at the end of the machine. The last thing ${A} did was "${OPS[last.op].say(last.k)}". What undoes that?`, explain: [`Start at the end: the last step was ${last.op}${last.k}.`, `The opposite of ${last.op} is ${OPS[last.op].inv}, so first: ${right.toLowerCase()}.`], answerText: right },
+        { kind: 'keypad', q: 'Keep undoing, right to left. What was the number?', answer: x, hint: `Start from ${R0} and undo every step, going right to left through the machine.`, whyNum: v => Number.isInteger(fr) && v === fr ? `You did the steps forwards. Go backwards and do the opposite of each step.` : null, explain: [...back, `Check it forwards: ${fwd.join(', ')} ✓`] }
+      ]
+    };
+  }
+}
+
+/* ============ DEDUCTION: Number Detective ============ */
+function genDetective(L) {
+  const max = L < 3 ? 30 : L < 6 ? 50 : 80, cols = L < 3 ? 6 : 10, minClues = L < 3 ? 2 : 3;
+  const dsum = n => String(n).split('').reduce((a, b) => a + Number(b), 0);
+  for (;;) {
+    const t = rand(L < 3 ? 4 : 11, max - 1), cl = [];
+    cl.push(t % 2 ? { text: 'It is odd.', f: n => n % 2 === 1 } : { text: 'It is even.', f: n => n % 2 === 0 });
+    { const n = rand(Math.max(1, t - 25), t - 1); cl.push({ text: `It is more than ${n}.`, f: x => x > n }); }
+    { const n = rand(t + 1, Math.min(max, t + 25)); cl.push({ text: `It is less than ${n}.`, f: x => x < n }); }
+    [3, 4, 5, 6, 7].filter(k => t % k === 0).forEach(k => cl.push({ text: `It is in the ${k} times table.`, f: x => x % k === 0 }));
+    if (t >= 10) { const s = dsum(t); cl.push({ text: `Its digits add up to ${s}.`, f: x => x >= 10 && dsum(x) === s }); }
+    cl.push({ text: `It ends in ${t % 10}.`, f: x => x % 10 === t % 10 });
+    if (L >= 3 && Number.isInteger(Math.sqrt(t))) cl.push({ text: 'It is a square number.', f: x => Number.isInteger(Math.sqrt(x)) });
+    if (L >= 5 && t >= 10 && Math.floor(t / 10) !== t % 10) cl.push(Math.floor(t / 10) > t % 10 ? { text: 'Its tens digit is bigger than its units digit.', f: x => x >= 10 && Math.floor(x / 10) > x % 10 } : { text: 'Its tens digit is smaller than its units digit.', f: x => x >= 10 && Math.floor(x / 10) < x % 10 });
+    if (L >= 6 && isPrime(t)) cl.push({ text: 'It is a prime number.', f: isPrime });
+    let rem = range(max).map(i => i + 1); const chosen = [];
+    for (const c of shuffle(cl)) {
+      const nr = rem.filter(c.f);
+      if (nr.length < rem.length && nr.includes(t)) { chosen.push(c); rem = nr; }
+      if (rem.length === 1) break;
+    }
+    if (rem.length === 1 && chosen.length >= minClues && chosen.length <= minClues + 2) return { max, cols, t, clues: chosen };
+  }
+}
+function detectivePuzzle(L) {
+  const D = genDetective(L);
+  let rem = range(D.max).map(i => i + 1);
+  const walk = D.clues.map(c => { rem = rem.filter(c.f); return `${c.text.replace(/\.$/, '')} → ${rem.length <= 8 ? rem.join(', ') : `${rem.length} numbers left`}`; });
+  return {
+    top: `<p class="story">I'm thinking of a number from 1 to ${D.max}. <b>Use the clues to find it.</b></p><ol class="clues">${D.clues.map(c => `<li>${c.text}</li>`).join('')}</ol>`,
+    steps: [{
+      kind: 'custom', q: 'Tap numbers to cross out the ones that break a clue. When one is left, check it.',
+      hint: 'Use one clue at a time and cross out everything that breaks it.', answer: D.t, explain: [...walk, `Only ${D.t} fits every clue.`],
+      mount(pin, submit) {
+        pin.innerHTML = `<div class="det" style="grid-template-columns:repeat(${D.cols},minmax(0,1fr))">${range(D.max).map(i => `<button class="dn" data-n="${i + 1}" aria-label="${i + 1}">${i + 1}</button>`).join('')}</div>
+          <div class="det-act"><button class="btn ghost sm" type="button">Clear</button><span class="meta"></span><button class="btn" type="button" disabled>Check</button></div>`;
+        pin.style.display = 'flex'; pin.style.flexDirection = 'column'; pin.style.gap = '10px';
+        const cells = [...pin.querySelectorAll('.dn')], [clr, chk] = pin.querySelectorAll('.det-act .btn'), info = pin.querySelector('.det-act .meta');
+        let locked = false;
+        const left = () => cells.filter(c => !c.classList.contains('x'));
+        const upd = () => { const l = left(); info.textContent = l.length === 1 ? `Your answer: ${l[0].dataset.n}` : l.length ? `${l.length} left` : 'All crossed out!'; chk.disabled = l.length !== 1 || locked; };
+        cells.forEach(c => c.onclick = () => { if (locked) return; c.classList.toggle('x'); SFX.tap(); upd(); });
+        clr.onclick = () => { if (locked) return; cells.forEach(c => c.classList.remove('x')); upd(); };
+        chk.onclick = () => {
+          const l = left(); if (l.length !== 1) return;
+          const n = Number(l[0].dataset.n), bad = D.clues.find(c => !c.f(n));
+          const r = submit(n === D.t, pin.querySelector('.det'), bad ? `${n} breaks the clue "${bad.text}" Start again and check each number against every clue.` : null);
+          if (r === 'ok') { locked = true; l[0].classList.add('win'); }
+          else if (r === 'hint') { cells.forEach(c => c.classList.remove('x')); }
+          else if (r === 'fail') { locked = true; }
+          upd();
+        };
+        upd();
+      }
+    }]
+  };
+}
+
+/* ============ DEDUCTION: Fruit Algebra ============ */
+const FR = ['🍎', '🍌', '🍇', '🍊', '🍓', '🥭', '🍍'];
+function eqHTML(l, r) { return `<div class="eqr">${l.map(t => ['+', '−', '×'].includes(t) ? `<span class="op">${t}</span>` : `<span class="fe">${t}</span>`).join('')}<span class="eqv">= ${r}</span></div>`; }
+function genFruit(L) {
+  const [A, B, C] = shuffle(FR).slice(0, 3);
+  const rep = (f, k) => range(k).flatMap(i => i ? ['+', f] : [f]);
+  const chip = (f, v) => st => { st.querySelector('.solved').insertAdjacentHTML('beforeend', `<span>${f} = ${v}</span>`); };
+  let eqs, steps;
+  if (L < 3) {
+    const a = rand(2, 9), b = rand(1, 9), k = rand(2, 3), two = L >= 1 && Math.random() < .5;
+    eqs = [[rep(A, k), k * a], [two ? [A, '+', B, '+', B] : [A, '+', B], two ? a + 2 * b : a + b]];
+    steps = [
+      { kind: 'keypad', q: `What is ${A} worth?`, answer: a, onRight: chip(A, a), hint: `Look at the first line: ${k} ${A} make ${k * a}. Share it out.`, explain: [`${k} × ${A} = ${k * a}`, `${A} = ${k * a} ÷ ${k} = ${a}`] },
+      { kind: 'keypad', q: `What is ${B} worth?`, answer: b, onRight: chip(B, b), hint: `Put ${A} = ${a} into the second line. What's left for ${B}?`, explain: two ? [`${a} + ${B} + ${B} = ${a + 2 * b}`, `${B} + ${B} = ${a + 2 * b} − ${a} = ${2 * b}`, `${B} = ${2 * b} ÷ 2 = ${b}`] : [`${a} + ${B} = ${a + b}`, `${B} = ${a + b} − ${a} = ${b}`] }
+    ];
+  } else if (L < 6) {
+    const a = rand(2, 8), b = rand(1, 8), c = rand(1, 9), k = rand(2, 3), bodmas = L >= 4;
+    eqs = [[rep(A, k), k * a], [[A, '+', B, '+', B], a + 2 * b], [[B, '+', C], b + c]];
+    const fin = bodmas ? a + b * c : a + b + c;
+    steps = [
+      { kind: 'keypad', q: `What is ${A} worth?`, answer: a, onRight: chip(A, a), hint: `Start with the line that has only ${A} in it.`, explain: [`${k} × ${A} = ${k * a}`, `${A} = ${k * a} ÷ ${k} = ${a}`] },
+      { kind: 'keypad', q: `What is ${B} worth?`, answer: b, onRight: chip(B, b), hint: `Put ${A} = ${a} into the second line.`, explain: [`${a} + ${B} + ${B} = ${a + 2 * b}`, `${B} + ${B} = ${a + 2 * b} − ${a} = ${2 * b}`, `${B} = ${b}`] },
+      { kind: 'keypad', q: `What is ${C} worth?`, answer: c, onRight: chip(C, c), hint: `Use ${B} = ${b} in the third line.`, explain: [`${b} + ${C} = ${b + c}`, `${C} = ${b + c} − ${b} = ${c}`] },
+      { kind: 'keypad', q: `Now work out ${bodmas ? `${A} + ${B} × ${C}` : `${A} + ${B} + ${C}`}`, answer: fin, hint: bodmas ? `Remember BODMAS: do × before +.` : `Add the three values.`, whyNum: v => bodmas && v === (a + b) * c ? `Careful: × comes before +, so do ${B} × ${C} first.` : null, explain: bodmas ? [`× first: ${b} × ${c} = ${b * c}`, `Then +: ${a} + ${b * c} = ${fin}`] : [`${a} + ${b} + ${c} = ${fin}`] }
+    ];
+  } else {
+    const b = rand(1, 9), a = b + rand(1, 8), c = rand(2, 6);
+    if (Math.random() < .5) {
+      eqs = [[[A, '+', B], a + b], [[A, '−', B], a - b]];
+      steps = [{ kind: 'keypad', q: `What is ${A} worth?`, answer: a, onRight: chip(A, a), hint: `Add the two lines together. What happens to the ${B}s?`, explain: [`Add the lines: (${A} + ${B}) + (${A} − ${B}) = ${a + b} + ${a - b}`, `The ${B}s cancel: ${A} + ${A} = ${2 * a}`, `${A} = ${a}`] }];
+    } else {
+      eqs = [[[A, '+', A, '+', B], 2 * a + b], [[A, '+', B], a + b]];
+      steps = [{ kind: 'keypad', q: `What is ${A} worth?`, answer: a, onRight: chip(A, a), hint: `Compare the lines. The first one has exactly one more ${A} than the second.`, explain: [`Line 1 − line 2: (${A} + ${A} + ${B}) − (${A} + ${B}) = ${2 * a + b} − ${a + b}`, `${A} = ${a}`] }];
+    }
+    eqs.push([[A, '×', C], a * c]);
+    steps.push(
+      { kind: 'keypad', q: `What is ${B} worth?`, answer: b, onRight: chip(B, b), hint: `Put ${A} = ${a} into one of the first two lines.`, explain: [`${a} + ${B} = ${a + b}`, `${B} = ${b}`] },
+      { kind: 'keypad', q: `What is ${C} worth?`, answer: c, onRight: chip(C, c), hint: `Use the line with ${C} and ${A}.`, explain: [`${a} × ${C} = ${a * c}`, `${C} = ${a * c} ÷ ${a} = ${c}`] },
+      { kind: 'keypad', q: `Now work out ${C} + ${A} × ${B}`, answer: c + a * b, hint: `BODMAS: × before +.`, whyNum: v => v === (c + a) * b ? `× comes before +, so do ${A} × ${B} first.` : null, explain: [`× first: ${a} × ${b} = ${a * b}`, `Then +: ${c} + ${a * b} = ${c + a * b}`] }
+    );
+  }
+  return { base: 15 * steps.length, top: `<p class="story">Each fruit stands for a number. <b>Crack the code.</b></p><div class="eqs">${eqs.map(([l, r]) => eqHTML(l, r)).join('')}</div><div class="solved"></div>`, steps };
+}
+
+/* ============ DEDUCTION: Fruit Scales ============ */
 const FRUIT = ['🍉', '🍍', '🍎', '🍓', '🍌', '🍇', '🥥', '🍋', '🍑', '🥭'];
 function genBalance(level) {
   const n = level < 4 ? 3 : 4, maxW = n === 3 ? 10 : 8;
@@ -760,426 +1151,173 @@ function scaleSVG(sc, em) {
     ${side(sc.left, 46, t, 'panL')}${side(sc.right, 154, -t, 'panR')}
     <g class="beam" style="--a:${ang}deg"><line class="sc-beam" x1="46" y1="${py}" x2="154" y2="${py}"/><circle class="sc-piv" cx="100" cy="${py}" r="7"/></g></svg>`;
 }
-function scalesGame(stage, api) {
-  function round() {
-    const P = genBalance(api.level), em = shuffle(FRUIT).slice(0, P.n);
-    stage.innerHTML = `<p class="hint">Watch the scales tip. Which fruit is the <b>heaviest</b>?</p><div class="scales">${P.scales.map(s => scaleSVG(s, em)).join('')}</div><div class="choices"></div>`;
-    api.raf(() => api.raf(() => stage.querySelector('.scales').classList.add('tilted')));
-    api.later(SFX.whoosh, 60);
-    const btns = choiceRow(stage.querySelector('.choices'), em.map(e => ({ html: `<span class="emo">${e}</span>` })), i => judge(api, btns, i, P.answer, round, 40 + api.level * 8), P.n);
-    api.onKey = keyPick(btns);
-  }
-  round();
-}
-
-/* ============ MATH: Bubble Sum ============ */
-function bubbleGame(stage, api) {
-  stage.innerHTML = `<div class="sumbar"><span>Target <b class="tg" id="bTarget"></b></span><span>Popped <b id="bSum">0</b></span></div><div class="arena" id="arena"></div><p class="hint">Tap bubbles that add up to the target exactly. Tap a picked one to let it go.</p>`;
-  const arena = stage.querySelector('#arena'), W = arena.clientWidth, H = arena.clientHeight;
-  const tEl = stage.querySelector('#bTarget'), sEl = stage.querySelector('#bSum');
-  let target = 0, sum = 0, bubbles = [], last = null, acc = 0;
-  const cfg = () => { const l = api.level; return l < 3 ? { t: [8, 15], m: 9, v: 40, e: .85 } : l < 6 ? { t: [14, 28], m: 13, v: 50, e: .72 } : { t: [24, 45], m: 19, v: 62, e: .6 }; };
-  function newTarget() { const c = cfg(); target = rand(c.t[0], c.t[1]); sum = 0; tEl.textContent = target; sEl.textContent = 0; }
-  function place(b) { b.el.style.transform = `translate(${b.x + (b.picked ? 0 : Math.sin(b.ph) * 7)}px,${b.y}px)${b.picked ? ' scale(1.12)' : ''}`; }
-  function spawn(y) {
-    const c = cfg(), need = target - sum;
-    const v = need > 0 && need <= c.m && Math.random() < .4 ? need : rand(1, Math.min(c.m, Math.max(2, target - 1)));
-    const el = document.createElement('button');
-    el.className = 'bubble'; el.textContent = v;
-    const b = { el, v, x: rand(36, W - 36), y: y != null ? y : H + 34, sp: c.v * (.8 + Math.random() * .5), ph: Math.random() * 6, picked: false, gone: false };
-    el.onpointerdown = e => { e.preventDefault(); tap(b); };
-    arena.append(el); bubbles.push(b); place(b);
-  }
-  function popB(b, ok) { b.gone = true; burst(centerOf(b.el), ok ? ['#BDE6FF', '#2EA8FF', '#fff'] : ['#EF4444', '#FFB4B4'], 10); b.el.remove(); }
-  function tap(b) {
-    if (b.gone || !api.live()) return;
-    if (b.picked) { b.picked = false; b.el.classList.remove('picked'); sum -= b.v; SFX.tap(); }
-    else { b.picked = true; b.el.classList.add('picked'); sum += b.v; SFX.pop(); }
-    sEl.textContent = sum;
-    if (sum === target) {
-      const ps = bubbles.filter(x => x.picked && !x.gone);
-      const p = centerOf(b.el);
-      ps.forEach(x => popB(x, true));
-      api.right(10 * ps.length + api.level * 3, p);
-      newTarget();
-    } else if (sum > target) {
-      const p = centerOf(b.el);
-      bubbles.filter(x => x.picked && !x.gone).forEach(x => popB(x, false));
-      api.wrong(p);
-      sum = 0; sEl.textContent = 0;
-    }
-  }
-  function frame(ts) {
-    if (last === null) last = ts;
-    const dt = Math.min(.05, (ts - last) / 1000); last = ts;
-    acc += dt;
-    if (acc > cfg().e) { acc = 0; spawn(); }
-    bubbles.forEach(b => {
-      if (b.gone) return;
-      if (!b.picked) { b.y -= b.sp * dt; b.ph += dt * 2.2; if (b.y < -40) { b.gone = true; b.el.remove(); return; } }
-      place(b);
-    });
-    bubbles = bubbles.filter(b => !b.gone);
-    api.raf(frame);
-  }
-  newTarget();
-  for (let i = 0; i < 5; i++) spawn(H * (.2 + i * .16));
-  api.raf(frame);
-}
-
-/* ============ MATH: Shop Till ============ */
-const GOODS = ['🍞', '🥛', '🍫', '🥤', '🍪', '🧃', '🍌', '🥚', '🍚', '🧼', '🍬', '🍗', '🥫', '🧈', '🍅', '🧅'];
-const FACES = ['🧑🏾', '👩🏾', '👨🏿', '👵🏾', '👴🏽', '🧕🏾', '👨🏾‍🦱', '👩🏽‍🦱', '👧🏾', '🧔🏿'];
-const NOTES = [[1000, '#C9B2FF'], [500, '#9FE3C8'], [200, '#FFD08A'], [100, '#FF9EB6'], [50, '#A9D8FF'], [20, '#E9E9E9'], [10, '#F5E07A']];
-function shopGame(stage, api) {
-  let change, given, locked;
-  function round() {
-    const L = api.level, k = L < 3 ? rand(1, 2) : L < 6 ? 2 : 3, unit = L < 3 ? 50 : 10;
-    const items = shuffle(GOODS).slice(0, k).map(e => ({ e, p: unit * (L < 3 ? rand(1, 9) : rand(3, 49)) }));
-    const total = items.reduce((t, i) => t + i.p, 0), paid = [500, 1000, 2000, 5000].find(v => v > total);
-    change = paid - total; given = 0; locked = false;
-    stage.innerHTML = `<div class="counter"><span class="face">${pick(FACES)}</span><div class="speech">Here's <b>₦${paid}</b>. My change, please!</div></div>
-      <div class="items">${items.map(i => `<div class="item">${i.e}<small>₦${i.p}</small></div>`).join('')}</div>
-      <div class="till"><span>Total ${L < 3 ? `<b>₦${total}</b>` : '<b>add it up</b>'}</span><span>Giving <b id="given">₦0</b></span></div>
-      <div class="notes">${NOTES.map(([v, c]) => `<button class="note" data-v="${v}" style="background:${c}">₦${v}</button>`).join('')}<button class="note clr" data-v="0">Reset</button></div>`;
-    stage.querySelectorAll('.note').forEach(b => b.onclick = () => give(Number(b.dataset.v), b));
-  }
-  function give(v, b) {
-    if (locked) return;
-    const face = stage.querySelector('.face'), speech = stage.querySelector('.speech');
-    if (v === 0) { given = 0; SFX.tap(); }
-    else { given += v; SFX.coin(); floatText(centerOf(b), `+₦${v}`, 'small'); }
-    stage.querySelector('#given').textContent = '₦' + given;
-    if (given === change) {
-      locked = true; face.textContent = '😄'; speech.textContent = 'Perfect, thank you!';
-      api.right(50 + api.level * 10, face); api.later(round, 950);
-    } else if (given > change) {
-      locked = true; face.textContent = '😠'; speech.innerHTML = `Too much! I only needed <b>₦${change}</b>.`;
-      api.wrong(face); api.later(round, 1700);
-    }
-  }
-  round();
-}
-
-/* ============ MEMORY: Burger Bar ============ */
-const ING = [['🥬', 'Lettuce'], ['🍅', 'Tomato'], ['🧀', 'Cheese'], ['🥩', 'Patty'], ['🥓', 'Bacon'], ['🧅', 'Onion'], ['🥒', 'Pickle'], ['🍳', 'Egg']];
-function burgerGame(stage, api) {
-  let order, built, phase;
-  const stackHTML = (list, top) => `<div class="stack">${top ? '<span>🍞</span>' : ''}${[...list].reverse().map(i => `<span>${ING[i][0]}</span>`).join('')}<span>🍞</span></div>`;
-  function round() {
-    const L = api.level, len = Math.min(3 + Math.floor(L / 2), 8);
-    order = [];
-    while (order.length < len) { const i = rand(0, L >= 4 ? 7 : 5); if (order[order.length - 1] !== i && (L >= 4 || !order.includes(i))) order.push(i); }
-    built = []; phase = 'show';
-    const showMs = Math.max(1100 + len * 300, 1700 + len * 480 - L * 110);
-    stage.innerHTML = `<p class="hint">Order up! Remember the stack, <b>bottom to top</b>.</p><div class="ticket">${stackHTML(order, true)}<div class="memo"><i style="animation-duration:${showMs}ms"></i></div></div>`;
-    api.later(build, showMs);
-  }
-  function build() {
-    phase = 'build';
-    stage.innerHTML = `<p class="hint">Build it from the bottom up</p><div class="plate" id="plate">${stackHTML([], false)}</div><div class="pantry">${ING.map((g, i) => `<button class="ing" data-i="${i}" aria-label="${g[1]}">${g[0]}</button>`).join('')}</div>`;
-    stage.querySelectorAll('.ing').forEach(b => b.onclick = () => add(Number(b.dataset.i)));
-  }
-  function add(i) {
-    if (phase !== 'build') return;
-    const plate = stage.querySelector('#plate');
-    built.push(i);
-    plate.innerHTML = stackHTML(built, false);
-    plate.querySelector('.stack span').classList.add('drop');
-    if (i !== order[built.length - 1]) {
-      phase = 'done';
-      plate.querySelector('.stack').classList.add('topple');
-      api.wrong(plate);
-      api.later(() => { plate.innerHTML = `<p class="hint">The order was:</p>${stackHTML(order, true)}`; }, 650);
-      api.later(round, 2200);
-      return;
-    }
-    SFX.tap();
-    if (built.length === order.length) {
-      phase = 'done';
-      api.later(() => { plate.innerHTML = stackHTML(built, true); plate.querySelector('.stack span').classList.add('drop'); api.right(25 * order.length, plate); }, 150);
-      api.later(round, 1100);
-    }
-  }
-  round();
-}
-
-/* ============ MEMORY: Speed Match ============ */
-const SM_EASY = ['🍎', '🚗', '⭐', '🐟', '🎈', '⚽', '🌙', '🎁'];
-const SM_HARD = ['🍎', '🍅', '🍒', '🍓', '🍑', '🍊', '🌹', '🎈'];
-function speedGame(stage, api) {
-  const hist = [];
-  let back = api.level >= 5 ? 2 : 1, asking = false;
-  stage.innerHTML = `<p class="hint" id="smq"></p><div class="cardzone" id="cz"></div><div class="yn"><button class="btn no" id="smNo">✗ No</button><button class="btn yes" id="smYes">✓ Yes</button></div><p class="hint">Keyboard: ← no, → yes</p>`;
-  const q = stage.querySelector('#smq'), cz = stage.querySelector('#cz');
-  function deal() {
-    const pool = api.level >= 4 ? SM_HARD : SM_EASY;
-    let e;
-    if (hist.length >= back && Math.random() < .45) e = hist[hist.length - back];
-    else do e = pick(pool); while (hist.length >= back && e === hist[hist.length - back]);
-    hist.push(e);
-    cz.innerHTML = `<div class="mcard">${e}</div>`;
-    asking = hist.length > back;
-    if (!asking) { q.innerHTML = 'Remember this card'; api.later(deal, 900); }
-    else q.innerHTML = back === 1 ? 'Same as the <b>last</b> card?' : 'Same as the card <b>2 back</b>?';
-  }
-  function answer(yes) {
-    if (!asking) return;
-    asking = false;
-    const same = hist[hist.length - 1] === hist[hist.length - 1 - back];
-    const el = stage.querySelector(yes ? '#smYes' : '#smNo');
-    yes === same ? api.right(10, el) : api.wrong(el);
-    const nb = api.level >= 5 ? 2 : 1;
-    if (nb !== back) { back = nb; hist.length = 0; api.toast(back === 2 ? 'Now: 2 back!' : 'Back to 1 back'); api.later(deal, 800); }
-    else api.later(deal, yes === same ? 120 : 500);
-  }
-  stage.querySelector('#smYes').onclick = () => answer(true);
-  stage.querySelector('#smNo').onclick = () => answer(false);
-  api.onKey = e => { if (e.key === 'ArrowRight') { answer(true); return true; } if (e.key === 'ArrowLeft') { answer(false); return true; } return false; };
-  deal();
-}
-
-/* ============ VISUAL: Shadow Snap ============ */
-const SIL_EASY = ['🐘', '🦒', '🐪', '🐢', '🦀', '🐙', '🦋', '🐌', '🐓', '🐇', '🦔', '🐬', '🦕', '🦖', '🐊', '🐝', '✈️', '🚲', '🎸', '🔑', '☂️', '⚓', '🚁', '🦩'];
-const SIL_HARD = ['🐶', '🐱', '🐭', '🐹', '🐰', '🦊', '🐻', '🐼', '🐨', '🐯', '🦁', '🐮', '🐷', '🐵', '🐸'];
-function silGame(stage, api) {
-  function round() {
-    const L = api.level, pool = L < 4 ? SIL_EASY : L < 7 && Math.random() < .5 ? SIL_EASY : SIL_HARD;
-    const opts = shuffle(pool).slice(0, 4), ans = rand(0, 3);
-    const tf = L >= 6 ? pick(['rotate(90deg)', 'rotate(180deg)', 'scaleX(-1)', 'rotate(-90deg)']) : L >= 3 ? pick(['scaleX(-1)', 'none']) : 'none';
-    stage.innerHTML = `<p class="hint">Whose shadow is this?</p><div class="silbox"><span class="sil" style="transform:${tf}">${opts[ans]}</span></div><div class="choices"></div>`;
-    const t0 = performance.now();
-    const btns = choiceRow(stage.querySelector('.choices'), opts.map(e => ({ html: `<span class="emo">${e}</span>` })), i => judge(api, btns, i, ans, round, performance.now() - t0 < 1500 ? 15 : 10, true), 4);
-    api.onKey = keyPick(btns);
-  }
-  round();
-}
-
-/* ============ VISUAL: Shelf Swap ============ */
-const SHELF_ALL = ['🍎', '🍌', '🥫', '🧃', '🍞', '🧀', '🥚', '🍪', '🥛', '🍫', '🧂', '🍯', '🥕', '🍋', '🥥', '🍇', '🥖', '🧈', '🍩', '🍬', '🥑', '🌽', '🍄', '🥜'];
-const SHELF_GROUPS = [['🍎', '🍏', '🍅', '🍒', '🍓', '🍑'], ['🍊', '🍋', '🥭', '🍐', '🍌'], ['🥤', '🧃', '🧋', '🥛', '☕'], ['🍪', '🍩', '🥯', '🥐', '🥨']];
-function shelfGame(stage, api) {
-  function round() {
-    const L = api.level, count = L < 3 ? 6 : L < 6 ? 9 : 12, cols = count === 12 ? 4 : 3;
-    const view = Math.max(1500, 3600 - L * 230);
-    const items = shuffle(SHELF_ALL).slice(0, count), idx = rand(0, count - 1);
-    let repl;
-    if (L >= 5) {
-      const g = pick(SHELF_GROUPS);
-      items[idx] = pick(g.filter(x => !items.includes(x)));
-      repl = pick(g.filter(x => x !== items[idx] && !items.includes(x)));
-    } else repl = pick(SHELF_ALL.filter(x => !items.includes(x)));
-    stage.innerHTML = `<p class="hint" id="shq">Memorise the shelf</p><div class="memo"><i style="animation-duration:${view}ms"></i></div><div class="shelf" style="grid-template-columns:repeat(${cols},1fr)">${items.map((e, i) => `<button class="slot2" data-i="${i}" disabled aria-label="Shelf spot ${i + 1}">${e}</button>`).join('')}<div class="dark">🔦</div></div>`;
-    const shelf = stage.querySelector('.shelf'), slots = [...shelf.querySelectorAll('.slot2')], q = stage.querySelector('#shq');
-    api.later(() => { shelf.classList.add('off'); q.textContent = 'Lights out…'; SFX.whoosh(); }, view);
-    api.later(() => {
-      slots[idx].textContent = repl;
-      shelf.classList.remove('off');
-      stage.querySelector('.memo').remove();
-      q.innerHTML = 'What <b>changed</b>? Tap it.';
-      slots.forEach((s, i) => { s.disabled = false; s.onclick = () => choose(i); });
-    }, view + 650);
-    let done = false;
-    function choose(i) {
-      if (done) return;
-      done = true;
-      slots.forEach(s => s.disabled = true);
-      slots[idx].classList.add('ring');
-      if (i === idx) { api.right(40 + L * 5, slots[i]); api.later(round, 700); }
-      else { slots[i].classList.add('is-bad'); q.innerHTML = `It was the ${items[idx]}, swapped for ${repl}`; api.wrong(slots[i]); api.later(round, 1700); }
-    }
-  }
-  round();
-}
-
-/* ============ FOCUS: Whack-a-Rule ============ */
-const CRIT = ['🐭', '🐰', '🐹', '🐸', '🐧', '🦔'];
-function whackGame(stage, api) {
-  let rule, ruleAt = 0, spawnAcc = 0, last = null, elapsed = 0;
-  stage.innerHTML = `<div class="rule" id="rule"></div><div class="holes">${range(9).map(i => `<button class="hole" aria-label="Hole ${i + 1}"><span class="pit"></span><span class="mask"><span class="critter"></span></span></button>`).join('')}</div><p class="hint">Hit the right critters. Wrong ones cost you your combo.</p>`;
-  const ruleEl = stage.querySelector('#rule');
-  const holes = [...stage.querySelectorAll('.hole')].map(el => ({ el, crit: el.querySelector('.critter'), c: null, until: 0, hit: false }));
-  holes.forEach(h => h.el.onpointerdown = e => { e.preventDefault(); hit(h); });
-  function newRule(first) {
-    const c = pick(CRIT), type = api.level >= 4 && Math.random() < .5 ? 'except' : 'only';
-    rule = { type, c };
-    ruleEl.innerHTML = type === 'only' ? `Whack only <span class="e">${c}</span>` : `Whack anything <u>but</u> <span class="e">${c}</span>`;
-    if (!first) { ruleEl.classList.remove('flash'); void ruleEl.offsetWidth; ruleEl.classList.add('flash'); api.toast('New rule!'); SFX.level(); }
-  }
-  const isTarget = c => rule.type === 'only' ? c === rule.c : c !== rule.c;
-  function hit(h) {
-    if (!h.c || h.hit || !api.live()) return;
-    h.hit = true;
-    h.el.classList.add('bonk');
-    if (isTarget(h.c)) api.right(10, h.el); else api.wrong(h.el);
-    h.until = performance.now() + 200;
-  }
-  function frame(ts) {
-    if (last === null) last = ts;
-    const dt = Math.min(.05, (ts - last) / 1000); last = ts; elapsed += dt;
-    const L = api.level, now = performance.now();
-    if (L >= 2 && elapsed - ruleAt > 9) { ruleAt = elapsed; newRule(false); }
-    holes.forEach(h => {
-      if (h.c && now > h.until) {
-        if (!h.hit && isTarget(h.c)) api.miss(h.el);
-        h.c = null; h.hit = false; h.el.classList.remove('up', 'bonk');
-      }
-    });
-    spawnAcc += dt;
-    if (spawnAcc > Math.max(.36, .9 - L * .055)) {
-      spawnAcc = 0;
-      const free = holes.filter(h => !h.c);
-      if (free.length) {
-        const h = pick(free), others = CRIT.filter(x => x !== rule.c), tgt = Math.random() < .55;
-        h.c = rule.type === 'only' ? (tgt ? rule.c : pick(others)) : (tgt ? pick(others) : rule.c);
-        h.hit = false; h.crit.textContent = h.c; h.el.classList.add('up');
-        h.until = now + Math.max(650, 1500 - L * 85);
-      }
-    }
-    api.raf(frame);
-  }
-  newRule(true);
-  api.raf(frame);
-}
-
-/* ============ FOCUS: Bus Stop ============ */
-const PAX = ['🧍🏾', '🧍🏽‍♀️', '🧑🏿', '👩🏾', '👨🏽', '👧🏾', '👴🏿', '🧕🏾'];
-function busGame(stage, api) {
-  function round() {
-    api.onKey = null;
-    const L = api.level, S = Math.min(3 + Math.floor(L / 2), 7), sp = L < 3 ? 1 : L < 6 ? .8 : .65;
-    let on = rand(L < 3 ? 0 : 2, L < 3 ? 3 : 6);
-    const start = on, maxMove = 2 + Math.floor(L / 3);
-    const stops = range(S).map(() => {
-      const off = rand(0, Math.min(on, maxMove)), onN = rand(off === 0 ? 1 : 0, maxMove);
-      on = on - off + onN;
-      return { off, on: onN };
-    });
-    const askStops = L >= 5 && Math.random() < .35, answer = askStops ? S : on;
-    stage.innerHTML = `<p class="hint">Passengers on the bus at the start</p><div class="onboard">${start}</div><div class="bscene"><span class="stopsign">🚏</span><span class="bus">🚌</span></div><p class="hint" id="bq">Keep track as people get on and off</p><div class="choices"></div>`;
-    const scene = stage.querySelector('.bscene'), bus = scene.querySelector('.bus');
-    const W = scene.clientWidth, busW = bus.getBoundingClientRect().width || 100;
-    const bx = Math.max(W * .55 - busW / 2, 70), door = bx + busW * .45, sx = W * .1;
-    const D = Math.round(650 * sp), ST = Math.round(280 * sp), WALK = Math.round(520 * sp);
-    bus.style.transform = `translateX(${W + 20}px)`;
-    function walker(from, to, fade) {
-      const p = document.createElement('span');
-      p.className = 'pax'; p.textContent = pick(PAX);
-      p.style.transform = `translateX(${from}px)`;
-      scene.append(p);
-      api.raf(() => api.raf(() => { p.style.transition = `transform ${WALK}ms ease-in-out, opacity ${WALK}ms ease-in`; p.style.transform = `translateX(${to}px)`; if (fade) p.style.opacity = 0; }));
-      api.later(() => p.remove(), WALK + 80);
-    }
-    let t = 500;
-    stops.forEach(s => {
-      api.later(() => { bus.style.transition = `transform ${D}ms cubic-bezier(.25,1.15,.5,1)`; bus.style.transform = `translateX(${bx}px)`; }, t);
-      t += D + 150;
-      for (let i = 0; i < s.off; i++) { api.later(() => walker(door, -60, false), t); t += ST; }
-      if (s.off) t += 200;
-      for (let i = 0; i < s.on; i++) { api.later(() => walker(sx, door, true), t); t += ST; }
-      t += WALK;
-      api.later(() => { bus.style.transition = `transform ${D}ms cubic-bezier(.55,0,.8,.2)`; bus.style.transform = `translateX(${-busW - 30}px)`; SFX.whoosh(); }, t);
-      t += D + 60;
-      api.later(() => { bus.style.transition = 'none'; bus.style.transform = `translateX(${W + 20}px)`; }, t);
-      t += 40;
-    });
-    api.later(() => {
-      stage.querySelector('#bq').innerHTML = askStops ? 'Trick question! How many <b>stops</b> did the bus make?' : 'How many passengers are on the bus <b>now</b>?';
-      const opts = aroundInts(answer);
-      const btns = choiceRow(stage.querySelector('.choices'), opts.map(v => ({ html: String(v) })), i => judge(api, btns, i, opts.indexOf(answer), round, 60 + L * 10), 4);
-      api.onKey = keyPick(btns);
-    }, t + 200);
-  }
-  round();
-}
-
-/* ---------- stress mode distractions ---------- */
-function startBugs(wrap) {
-  const layer = document.createElement('div');
-  layer.className = 'bugs';
-  wrap.append(layer);
-  const W = () => wrap.clientWidth - 30, H = () => wrap.clientHeight - 30;
-  const bugs = ['🪳', '🐜', '🪲', '🕷️', '🐜'].map(e => {
-    const el = document.createElement('span');
-    el.className = 'bug'; el.textContent = e; layer.append(el);
-    return { el, x: Math.random() * W(), y: Math.random() * H(), a: Math.random() * 6.28, v: 50 + Math.random() * 60 };
-  });
-  let last = performance.now(), id, shakeT;
-  const loop = ts => {
-    const dt = Math.min(.05, (ts - last) / 1000); last = ts;
-    bugs.forEach(b => {
-      b.a += (Math.random() - .5) * 10 * dt;
-      b.x += Math.cos(b.a) * b.v * dt; b.y += Math.sin(b.a) * b.v * dt;
-      if (b.x < 0 || b.x > W()) { b.a = Math.PI - b.a; b.x = Math.max(0, Math.min(W(), b.x)); }
-      if (b.y < 0 || b.y > H()) { b.a = -b.a; b.y = Math.max(0, Math.min(H(), b.y)); }
-      b.el.style.transform = `translate(${b.x}px,${b.y}px) rotate(${b.a + Math.PI / 2}rad)`;
-    });
-    id = requestAnimationFrame(loop);
+function scalesPuzzle(L) {
+  const P = genBalance(L), em = shuffle(FRUIT).slice(0, P.n);
+  const side = s => s.map(i => em[i]).join('');
+  const lines = P.scales.map(sc => sc.out === 0 ? `${side(sc.left)} weighs the same as ${side(sc.right)}` : sc.out > 0 ? `${side(sc.left)} is heavier than ${side(sc.right)}` : `${side(sc.right)} is heavier than ${side(sc.left)}`);
+  return {
+    top: `<p class="story">Each scale tips down on the heavier side, or stays level if both sides weigh the same.</p><div class="scales">${P.scales.map(s => scaleSVG(s, em)).join('')}</div>`,
+    mounted: (stage, api) => { api.raf(() => api.raf(() => stage.querySelector('.scales').classList.add('tilted'))); api.later(SFX.whoosh, 60); },
+    steps: [{ kind: 'choice', cols: P.n, q: 'Which fruit is the heaviest?', items: em.map(e => ({ html: `<span class="emo">${e}</span>` })), answer: P.answer, hint: `Read the scales one at a time. A fruit that is ever on the lighter side can't be the heaviest.`, explain: [...lines, `Put together, ${em[P.answer]} beats every other fruit.`], answerHTML: `<span class="emo">${em[P.answer]}</span>` }]
   };
-  id = requestAnimationFrame(loop);
-  const shake = () => { wrap.classList.remove('shake'); void wrap.offsetWidth; wrap.classList.add('shake'); shakeT = setTimeout(shake, 4000 + Math.random() * 4000); };
-  shakeT = setTimeout(shake, 2500);
-  return () => { cancelAnimationFrame(id); clearTimeout(shakeT); layer.remove(); wrap.classList.remove('shake'); };
+}
+
+/* ============ CHECKING: Spot the Slip ============ */
+function genSlip(L) {
+  const pool = ['bodmas', 'eq']; if (L >= 2) pool.push('money'); if (L >= 4) pool.push('bracket', 'bodmas2');
+  const t = pick(pool), who = pick(NAMES);
+  const slip = () => pick([-2, -1, 1, 2, 10]);
+  let problem, correct, shown, idx, why, hint, ans, check = null;
+  if (t === 'bodmas') {
+    const a = rand(2, 12), b = rand(2, 9), c = rand(2, 9);
+    problem = `Work out ${a} + ${b} × ${c}`; correct = [`= ${a} + ${b * c}`, `= ${a + b * c}`]; ans = a + b * c;
+    const e = pick(['order', 'order', 'slip1', 'slip2']);
+    if (e === 'order') { shown = [`= ${a + b} × ${c}`, `= ${(a + b) * c}`]; idx = 0; why = `Line 1 adds first. BODMAS says × comes before +, so ${b} × ${c} = ${b * c} first.`; }
+    else if (e === 'slip1') { const d = slip(); shown = [`= ${a} + ${b * c + d}`, `= ${a + b * c + d}`]; idx = 0; why = `${b} × ${c} is ${b * c}, not ${b * c + d}.`; }
+    else { const d = slip(); shown = [`= ${a} + ${b * c}`, `= ${a + b * c + d}`]; idx = 1; why = `${a} + ${b * c} is ${a + b * c}, not ${a + b * c + d}.`; }
+    hint = `Redo each line yourself. Remember BODMAS: × and ÷ before + and −.`;
+  } else if (t === 'bodmas2') {
+    let a, b, c, d; do { a = rand(3, 9); b = rand(3, 9); c = rand(2, 6); d = rand(2, 6); } while (a * b - c * d < 2 || a * b - c < 1);
+    problem = `Work out ${a} × ${b} − ${c} × ${d}`; correct = [`= ${a * b} − ${c * d}`, `= ${a * b - c * d}`]; ans = a * b - c * d;
+    if (Math.random() < .6) { shown = [`= ${a * b - c} × ${d}`, `= ${(a * b - c) * d}`]; idx = 0; why = `Line 1 takes away before multiplying. Both × come first: ${a} × ${b} = ${a * b} and ${c} × ${d} = ${c * d}.`; }
+    else { const s = slip(); shown = [`= ${a * b} − ${c * d}`, `= ${a * b - c * d + s}`]; idx = 1; why = `${a * b} − ${c * d} is ${a * b - c * d}, not ${a * b - c * d + s}.`; }
+    hint = `Redo each line yourself. Remember BODMAS: × before −.`;
+  } else if (t === 'eq') {
+    const x = rand(2, 12), a = rand(2, 6), b = rand(1, 20), c = a * x + b;
+    problem = `Solve ${a}x + ${b} = ${c}`; correct = [`${a}x = ${c} − ${b}`, `${a}x = ${c - b}`, `x = ${c - b} ÷ ${a}`, `x = ${x}`]; ans = x;
+    check = `Check: ${a} × ${x} + ${b} = ${c} ✓`;
+    const e = (c + b) % a === 0 ? pick(['sign', 'sign', 'sub', 'div']) : pick(['sub', 'div']);
+    if (e === 'sign') { shown = [`${a}x = ${c} + ${b}`, `${a}x = ${c + b}`, `x = ${c + b} ÷ ${a}`, `x = ${(c + b) / a}`]; idx = 0; why = `When +${b} moves across the = sign it becomes −${b}, not +${b}.`; }
+    else if (e === 'sub') { const d = c - b > a ? pick([a, -a]) : a; shown = [correct[0], `${a}x = ${c - b + d}`, `x = ${c - b + d} ÷ ${a}`, `x = ${(c - b + d) / a}`]; idx = 1; why = `${c} − ${b} is ${c - b}, not ${c - b + d}.`; }
+    else { const d = x > 1 ? pick([1, -1]) : 1; shown = [correct[0], correct[1], correct[2], `x = ${x + d}`]; idx = 3; why = `${c - b} ÷ ${a} is ${x}, not ${x + d}.`; }
+    hint = `Redo each line yourself. A number that moves across the = sign flips: + becomes −.`;
+  } else if (t === 'bracket') {
+    let x, a, b, c; do { x = rand(2, 12); a = rand(2, 5); b = rand(1, 9); c = a * (x + b); } while (c - a - b < 1);
+    problem = `Solve ${a}(x + ${b}) = ${c}`; correct = [`x + ${b} = ${c} ÷ ${a}`, `x + ${b} = ${c / a}`, `x = ${c / a} − ${b}`, `x = ${x}`]; ans = x;
+    check = `Check: ${a} × (${x} + ${b}) = ${a} × ${x + b} = ${c} ✓`;
+    if (Math.random() < .6) { shown = [`x + ${b} = ${c} − ${a}`, `x + ${b} = ${c - a}`, `x = ${c - a} − ${b}`, `x = ${c - a - b}`]; idx = 0; why = `${a}( … ) means ${a} TIMES the bracket, so divide both sides by ${a}. Don't subtract it.`; }
+    else { shown = [correct[0], correct[1], correct[2], `x = ${x + 1}`]; idx = 3; why = `${c / a} − ${b} is ${x}, not ${x + 1}.`; }
+    hint = `Redo each line yourself. What does the ${a} in front of the bracket do?`;
+  } else {
+    const n = rand(2, 6), p = 10 * rand(5, 40), C = n * p, N = nextNote(C);
+    problem = `${who} buys ${n} pens at ${naira(p)} each and pays with ${naira(N)}. Find the change.`;
+    correct = [`Cost = ${n} × ${p}`, `Cost = ${C}`, `Change = ${N} − ${C}`, `Change = ${N - C}`]; ans = N - C;
+    const e = pick(['mul', 'sub', 'one']);
+    if (e === 'mul') { const d = pick([10, -10, 100]).valueOf(); const C2 = C + d < N && C + d > 0 ? C + d : C - 10; shown = [correct[0], `Cost = ${C2}`, `Change = ${N} − ${C2}`, `Change = ${N - C2}`]; idx = 1; why = `${n} × ${p} is ${C}, not ${C2}.`; }
+    else if (e === 'sub') { const d = pick([10, -10, 100, -100]); const R2 = N - C + d > 0 ? N - C + d : N - C + 10; shown = [correct[0], correct[1], correct[2], `Change = ${R2}`]; idx = 3; why = `${N} − ${C} is ${N - C}, not ${R2}.`; }
+    else { shown = [correct[0], correct[1], `Change = ${N} − ${p}`, `Change = ${N - p}`]; idx = 2; why = `The change comes off the total cost (${C}), not the price of one pen.`; }
+    hint = `Redo each calculation yourself, one line at a time.`;
+  }
+  const solvedBy = `${who} solved this. One line has a mistake.`;
+  return {
+    top: `<p class="story">${solvedBy}</p><div class="work"><div class="wq">${problem}</div>${shown.map((l, i) => `<div class="wl"><span class="ln">Line ${i + 1}</span>${l}</div>`).join('')}</div>`,
+    steps: [
+      { kind: 'choice', cols: 1, q: 'Which line has the first mistake?', items: shown.map((l, i) => ({ html: `Line ${i + 1}: ${l}` })), answer: idx, whys: shown.map((_, i) => i < idx ? `Line ${i + 1} is right. Keep checking further down.` : i > idx ? `Line ${i + 1} follows on from the line before it. The mistake starts earlier.` : ''), hint, explain: [why], answerText: `Line ${idx + 1}` },
+      { kind: 'keypad', q: 'What should the final answer be?', answer: ans, hint: `Start again from the top and do every line carefully.`, explain: [problem.replace(/\.$/, '') + ':', ...correct, ...(check ? [check] : [])] }
+    ]
+  };
+}
+
+/* ============ CHECKING: Sense Check ============ */
+function genSense(L) {
+  const pool = ['share', 'change', 'age', 'speed']; if (L >= 3) pool.push('area', 'percent');
+  const t = pick(pool), [A, B] = twoNames();
+  let story, right, wrongs, est, exact, fmt = String, unit = '';
+  if (t === 'share') {
+    let n, k, m, tot; do { n = rand(3, 8); k = rand(6, 15); tot = n * k; m = pick([2, 3, 4, 5, 6, 8].filter(d => tot % d === 0) || [2]); } while (!m || tot % m);
+    right = tot / m; story = `${n} boxes, each with ${k} mangoes, are shared equally among ${m} children.`; unit = ' mangoes each';
+    wrongs = [[tot * m, `They multiplied by the number of children. Sharing should make it smaller.`], [tot - m, `They took away the number of children instead of sharing.`], [right * 10, `That's 10 times too big.`]];
+    est = `There are ${tot} mangoes. Shared by ${m} children, each child gets a lot less than ${tot}.`; exact = [`Total: ${n} × ${k} = ${tot}`, `Each: ${tot} ÷ ${m} = ${right}`];
+  } else if (t === 'change') {
+    const n = rand(2, 5), p = 50 * rand(2, 8), C = n * p, N = nextNote(C);
+    right = N - C; story = `${A} buys ${n} loaves at ${naira(p)} each and pays with ${naira(N)}.`; fmt = naira; unit = ' change';
+    wrongs = [[N + C, `They added the cost on. Change must be less than the ${naira(N)} paid.`], [N - p, `They only took off the price of one loaf.`]];
+    est = `The change has to be less than ${naira(N)}, and the loaves cost more than ${naira(p)}.`; exact = [`Cost: ${n} × ${p} = ${C}`, `Change: ${N} − ${C} = ${right}`];
+  } else if (t === 'age') {
+    const k = rand(2, 4), y = rand(8, 14);
+    right = k * y; story = `${A}'s aunt is ${k} times as old as ${A}. ${A} is ${y}.`; unit = ' years old';
+    wrongs = [[y + k, `"${k} times as old" means multiply, not add.`], [y - k, `They took away. The aunt must be older than ${A}.`]];
+    est = `${k} times ${y} has to be a lot more than ${y}.`; exact = [`${k} × ${y} = ${right}`];
+  } else if (t === 'speed') {
+    const v = 10 * rand(4, 9), h = rand(2, 5);
+    right = v * h; story = `A bus travels ${v} km every hour, for ${h} hours.`; unit = ' km';
+    wrongs = [[v + h, `They added the hours instead of multiplying.`], [v * h * 10, `That's 10 times too far.`]];
+    est = `In one hour it goes ${v} km, so in ${h} hours it must go much further than ${v} km.`; exact = [`${v} × ${h} = ${right}`];
+  } else if (t === 'area') {
+    let l, w; do { l = rand(4, 12); w = rand(3, 9); } while (l * w === 2 * (l + w) || l * w === l + w);
+    right = l * w; story = `A room is ${l} m long and ${w} m wide.`; unit = ' square metres';
+    wrongs = [[2 * (l + w), `That's the perimeter (the distance round), not the area.`], [l + w, `They added the sides instead of multiplying.`]];
+    est = `Area = length × width, so it's about ${l} lots of ${w}.`; exact = [`${l} × ${w} = ${right}`];
+  } else {
+    const P = 500 * rand(2, 20), pct = pick([10, 20, 25, 50]), off = P * pct / 100;
+    right = P - off; story = `A dress costs ${naira(P)}. The shop takes ${pct}% off.`; fmt = naira; unit = ' new price';
+    wrongs = [[off, `That's the discount itself, not the new price.`], [P + off, `They added the discount. Money off makes the price go down.`]];
+    est = `With ${pct}% off, the price drops, but it's still ${pct <= 25 ? 'most of' : 'half of'} ${naira(P)}.`; exact = [`${pct}% of ${P} = ${off}`, `${P} − ${off} = ${right}`];
+  }
+  const isRight = Math.random() < .4, wrong = pick(wrongs), claim = isRight ? right : wrong[0];
+  const ask = { share: 'How many mangoes does each child get?', change: 'How much change?', age: 'How old is the aunt?', speed: 'How far does it go?', area: 'What is the area?', percent: 'What is the new price?' }[t];
+  const face = pick(FACES);
+  const steps = [{ kind: 'choice', cols: 1, q: 'Does that answer make sense?', items: [{ html: '👍 Yes, that makes sense' }, { html: "👎 No, that can't be right" }], answer: isRight ? 0 : 1, hint: `Estimate first: ${est}`, explain: isRight ? [est, ...exact, `So ${B} is right.`] : [est, wrong[1], ...exact], answerText: isRight ? 'It makes sense' : "It can't be right" }];
+  if (!isRight) {
+    const O = numberOpts(right, [...wrongs.map(w => w[0]), right + (fmt === naira ? 100 : 2), right - (fmt === naira ? 100 : 1)], fmt, claim);
+    steps.push({ kind: 'choice', cols: 2, q: 'So what is the right answer?', items: O.items, answer: O.answer, whys: O.values.map(v => v === claim ? `That's ${B}'s answer, and it doesn't make sense.` : ''), hint: `Work it out exactly: ${exact[0]}…`, explain: exact, answerText: fmt(right) });
+  }
+  return { top: `<p class="story">${story} <b>${ask}</b></p><div class="claim"><span class="face">${face}</span><p>${B} says the answer is <b>${fmt(claim)}</b>.</p></div>`, steps };
 }
 
 /* ---------- catalogue ---------- */
 const CATS = [
-  { id: 'logic', name: 'Logic', weak: 'Logic tripped you up. Before you tap, trace the water path or the scale clues all the way through once.' },
-  { id: 'math', name: 'Math', weak: 'Math was your weak spot. Break totals into round numbers first, like 350 + 280 is 600 + 30.' },
-  { id: 'memory', name: 'Memory', weak: 'Memory let you down. Say the order to yourself while you look, like "cheese, patty, tomato".' },
-  { id: 'visual', name: 'Visual', weak: 'Visual cost you points. Scan the shelf row by row instead of all at once.' },
-  { id: 'focus', name: 'Focus', weak: 'Focus slipped. Read the rule again every time it changes, and count out loud with the bus.' }
+  { id: 'words', name: 'Word problems', color: 'math', weak: 'Word problems held you back. Before you calculate, picture the bars: who has more, and is there a total?' },
+  { id: 'patterns', name: 'Patterns', color: 'logic', weak: 'Patterns were the tricky part. Check the rule on every jump, not just the first one, and work backwards from the end.' },
+  { id: 'deduce', name: 'Deduction', color: 'visual', weak: 'Deduction slowed you down. Use one clue at a time and cross things out as you go.' },
+  { id: 'check', name: 'Checking', color: 'memory', weak: 'Checking was the weak spot. Redo each line yourself, and always ask "does this answer make sense?"' }
 ];
 const CAT = Object.fromEntries(CATS.map(c => [c.id, c]));
 const GAMES = [
-  { id: 'pipes', cat: 'logic', name: 'Pipe Flow', icon: '🚰', par: 3, create: pipesGame,
-    blurb: 'Turn the pipes, water the plant.',
-    how: 'Tap a pipe to turn it. Connect a path from the tap on the left to the plant on the right. Water fills the pipes as they connect. Bigger grids and longer routes as you level up.' },
-  { id: 'scales', cat: 'logic', name: 'Fruit Scales', icon: '⚖️', par: 7, create: scalesGame,
+  { id: 'bar', cat: 'words', name: 'Bar Builder', icon: '📊', n: 6, make: genBar,
+    blurb: 'Draw the story as bars, then solve it.',
+    how: 'Read the story and pick the bar model that matches it: who has more, what is the total, what is missing. Then use the model to solve it. Later levels bring in "twice as many" puzzles.' },
+  { id: 'steps', cat: 'words', name: 'Step by Step', icon: '🪜', n: 6, make: genSteps,
+    blurb: 'Plan the first step, then finish.',
+    how: 'Each story takes more than one step. First decide what to work out first, then finish the problem. Change from naira notes, buses, sharing, fencing and more.' },
+  { id: 'next', cat: 'patterns', name: 'Next in Line', icon: '🔢', n: 6, make: genNext,
+    blurb: 'Name the rule, then continue it.',
+    how: 'Look at the number pattern. First choose the rule that makes it (it must work for every jump), then use it to find the next number.' },
+  { id: 'undo', cat: 'patterns', name: 'Undo Machine', icon: '⚙️', n: 6, make: genUndo,
+    blurb: 'Work backwards to the start.',
+    how: 'Someone put a number through a machine and tells you what came out. Undo each step, last step first, to find the number they started with.' },
+  { id: 'detective', cat: 'deduce', name: 'Number Detective', icon: '🔍', n: 5, make: detectivePuzzle,
+    blurb: 'Cross out numbers until one is left.',
+    how: 'A mystery number and a few clues. Tap numbers to cross out any that break a clue. When only one is left, check it.' },
+  { id: 'fruit', cat: 'deduce', name: 'Fruit Algebra', icon: '🍎', n: 5, make: genFruit,
+    blurb: 'Each fruit is a number. Crack it.',
+    how: 'Each fruit stands for a number. Use the lines one at a time to find each fruit. Later levels need BODMAS and comparing two lines, just like simultaneous equations.' },
+  { id: 'scales', cat: 'deduce', name: 'Fruit Scales', icon: '⚖️', n: 6, make: scalesPuzzle,
     blurb: 'Read the scales, find the heaviest.',
-    how: 'Each scale tips toward the heavier side, or stays level if both sides weigh the same. Put all the clues together and pick the heaviest fruit. Later rounds pile several fruits on one pan.' },
-  { id: 'bubbles', cat: 'math', name: 'Bubble Sum', icon: '🫧', par: 8, create: bubbleGame, lvlEvery: 3,
-    blurb: 'Pop bubbles that hit the target.',
-    how: 'Numbered bubbles float up. Tap bubbles that add up to the target exactly. Go over and they all burst. Tap a picked bubble to let it go.' },
-  { id: 'shop', cat: 'math', name: 'Shop Till', icon: '🛒', par: 7, create: shopGame,
-    blurb: 'Give customers the right change.',
-    how: 'A customer pays with a note. Tap notes to hand back the exact change. Give too much and they get angry. From level 4 the total is hidden, so you add up the prices yourself.' },
-  { id: 'burger', cat: 'memory', name: 'Burger Bar', icon: '🍔', par: 5, create: burgerGame,
-    blurb: 'Remember the order, build the burger.',
-    how: 'An order shows a burger for a few seconds. When it disappears, build it from the bottom up by tapping ingredients in the right order. Orders get taller as you level up.' },
-  { id: 'speed', cat: 'memory', name: 'Speed Match', icon: '🃏', par: 25, create: speedGame, lvlEvery: 5,
-    blurb: 'Same as the last card? Quick!',
-    how: 'Cards come one after another. Say whether each card matches the one before it. From level 6 it switches to matching the card two back. Arrow keys work too.' },
-  { id: 'shadow', cat: 'visual', name: 'Shadow Snap', icon: '👤', par: 18, create: silGame, lvlEvery: 4,
-    blurb: 'Whose silhouette is it?',
-    how: 'A black silhouette appears. Pick which picture it belongs to, fast. Answers under 1.5 seconds score extra. Higher levels flip and turn the shadow, and use animals that look alike.' },
-  { id: 'shelf', cat: 'visual', name: 'Shelf Swap', icon: '🏪', par: 7, create: shelfGame,
-    blurb: 'Lights out. What changed?',
-    how: 'Memorise the shop shelf. The lights go out and one item gets swapped. Tap the one that changed. At higher levels the shelf is bigger and the swap is sneakier.' },
-  { id: 'whack', cat: 'focus', name: 'Whack-a-Rule', icon: '🔨', par: 22, create: whackGame, lvlEvery: 5,
-    blurb: 'Whack the right ones. Rules change.',
-    how: 'Critters pop out of holes. Whack only the ones the rule allows. From level 3 the rule changes every few seconds, and from level 5 it can flip to "anything but".' },
-  { id: 'bus', cat: 'focus', name: 'Bus Stop', icon: '🚌', par: 3, create: busGame,
-    blurb: 'Count who gets on and off.',
-    how: 'The bus stops again and again. People get off, people get on. Keep count, then answer the question at the end. Sometimes it is a trick question.' }
+    how: 'Each scale tips toward the heavier side. Put all the clues together to find the heaviest fruit.' },
+  { id: 'slip', cat: 'check', name: 'Spot the Slip', icon: '🕵️', n: 6, make: genSlip,
+    blurb: 'Find the line with the mistake.',
+    how: 'A classmate worked something out, but one line is wrong. Find the first wrong line, then give the right answer. BODMAS, equations and money.' },
+  { id: 'sense', cat: 'check', name: 'Sense Check', icon: '🤔', n: 6, make: genSense,
+    blurb: 'Does that answer make sense?',
+    how: 'Someone gives an answer. Estimate first and decide if it makes sense. If it doesn\'t, pick the right one.' }
 ];
 const BY = Object.fromEntries(GAMES.map(g => [g.id, g]));
-const GAME_TIME = 45;
 
 /* ---------- screens ---------- */
 function show(id) { document.querySelectorAll('.screen').forEach(s => s.hidden = s.id !== id); window.scrollTo(0, 0); }
 function setCat(cat) {
   const r = document.documentElement.style;
-  if (cat) { r.setProperty('--cat', `var(--${cat})`); r.setProperty('--cat-soft', `var(--${cat}-soft)`); r.setProperty('--on-cat', cat === 'focus' ? 'var(--ink)' : '#fff'); }
+  if (cat) { const c = CAT[cat].color; r.setProperty('--cat', `var(--${c})`); r.setProperty('--cat-soft', `var(--${c}-soft)`); r.setProperty('--on-cat', '#fff'); }
   else ['--cat', '--cat-soft', '--on-cat'].forEach(p => r.removeProperty(p));
 }
 
 function chartSVG(vals) {
-  const w = 320, h = 100, px = 24, py = 10;
+  const w = 320, h = 100, px = 30, py = 10;
   const x = i => px + (vals.length === 1 ? 0 : i * (w - px - 10) / (vals.length - 1));
   const y = v => h - py - (v / 100) * (h - 2 * py);
   const pts = vals.map((v, i) => `${x(i).toFixed(1)},${y(v).toFixed(1)}`).join(' ');
-  return `<svg viewBox="0 0 ${w} ${h}" role="img" aria-label="Brain usage over your last ${vals.length} tests">
+  return `<svg viewBox="0 0 ${w} ${h}" role="img" aria-label="Logic score over your last ${vals.length} workouts">
     ${[0, 50, 100].map(g => `<line class="gl" x1="${px}" x2="${w - 4}" y1="${y(g)}" y2="${y(g)}"/><text class="lb" x="0" y="${y(g) + 3}">${g}%</text>`).join('')}
     <polygon class="ar" points="${x(0)},${y(0)} ${pts} ${x(vals.length - 1)},${y(0)}"/>
     <polyline class="ln" points="${pts}"/>
@@ -1210,13 +1348,8 @@ function renderWho() {
 function createPlayer(name, avatar) {
   const id = 'p' + Date.now().toString(36);
   const p = { name, avatar, created: Date.now(), last: Date.now(), ...blankProgress() };
-  // carry over scores saved by the previous version of the game
   if (!Object.keys(db.profiles).length) {
-    try {
-      const old = JSON.parse(localStorage.getItem(OLD_KEY));
-      if (old && old.best) { p.best = old.best || {}; p.history = old.history || []; p.xp = Object.values(p.best).reduce((t, v) => t + v, 0); }
-      if (old && old.muted) db.muted = true;
-    } catch {}
+    try { const old = JSON.parse(localStorage.getItem(OLD_KEY)); if (old && old.muted) db.muted = true; } catch {}
   }
   db.profiles[id] = p;
   login(id);
@@ -1233,31 +1366,34 @@ function renderHome() {
   $('#pXP').style.width = next ? `${100 * (store.xp - RANKS[r][0]) / (next[0] - RANKS[r][0])}%` : '100%';
   $('#pNext').textContent = next ? `${(next[0] - store.xp).toLocaleString()} XP to ${next[1]} ${next[2]}` : 'Top rank reached';
   $('#resetConfirm').hidden = true;
-  const tests = store.history.filter(x => x.mode === 'test'), stress = store.history.filter(x => x.mode === 'stress');
-  const s = [];
-  if (tests.length) s.push(`<div class="stat"><b>${tests[tests.length - 1].index}%</b><small>Last brain test</small></div>`, `<div class="stat"><b>${Math.max(...tests.map(x => x.index))}%</b><small>Best</small></div>`);
-  if (stress.length) s.push(`<div class="stat"><b>${Math.max(...stress.map(x => x.index))}%</b><small>Best under stress</small></div>`);
-  $('#homeStats').innerHTML = s.join('');
+
+  const ws = store.history.filter(x => x.mode === 'workout');
+  $('#homeStats').innerHTML = ws.length ? `<div class="stat"><b>${ws[ws.length - 1].index}%</b><small>Last workout</small></div><div class="stat"><b>${Math.max(...ws.map(x => x.index))}%</b><small>Best</small></div><div class="stat"><b>${ws.length}</b><small>Workouts done</small></div>` : '';
+
+  $('#skills').innerHTML = `<span class="label" style="font-size:18px">Skills</span>` + CATS.map(c => {
+    const gs = GAMES.filter(g => g.cat === c.id), lv = gs.reduce((t, g) => t + (store.levels[g.id] || 0), 0) / gs.length;
+    return `<div class="skill" style="--cat:var(--${c.color})"><span>${c.name}</span><div class="track"><div class="fill" style="transform:scaleX(${(lv + 1) / 10})"></div></div><b>Lv ${Math.floor(lv) + 1}</b></div>`;
+  }).join('');
+
   const ch = $('#homeChart');
-  if (tests.length >= 2) { const v = tests.slice(-14).map(x => x.index); ch.innerHTML = `<span class="label" style="font-size:18px">Brain chart</span>${chartSVG(v)}`; ch.hidden = false; }
+  if (ws.length >= 2) { const v = ws.slice(-14).map(x => x.index); ch.innerHTML = `<span class="label" style="font-size:18px">Logic score over time</span>${chartSVG(v)}`; ch.hidden = false; }
   else ch.hidden = true;
 
   const list = $('#trainList');
   list.innerHTML = '';
   GAMES.forEach(g => {
-    const b = document.createElement('button');
+    const b = document.createElement('button'), c = CAT[g.cat];
     b.className = 'gcard';
-    b.style.setProperty('--cat', `var(--${g.cat})`);
-    b.style.setProperty('--cat-soft', `var(--${g.cat}-soft)`);
+    b.style.setProperty('--cat-soft', `var(--${c.color}-soft)`);
     const bs = store.best[g.id], lv = store.levels[g.id];
-    b.innerHTML = `<span class="ic" aria-hidden="true">${g.icon}</span><span class="t"><strong>${g.name}</strong><small>${g.blurb}</small><span class="best">${CAT[g.cat].name}${lv != null ? ` · Lv ${lv + 1}` : ''}${bs != null ? ` · best ${bs}` : ''}</span></span>`;
+    b.innerHTML = `<span class="ic" aria-hidden="true">${g.icon}</span><span class="t"><strong>${g.name}</strong><small>${g.blurb}</small><span class="best">${c.name}${lv != null ? ` · Lv ${lv + 1}` : ''}${bs != null ? ` · best ${bs}` : ''}</span></span>`;
     b.onclick = () => { session = { mode: 'train', order: [g.id], i: 0, scores: {} }; intro(); };
     list.append(b);
   });
   show('home');
 }
 
-let session = null;   // { mode: 'test'|'stress'|'train', order, i, scores }
+let session = null;   // { mode: 'workout'|'train', order, i, scores, fresh }
 let cur = null;       // the running game
 
 function intro() {
@@ -1275,16 +1411,14 @@ function intro() {
   const paint = () => seg.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', String((b.dataset.f === '1') === session.fresh)));
   seg.querySelectorAll('button').forEach(b => b.onclick = () => { session.fresh = b.dataset.f === '1'; paint(); SFX.tap(); });
   paint();
-  $('#introMeta').textContent = (train ? '' : `${session.mode === 'stress' ? 'Stress test' : 'Brain test'} · game ${session.i + 1} of ${session.order.length} · `)
-    + `${GAME_TIME} seconds · difficulty adapts as you play and your level is saved`;
-  $('#introGo').onclick = () => { audio(); play(); };
+  $('#introMeta').textContent = (train ? '' : `Workout · game ${session.i + 1} of ${session.order.length} · `) + `${g.n} puzzles · no timer · a hint if you get stuck`;
+  $('#introGo').onclick = () => { audio(); SFX.go(); play(); };
   show('intro');
   $('#introGo').focus({ preventScroll: true });
 }
 
 function play() {
-  const g = BY[session.order[session.i]];
-  const adaptive = true;
+  const g = BY[session.order[session.i]], N = g.n;
   const startLevel = session.fresh ? 0 : Math.min(9, store.levels[g.id] || 0);
   const stage = $('#stage'), wrap = $('#wrap');
   stage.innerHTML = '';
@@ -1292,62 +1426,64 @@ function play() {
   $('#playName').textContent = g.name;
   $('#playScore').textContent = '0';
   $('#combo').className = 'combo';
-  $('#timeFill').style.transform = 'scaleX(1)';
-  $('#timeLeft').textContent = GAME_TIME;
-  $('#timer').classList.remove('hurry');
   $('#hudMascot').innerHTML = mascotSVG();
 
-  const stats = { correct: 0, wrong: 0, points: 0, streak: 0, bestStreak: 0 };
-  const run = { g, stats, live: false, timers: new Set(), rafs: new Set(), frame: 0, unbug: null, peak: startLevel };
+  const stats = { perfect: 0, assisted: 0, failed: 0, points: 0, streak: 0, bestStreak: 0, done: 0 };
+  const run = { g, stats, live: true, timers: new Set(), rafs: new Set(), peak: startLevel };
   cur = run;
   let prog = 0;
+  const paintProgress = () => { $('#progFill').style.transform = `scaleX(${stats.done / N})`; $('#progText').textContent = `${Math.min(stats.done + 1, N)} of ${N}`; };
   const lvlText = () => { $('#playLevel').textContent = `Level ${api.level + 1}`; };
   const flash = ok => {
     wrap.classList.remove('ok', 'no'); void wrap.offsetWidth; wrap.classList.add(ok ? 'ok' : 'no');
-    if (!ok) { wrap.classList.remove('shake'); void wrap.offsetWidth; wrap.classList.add('shake'); }
-    const t = setTimeout(() => wrap.classList.remove('ok', 'no'), 260); run.timers.add(t);
+    const t = setTimeout(() => wrap.classList.remove('ok', 'no'), 300); run.timers.add(t);
   };
+  const mult = () => Math.min(5, 1 + Math.floor(stats.streak / 2));
   const paintScore = bump => {
     const sc = $('#playScore');
     sc.textContent = stats.points;
     if (bump) { sc.classList.remove('bump'); void sc.offsetWidth; sc.classList.add('bump'); }
     const m = mult(), cb = $('#combo');
-    cb.textContent = `×${m} combo`;
+    cb.textContent = `×${m} streak`;
     cb.className = 'combo';
     if (m > 1) { void cb.offsetWidth; cb.className = 'combo on'; }
   };
-  const mult = () => Math.min(5, 1 + Math.floor(stats.streak / 3));
   const api = {
-    stats,
-    level: startLevel,
-    onKey: null,
+    stats, level: startLevel, onKey: null,
     live: () => cur === run && run.live,
     right(base, at) {
       if (!api.live()) return;
-      stats.correct++; stats.streak++; stats.bestStreak = Math.max(stats.bestStreak, stats.streak);
+      stats.perfect++; stats.streak++; stats.bestStreak = Math.max(stats.bestStreak, stats.streak);
       const pts = Math.round(base * mult());
       stats.points += pts;
       const p = centerOf(at);
       floatText(p, `+${pts}`); burst(p);
       SFX.good(stats.streak);
-      mood('#hudMascot', stats.streak >= 3 ? 'happy' : 'wow', 600);
+      mood('#hudMascot', 'happy', 700);
       flash(true); paintScore(true);
-      if (adaptive && ++prog >= (g.lvlEvery || 2) && api.level < 9) { prog = 0; api.level++; run.peak = Math.max(run.peak, api.level); api.toast(`Level ${api.level + 1}!`); api.later(SFX.level, 120); }
+      if (++prog >= 2 && api.level < 9) { prog = 0; api.level++; run.peak = Math.max(run.peak, api.level); api.toast(`Level ${api.level + 1}!`); api.later(SFX.level, 150); }
       lvlText();
+    },
+    assist(base, at) {
+      if (!api.live()) return;
+      stats.assisted++;
+      stats.points += base;
+      floatText(centerOf(at), `+${base}`, 'small');
+      SFX.good(0); mood('#hudMascot', 'wow', 700);
+      flash(true); paintScore(true);
     },
     wrong(at) {
       if (!api.live()) return;
-      stats.wrong++; stats.streak = 0; prog = 0;
-      floatText(centerOf(at), '✗', 'bad');
-      SFX.bad(); mood('#hudMascot', 'sad', 800);
+      stats.failed++; stats.streak = 0; prog = 0;
+      SFX.bad(); mood('#hudMascot', 'sad', 900);
       flash(false); paintScore(false);
-      if (adaptive) api.level = Math.max(0, api.level - 1);
+      api.level = Math.max(0, api.level - 1);
       lvlText();
     },
-    miss(at) {
-      if (!api.live() || !stats.streak) return;
-      stats.streak = 0; paintScore(false);
-      floatText(centerOf(at), 'missed', 'small');
+    nudge(at) {
+      if (!api.live()) return;
+      SFX.hmm(); mood('#hudMascot', 'wow', 900);
+      if (stats.streak) { stats.streak = 0; paintScore(false); }
     },
     toast(text) {
       const t = document.createElement('div');
@@ -1358,51 +1494,28 @@ function play() {
     raf(fn) { const id = requestAnimationFrame(ts => { run.rafs.delete(id); if (api.live()) fn(ts); }); run.rafs.add(id); return id; }
   };
   run.api = api;
-  lvlText();
+  lvlText(); paintProgress();
   show('play');
 
-  let n = 3;
-  const countdown = () => {
-    if (cur !== run) return;
-    if (n === 0) { stage.innerHTML = '<div class="count">GO!</div>'; SFX.go(); const t = setTimeout(begin, 450); run.timers.add(t); return; }
-    stage.innerHTML = `<div class="count">${n--}</div>`;
-    SFX.count();
-    const t = setTimeout(countdown, 600); run.timers.add(t);
-  };
-  countdown();
-
-  function begin() {
-    if (cur !== run) return;
-    stage.innerHTML = '';
-    run.live = true;
-    if (session.mode === 'stress') run.unbug = startBugs(wrap);
-    g.create(stage, api);
-    const start = performance.now();
-    let lastSec = GAME_TIME;
-    const frame = () => {
-      if (!api.live()) return;
-      const left = GAME_TIME - (performance.now() - start) / 1000, sec = Math.max(0, Math.ceil(left));
-      $('#timeFill').style.transform = `scaleX(${Math.max(0, left / GAME_TIME)})`;
-      if (sec !== lastSec) {
-        lastSec = sec; $('#timeLeft').textContent = sec;
-        if (sec <= 5 && sec > 0) { $('#timer').classList.add('hurry'); SFX.tick(); }
-      }
-      if (left <= 0) finish();
-      else run.frame = requestAnimationFrame(frame);
-    };
-    run.frame = requestAnimationFrame(frame);
+  function nextPuzzle() {
+    if (!api.live()) return;
+    if (stats.done >= N) return finish();
+    api.onKey = null;
+    stepPuzzle(stage, api, g.make(api.level), () => {
+      stats.done++; paintProgress();
+      if (stats.done >= N) api.later(finish, 250);
+      else { api.later(nextPuzzle, 200); api.later(() => { const top = wrap.getBoundingClientRect().top; if (top < 0) wrap.scrollIntoView({ block: 'start', behavior: 'smooth' }); }, 230); }
+    });
   }
+  nextPuzzle();
 }
 
 function stop() {
   if (!cur) return;
   cur.live = false;
-  cancelAnimationFrame(cur.frame);
   cur.timers.forEach(clearTimeout);
   cur.rafs.forEach(cancelAnimationFrame);
-  if (cur.unbug) cur.unbug();
-  $('#wrap').classList.remove('ok', 'no', 'shake');
-  $('#timer').classList.remove('hurry');
+  $('#wrap').classList.remove('ok', 'no');
 }
 
 function countUp(el, to, ms = 900) {
@@ -1415,12 +1528,13 @@ function finish() {
   const { g, stats, api, peak } = cur;
   stop();
   cur = null;
-  const rating = clamp(100 * (stats.correct - 0.5 * stats.wrong) / g.par);
+  const N = g.n;
+  const rating = clamp(100 * (stats.perfect + 0.5 * stats.assisted) / N);
   const stars = rating >= 85 ? 3 : rating >= 60 ? 2 : rating >= 30 ? 1 : 0;
   const prev = store.best[g.id];
   const isBest = stats.points > 0 && (prev == null || stats.points > prev);
   if (isBest) store.best[g.id] = stats.points;
-  // keep the level you reached; one late slip only costs a level below your peak
+  // keep the level reached; one late slip only costs a level below the peak
   const savedLv = Math.max(api.level, peak - 1);
   store.levels[g.id] = savedLv;
   const rankBefore = rankOf(store.xp);
@@ -1428,16 +1542,16 @@ function finish() {
   const rankAfter = rankOf(store.xp);
   store.last = Date.now();
   save();
-  $('#resXP').textContent = `+${stats.points.toLocaleString()} XP · Level ${savedLv + 1} saved`;
-  $('#resRank').hidden = rankAfter === rankBefore;
-  if (rankAfter !== rankBefore) $('#resRank').textContent = `Rank up! You're now ${RANKS[rankAfter][1]} ${RANKS[rankAfter][2]}`;
 
   $('#resChip').textContent = CAT[g.cat].name;
   $('#resName').textContent = g.name;
   $('#resStars').innerHTML = [0, 1, 2].map(i => `<span class="${i < stars ? '' : 'off'}" style="animation-delay:${.15 + i * .18}s">⭐</span>`).join('');
   countUp($('#resScore'), stats.points);
-  $('#resMeta').textContent = `${stats.correct} right · ${stats.wrong} wrong · best streak ${stats.bestStreak}` + (prev != null && !isBest ? ` · your best is ${prev}` : '');
+  $('#resTally').innerHTML = `<span style="background:#BDF5CF">✓ ${stats.perfect} first try</span><span style="background:var(--focus-soft)">💡 ${stats.assisted} with a hint</span><span style="background:var(--soft)">📖 ${stats.failed} explained</span>`;
+  $('#resXP').textContent = `+${stats.points.toLocaleString()} XP · Level ${savedLv + 1} saved`;
   $('#resBest').hidden = !(isBest && prev != null);
+  $('#resRank').hidden = rankAfter === rankBefore;
+  if (rankAfter !== rankBefore) $('#resRank').textContent = `Rank up! You're now ${RANKS[rankAfter][1]} ${RANKS[rankAfter][2]}`;
   if (stars >= 2 || (isBest && prev != null) || rankAfter !== rankBefore) { SFX.win(); confetti(stars === 3 || rankAfter !== rankBefore ? 140 : 80); }
   else SFX.level();
 
@@ -1448,7 +1562,7 @@ function finish() {
     $('#resNext').onclick = () => { session.i = 0; intro(); };
   } else {
     const done = session.i >= session.order.length;
-    $('#resNext').textContent = done ? 'See my brain usage' : `Next: ${BY[session.order[session.i]].name}`;
+    $('#resNext').textContent = done ? 'See my logic score' : `Next: ${BY[session.order[session.i]].name}`;
     $('#resNext').onclick = () => done ? final() : intro();
   }
   show('result');
@@ -1456,52 +1570,50 @@ function finish() {
 }
 
 function verdict(i) {
-  if (i >= 90) return 'Genius mode. Nothing got past you.';
-  if (i >= 75) return 'Sharp! Strong across the board.';
-  if (i >= 60) return 'Warmed up and firing.';
-  if (i >= 40) return 'Getting there. A couple of areas held you back.';
-  return 'Slow start. Shake it off and go again.';
+  if (i >= 90) return 'Brilliant thinking. Nothing got past you.';
+  if (i >= 75) return 'Sharp! You reasoned it through.';
+  if (i >= 60) return 'Good work. Your logic is getting stronger.';
+  if (i >= 40) return 'Getting there. Use the hints and keep going.';
+  return 'Tough one today. Every explanation you read makes the next one easier.';
 }
 
 function final() {
   setCat(null);
-  const mode = session.mode, sc = session.scores;
-  const val = c => sc[c.id] ? sc[c.id].score : 0;
-  const index = Math.round(CATS.reduce((t, c) => t + val(c), 0) / CATS.length);
-  const same = store.history.filter(x => x.mode === mode);
-  const prevBest = same.length ? Math.max(...same.map(x => x.index)) : null;
-  store.history.push({ t: Date.now(), mode, index, scores: Object.fromEntries(CATS.map(c => [c.id, val(c)])) });
+  const sc = session.scores, val = c => sc[c.id] ? sc[c.id].score : 0;
+  const played = CATS.filter(c => sc[c.id]);
+  const index = Math.round(played.reduce((t, c) => t + val(c), 0) / Math.max(1, played.length));
+  const ws = store.history.filter(x => x.mode === 'workout');
+  const prevBest = ws.length ? Math.max(...ws.map(x => x.index)) : null;
+  store.history.push({ t: Date.now(), mode: 'workout', index, scores: Object.fromEntries(CATS.map(c => [c.id, val(c)])) });
   store.history = store.history.slice(-60);
   save();
 
-  $('#finLabel').textContent = mode === 'stress' ? 'Brain usage under stress' : 'Brain usage';
   countUp($('#finIndex'), index, 1200);
   $('#finVerdict').textContent = verdict(index);
-  $('#finMeta').textContent = prevBest == null ? 'First result saved. Next time you will see if you beat it.' : index > prevBest ? `New record! Your previous best was ${prevBest}%.` : `Your best is ${prevBest}%.`;
+  $('#finMeta').textContent = prevBest == null ? 'First workout saved. Next time you will see if you beat it.' : index > prevBest ? `New record! Your previous best was ${prevBest}%.` : `Your best is ${prevBest}%.`;
   $('#finBars').innerHTML = CATS.map(c => `
-    <div class="bar" style="--cat:var(--${c.id})">
+    <div class="bar" style="--cat:var(--${c.color})">
       <span>${c.name}<small>${sc[c.id] ? BY[sc[c.id].game].name : ''}</small></span>
       <div class="track"><div class="fill" style="transform:scaleX(${val(c) / 100})"></div></div>
       <b>${val(c)}</b>
     </div>`).join('');
-  const ranked = [...CATS].sort((a, b) => val(b) - val(a));
-  $('#finCoach').innerHTML = `<div id="coachMascot">${mascotSVG()}</div><div><p>Your strongest area today was <b>${ranked[0].name.toLowerCase()}</b>.</p><p>${ranked[ranked.length - 1].weak}</p></div>`;
+  const ranked = [...played].sort((a, b) => val(b) - val(a));
+  $('#finCoach').innerHTML = `<div id="coachMascot">${mascotSVG()}</div><div><p>Your strongest skill today was <b>${ranked[0].name.toLowerCase()}</b>.</p><p>${ranked[ranked.length - 1].weak}</p></div>`;
   mood('#coachMascot', index >= 60 ? 'happy' : index >= 40 ? 'idle' : 'sad', 0);
   if (index >= 60 || (prevBest != null && index > prevBest)) { SFX.win(); confetti(140); }
-  $('#finAgain').onclick = () => startTest(mode);
+  $('#finAgain').onclick = startWorkout;
   show('final');
 }
 
-function startTest(mode) {
+function startWorkout() {
   audio();
-  session = { mode, order: CATS.map(c => pick(GAMES.filter(g => g.cat === c.id)).id), i: 0, scores: {} };
+  session = { mode: 'workout', order: CATS.map(c => pick(GAMES.filter(g => g.cat === c.id)).id), i: 0, scores: {} };
   intro();
 }
 
 function start() {
   $('#homeMascot').innerHTML = mascotSVG();
-  $('#startTest').onclick = () => startTest('test');
-  $('#startStress').onclick = () => startTest('stress');
+  $('#startWorkout').onclick = startWorkout;
   $('#introBack').onclick = () => { session = null; renderHome(); };
   $('#resHome').onclick = () => { session = null; renderHome(); };
   $('#finHome').onclick = renderHome;
@@ -1523,6 +1635,7 @@ function start() {
   });
   paintMute();
   document.addEventListener('keydown', e => {
+    if (e.target && e.target.tagName === 'INPUT') return;
     if (cur && cur.live && cur.api.onKey && cur.api.onKey(e)) e.preventDefault();
   });
   if (store) renderHome(); else renderWho();

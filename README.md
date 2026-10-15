@@ -26,6 +26,16 @@ Logic training for maths, built for an SS1 student who can do the sums but finds
 - **Scoring rewards thinking.** Full points for a first-try answer, half with a hint, none for guessing through. Difficulty rises after correct answers and eases off after mistakes.
 - **Bar models** (schema-based instruction) are used for word problems because they have the best evidence base for students who struggle with them.
 
+## Rewards
+
+- **Tickets 🎟️** are earned by reasoning: 2 for a first-try answer, 1 for an answer after a hint, nothing for guessing through, and a 5-ticket bonus for finishing a workout. New players start with 10.
+- **Arcade:** each break game costs 10 tickets, so a workout buys roughly three or four games and the puzzles stay the main event.
+  - **Whot! vs Brain:** the Nigerian card game (Hold on, Pick two, Suspension, General market, WHOT) against the mascot.
+  - **Fruit Slice:** swipe the fruit, avoid the bombs, three lives.
+  - **Flappy Brain:** tap to fly the mascot through the pipes.
+  - **Colour Sort:** pour coloured balls until every tube is one colour. Levels get harder and are always solvable.
+- **Sticker album:** 24 stickers (common, rare, legendary) won by finishing a workout, getting 3 stars in a game, or ranking up.
+
 ## Modes and progress
 
 - **Today's workout:** one game from each skill, about 15 minutes, ending with a logic score, per-skill bars and a coach tip.

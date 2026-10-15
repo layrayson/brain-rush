@@ -297,6 +297,98 @@ p{margin:0}
 .coach .mascot{width:60px;height:54px}
 .coach p+p{margin-top:4px}
 
+/* tickets, arcade, stickers */
+.tix{display:inline-flex;align-items:center;gap:4px;background:var(--focus);border:2px solid var(--ink);border-radius:999px;padding:0 10px;font-family:var(--f-display);font-weight:800;font-size:15px;align-self:flex-start;white-space:nowrap}
+.tix.big{font-size:22px;padding:2px 14px}
+.rankline{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.fun-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.fun{border:3px solid var(--ink);border-radius:20px;padding:12px 14px;text-align:left;display:grid;grid-template-columns:auto 1fr;column-gap:10px;align-items:center;box-shadow:0 5px 0 var(--ink);background:var(--focus-soft);transition:transform .07s,box-shadow .07s}
+.fun span{grid-row:span 2;font-size:34px;line-height:1}
+.fun b{font-family:var(--f-display);font-size:21px;font-weight:800;line-height:1}
+.fun small{color:var(--muted);font-size:13px;line-height:1.25}
+.fun.album{background:var(--visual-soft)}
+.fun:active{transform:translateY(4px);box-shadow:0 1px 0 var(--ink)}
+@media (max-width:420px){.fun-row{grid-template-columns:1fr}}
+.arc-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.agrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.acard{border:3px solid var(--ink);border-radius:20px;box-shadow:0 5px 0 var(--ink);padding:14px;text-align:left;display:flex;flex-direction:column;gap:6px;color:#fff;min-height:168px;transition:transform .07s,box-shadow .07s}
+.acard .ae{font-size:44px;line-height:1}
+.acard b{font-family:var(--f-display);font-size:21px;font-weight:800;line-height:1.05}
+.acard small{font-size:13px;line-height:1.3;opacity:.92}
+.acard .cost{margin-top:auto;display:flex;gap:6px;flex-wrap:wrap}
+.acard .cost i{font-style:normal;background:#fff;color:var(--ink);border:2px solid var(--ink);border-radius:999px;padding:0 9px;font-weight:800;font-size:13px}
+.acard:disabled{filter:grayscale(.75);opacity:.7}
+.acard:not(:disabled):active{transform:translateY(4px);box-shadow:0 1px 0 var(--ink)}
+@media (max-width:380px){.agrid{grid-template-columns:1fr}}
+.arc-bar{padding:8px 12px;display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center}
+.arc-bar strong{font-family:var(--f-display);font-size:20px;font-weight:800;line-height:1.1}
+.arc-score{font-family:var(--f-display);font-weight:800;font-size:22px;white-space:nowrap}
+.arc-stage{padding:10px;display:flex;flex-direction:column;align-items:center;gap:8px;position:relative;min-height:300px}
+.arc-cv{display:block;max-width:100%;border-radius:14px;border:3px solid var(--ink);touch-action:none;user-select:none;-webkit-user-select:none}
+.arc-tip{color:var(--muted);font-weight:700;text-align:center}
+.modal{position:fixed;inset:0;z-index:60;background:rgba(27,27,58,.55);display:grid;place-items:center;padding:16px;overflow-y:auto}
+.mbox{width:100%;max-width:380px;padding:22px 20px;display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;animation:mpop .35s cubic-bezier(.3,1.5,.5,1)}
+@keyframes mpop{from{transform:scale(.6);opacity:0}}
+.mbox h3{font-size:30px;font-weight:800}
+.mbox .ae{font-size:56px;line-height:1}
+.mbox .row{width:100%}
+.sgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:16px 12px}
+.scell{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center}
+.scell small{font-weight:800;font-size:12px;line-height:1.2}
+.scell .rar{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;font-weight:800}
+.stk{position:relative;width:84px;aspect-ratio:1;border-radius:50%;display:grid;place-items:center;border:4px solid #fff;box-shadow:0 0 0 3px var(--ink),0 5px 0 3px var(--ink);transform:rotate(var(--r,0deg))}
+.stk .se{font-size:42px;line-height:1}
+.stk.common{background:radial-gradient(circle at 35% 30%,#fff,#BDE6FF)}
+.stk.rare{background:radial-gradient(circle at 35% 30%,#fff,#C9B6FF)}
+.stk.legend{background:conic-gradient(#FFD60A,#FF4F8B,#7C5CFF,#2EA8FF,#22C55E,#FFD60A)}
+.stk.locked{background:var(--soft);box-shadow:0 0 0 3px #C9CFDF;border-color:var(--soft)}
+.stk.locked .se{filter:grayscale(1) brightness(0);opacity:.12}
+.stk .cnt{position:absolute;bottom:-6px;right:-6px;background:var(--ink);color:#fff;border-radius:999px;font:800 12px var(--f-body);padding:1px 7px}
+.reveal{perspective:600px;padding:8px}
+.reveal .stk{width:150px;animation:flipin .9s cubic-bezier(.3,1.4,.5,1)}
+.reveal .stk .se{font-size:76px}
+@keyframes flipin{0%{transform:rotateY(100deg) scale(.4)}60%{transform:rotateY(-12deg) scale(1.08)}100%{transform:rotateY(0) scale(1) rotate(var(--r,0deg))}}
+
+/* whot */
+.whot{display:flex;flex-direction:column;gap:10px;width:100%;position:relative}
+.wtop{display:flex;align-items:center;justify-content:center;gap:10px}
+.wtop .mascot{width:52px;height:46px}
+.wrow{display:flex;justify-content:center;gap:5px;flex-wrap:wrap;min-height:50px}
+.wrow.opp{gap:0}
+.wcard{width:58px;height:84px;border-radius:10px;border:2.5px solid var(--ink);background:#FFF8EE;color:#8B1E3F;position:relative;display:grid;place-items:center;font-family:var(--f-display);font-weight:800;padding:0;flex:none;box-shadow:0 3px 0 var(--ink);transition:transform .12s}
+.wcard .wn{position:absolute;top:2px;left:5px;font-size:15px;line-height:1}
+.wcard .wn2{position:absolute;bottom:2px;right:5px;font-size:15px;line-height:1;transform:rotate(180deg)}
+.wcard svg{width:30px;height:30px;fill:currentColor}
+.wcard .ww{font-size:13px;letter-spacing:.04em}
+.wcard.back{background:repeating-linear-gradient(45deg,#8B1E3F 0 6px,#A8325A 6px 12px);color:#FFF8EE}
+.wcard.back::after{content:"WHOT";font-size:11px;letter-spacing:.05em}
+.wcard.small{width:34px;height:50px;margin-left:-12px;box-shadow:none;border-width:2px}
+.wcard.small:first-child{margin-left:0}
+.wcard.small::after{font-size:0}
+.wcard.big{width:74px;height:106px}
+.wcard.big svg{width:42px;height:42px}
+.wcard.big .wn,.wcard.big .wn2{font-size:18px}
+.wcard.ok{transform:translateY(-8px);box-shadow:0 0 0 3px var(--good),0 6px 0 var(--ink)}
+.wcard.nope{animation:shake .35s}
+.wmid{display:flex;justify-content:center;align-items:center;gap:22px;padding:14px 10px;background:#2E7D4F;border:3px solid var(--ink);border-radius:18px;flex-wrap:wrap}
+.wpile{display:flex;flex-direction:column;align-items:center;gap:4px;color:#fff;font-weight:800;font-size:13px}
+.wneed{background:#fff;border:2px solid var(--ink);border-radius:999px;padding:2px 10px;font-weight:800;display:flex;align-items:center;gap:4px;color:#8B1E3F}
+.wneed svg{width:18px;height:18px;fill:currentColor}
+.wstatus{text-align:center;font-family:var(--f-display);font-weight:800;font-size:19px;min-height:26px}
+.wpickbox{position:absolute;inset:0;background:rgba(255,255,255,.95);border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;z-index:3}
+.wpick{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.wpick button{width:58px;height:58px;border:3px solid var(--ink);border-radius:14px;background:#FFF8EE;color:#8B1E3F;box-shadow:0 3px 0 var(--ink);display:grid;place-items:center}
+.wpick svg{width:30px;height:30px;fill:currentColor}
+
+/* colour sort */
+.tubes{display:flex;flex-wrap:wrap;justify-content:center;gap:12px 10px;padding:16px 0 6px}
+.tube{width:48px;height:184px;border:3px solid var(--ink);border-top:0;border-radius:0 0 26px 26px;background:rgba(255,255,255,.75);display:flex;flex-direction:column-reverse;align-items:center;gap:3px;padding:4px 0 6px;transition:transform .15s;position:relative}
+.tube::before{content:"";position:absolute;top:-3px;left:-7px;right:-7px;height:6px;border:3px solid var(--ink);border-radius:6px;background:#fff}
+.tube.sel{transform:translateY(-16px)}
+.tube.done{background:#DFF8E7}
+.ball{width:38px;height:38px;border-radius:50%;border:2.5px solid var(--ink);flex:none;box-shadow:inset -4px -5px 0 rgba(0,0,0,.15),inset 4px 4px 0 rgba(255,255,255,.35)}
+.sort-bar{display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap}
+
 @media (prefers-reduced-motion: reduce){.score.bump,.happy .mascot,.sad .mascot,.cf,.toast,.entry.bad,.hintbox,.explain{animation-duration:.01s!important}.beam,.panL,.panR{transition-duration:.01s}}
 </style>
 
@@ -325,7 +417,7 @@ p{margin:0}
       <span class="pav" id="pAvatar"></span>
       <div class="pinfo">
         <strong id="pName"></strong>
-        <span class="rank" id="pRank"></span>
+        <div class="rankline"><span class="rank" id="pRank"></span><span class="tix" id="pTix"></span></div>
         <div class="xpbar"><i id="pXP"></i></div>
         <small id="pNext"></small>
       </div>
@@ -350,6 +442,10 @@ p{margin:0}
       </div>
       <p class="lede">Logic for maths. Word problems, number patterns, detective puzzles and spotting mistakes. There's no timer, so think it through. Get stuck and you get a hint, not a telling-off.</p>
       <button class="mode" id="startWorkout"><strong>Today's workout</strong><small>One game from each skill, about 15 minutes. Puzzles get harder as you get them right.</small></button>
+      <div class="fun-row">
+        <button class="fun" id="openArcade"><span>🕹️</span><b>Arcade</b><small id="arcadeHint">Spend tickets on break games</small></button>
+        <button class="fun album" id="openAlbum"><span>📒</span><b>Stickers</b><small id="albumCount"></small></button>
+      </div>
       <div class="stats" id="homeStats"></div>
     </div>
     <div class="card skills" id="skills"></div>
@@ -403,6 +499,7 @@ p{margin:0}
       <div class="pts"><span id="resScore">0</span><small> points</small></div>
       <div class="tally" id="resTally"></div>
       <p class="xpline" id="resXP"></p>
+      <span class="tix big" id="resTix"></span>
       <span class="newbest" id="resBest" hidden>New best!</span>
       <span class="newbest rankup" id="resRank" hidden></span>
       <div class="row">
@@ -418,6 +515,7 @@ p{margin:0}
       <div class="pts"><span id="finIndex">0</span><small>%</small></div>
       <p class="verdict" id="finVerdict"></p>
       <p class="meta" id="finMeta"></p>
+      <span class="tix big" id="finTix"></span>
       <div class="bars" id="finBars"></div>
       <div class="coach" id="finCoach"></div>
       <div class="row">
@@ -427,7 +525,31 @@ p{margin:0}
     </div>
   </section>
 
+  <section id="arcade" class="screen" hidden>
+    <div class="card panel">
+      <div class="arc-head"><h2>Arcade</h2><span class="tix big" id="arcTix"></span></div>
+      <p class="how">Each game costs 10 🎟️. Earn tickets by solving puzzles: 2 for a first try, 1 with a hint, and 5 more for finishing a workout.</p>
+      <div class="agrid" id="agrid"></div>
+      <button class="btn ghost" id="arcBack">Back</button>
+    </div>
+  </section>
+
+  <section id="arcadePlay" class="screen" hidden>
+    <div class="card arc-bar"><button class="btn ghost sm" id="arcExit">Exit</button><strong id="arcName"></strong><span class="arc-score" id="arcScore"></span></div>
+    <div class="card arc-stage" id="arcStage"></div>
+  </section>
+
+  <section id="album" class="screen" hidden>
+    <div class="card panel">
+      <div class="arc-head"><h2>Stickers</h2><span class="tix big" id="albumProg"></span></div>
+      <p class="how">Win a sticker by finishing a workout, getting 3 stars in a game, or ranking up. Rare and legendary ones are harder to find.</p>
+      <div class="sgrid" id="sgrid"></div>
+      <button class="btn ghost" id="albumBack">Back</button>
+    </div>
+  </section>
+
 </main>
+<div class="modal" id="modal" hidden><div class="card mbox" id="mbox" role="dialog" aria-modal="true"></div></div>
 
 <script>
 const $ = s => document.querySelector(s);
@@ -447,7 +569,7 @@ function load() {
 function save() { try { localStorage.setItem(KEY, JSON.stringify(db)); } catch {} }
 let db = load();
 let store = (db.current && db.profiles[db.current]) || null;   // the logged-in player's progress
-const blankProgress = () => ({ xp: 0, best: {}, levels: {}, history: [] });
+const blankProgress = () => ({ xp: 0, best: {}, levels: {}, history: [], tickets: 10, stickers: {}, arcade: {} });
 const RANKS = [[0, 'Rookie', '🐣'], [1500, 'Thinker', '🤔'], [5000, 'Sharp', '✏️'], [12000, 'Clever Clogs', '🧠'], [25000, 'Mastermind', '🎓'], [50000, 'Genius', '💡'], [100000, 'Brainiac', '👑']];
 const rankOf = xp => { let r = 0; RANKS.forEach(([min], i) => { if (xp >= min) r = i; }); return r; };
 const AVATARS = ['🦊', '🐼', '🐯', '🐸', '🦄', '🐙', '🐵', '🐧'];
@@ -1265,6 +1387,481 @@ function genSense(L) {
   return { top: `<p class="story">${story} <b>${ask}</b></p><div class="claim"><span class="face">${face}</span><p>${B} says the answer is <b>${fmt(claim)}</b>.</p></div>`, steps };
 }
 
+/* ============================================================
+   REWARDS: tickets (earned by reasoning) and stickers
+   ============================================================ */
+const TICKET_COST = 10;
+const STICKERS = [
+  ['🦁', 'Lion Heart', 'common'], ['🐢', 'Slow & Steady', 'common'], ['🦉', 'Night Owl', 'common'], ['🐝', 'Busy Bee', 'common'],
+  ['🌻', 'Sunflower', 'common'], ['⚽', 'Super Eagle', 'common'], ['🎈', 'Pop!', 'common'], ['🍛', 'Jollof Genius', 'common'],
+  ['🚌', 'Danfo Driver', 'common'], ['🥁', 'Talking Drum', 'common'], ['🌴', 'Palm Breeze', 'common'], ['🎧', 'Vibes Only', 'common'],
+  ['📚', 'Bookworm', 'common'], ['🍦', 'Cool Head', 'common'],
+  ['🦄', 'Unicorn Thinker', 'rare'], ['🚀', 'Rocket Brain', 'rare'], ['🌈', 'Rainbow Mind', 'rare'], ['💎', 'Diamond Logic', 'rare'],
+  ['🎨', 'Ankara Artist', 'rare'], ['👑', 'Owambe Queen', 'rare'], ['🐙', 'Eight-Arm Thinker', 'rare'], ['🔭', 'Star Gazer', 'rare'],
+  ['🧠', 'Big Brain', 'legend'], ['🏆', 'Logic Champion', 'legend']
+];
+const RARITY = { common: 'Common', rare: 'Rare', legend: 'Legendary' };
+let rewardQueue = [];
+function rollSticker(min) {
+  let tier = Math.random() < .06 ? 'legend' : Math.random() < .3 ? 'rare' : 'common';
+  if (min === 'rare' && tier === 'common') tier = 'rare';
+  const i = pick(range(STICKERS.length).filter(k => STICKERS[k][2] === tier));
+  store.stickers[i] = (store.stickers[i] || 0) + 1;
+  save();
+  rewardQueue.push(i);
+}
+const rot = i => ((i * 37) % 17) - 8;
+function stickerHTML(i, locked) {
+  const [e, , r] = STICKERS[i], n = store.stickers[i] || 0;
+  return `<div class="stk ${locked ? 'locked' : r}" style="--r:${rot(i)}deg"><span class="se">${e}</span>${!locked && n > 1 ? `<span class="cnt">×${n}</span>` : ''}</div>`;
+}
+function openModal(html) { $('#mbox').innerHTML = html; $('#modal').hidden = false; }
+function closeModal() { $('#modal').hidden = true; $('#mbox').innerHTML = ''; }
+function showRewards(after) {
+  if (!rewardQueue.length) { if (after) after(); return; }
+  const i = rewardQueue.shift(), [, name, r] = STICKERS[i], n = store.stickers[i];
+  openModal(`<div class="reveal">${stickerHTML(i)}</div><h3>${n > 1 ? 'Another one!' : 'New sticker!'}</h3>
+    <p><b>${name}</b> · ${RARITY[r]}${n > 1 ? ` · you have ${n}` : ''}</p>
+    <button class="btn" id="mOk">${rewardQueue.length ? 'Next sticker' : 'Nice!'}</button>`);
+  if (r !== 'common') { SFX.win(); confetti(r === 'legend' ? 160 : 90); } else SFX.level();
+  const b = $('#mOk'); b.focus({ preventScroll: true });
+  b.onclick = () => { SFX.tap(); closeModal(); showRewards(after); };
+}
+function renderAlbum() {
+  setCat(null);
+  const have = STICKERS.filter((_, i) => store.stickers[i]).length;
+  $('#albumProg').textContent = `${have} / ${STICKERS.length}`;
+  $('#sgrid').innerHTML = STICKERS.map(([, name, r], i) => {
+    const got = !!store.stickers[i];
+    return `<div class="scell">${stickerHTML(i, !got)}<small>${got ? name : '???'}</small><span class="rar">${RARITY[r]}</span></div>`;
+  }).join('');
+  show('album');
+}
+
+/* ---------- arcade shell ---------- */
+let arcCleanup = null;
+function renderArcade() {
+  setCat(null);
+  $('#arcTix').textContent = `🎟️ ${store.tickets}`;
+  const g = $('#agrid'); g.innerHTML = '';
+  ARCADE.forEach(a => {
+    const b = document.createElement('button');
+    b.className = 'acard'; b.style.background = a.color;
+    b.disabled = store.tickets < TICKET_COST;
+    b.innerHTML = `<span class="ae">${a.e}</span><b>${a.name}</b><small>${a.blurb}</small><span class="cost"><i>${TICKET_COST} 🎟️</i>${a.best() ? `<i>${a.best()}</i>` : ''}</span>`;
+    b.onclick = () => startArcade(a);
+    g.append(b);
+  });
+  show('arcade');
+}
+function startArcade(a) {
+  if (store.tickets < TICKET_COST) return;
+  store.tickets -= TICKET_COST; save();
+  audio(); SFX.go();
+  $('#arcName').textContent = a.name;
+  $('#arcScore').textContent = '';
+  show('arcadePlay');
+  const stage = $('#arcStage'); stage.innerHTML = '';
+  let ended = false;
+  arcCleanup = a.run(stage, (score, title) => {
+    if (ended) return; ended = true;
+    if (arcCleanup) { arcCleanup(); arcCleanup = null; }
+    a.record(score); save();
+    const again = store.tickets >= TICKET_COST;
+    openModal(`<div class="ae">${a.e}</div><h3>${title}</h3><p class="xpline">${a.scoreText(score)}</p><p class="meta">${a.best()}</p>
+      ${again ? '' : `<p class="meta">Solve more puzzles to earn tickets for another go.</p>`}
+      <div class="row">${again ? `<button class="btn" id="mAgain">Play again · ${TICKET_COST} 🎟️</button>` : ''}<button class="btn ghost" id="mBack">Back to arcade</button></div>`);
+    if (again) $('#mAgain').onclick = () => { closeModal(); startArcade(a); };
+    $('#mBack').onclick = () => { closeModal(); renderArcade(); };
+  }, s => { $('#arcScore').textContent = s; });
+}
+function exitArcade() { if (arcCleanup) { arcCleanup(); arcCleanup = null; } renderArcade(); }
+function setupCanvas(cv, W, H) {
+  const dpr = window.devicePixelRatio || 1;
+  cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+  cv.style.width = W + 'px'; cv.style.height = H + 'px';
+  const ctx = cv.getContext('2d'); ctx.scale(dpr, dpr);
+  return ctx;
+}
+const canvasPoint = (cv, W, e) => { const r = cv.getBoundingClientRect(), k = W / r.width; return { x: (e.clientX - r.left) * k, y: (e.clientY - r.top) * k }; };
+function drawBrain(ctx, x, y, r, ang) {
+  ctx.save(); ctx.translate(x, y); ctx.rotate(ang);
+  ctx.fillStyle = '#FF9EC4'; ctx.strokeStyle = '#1B1B3A'; ctx.lineWidth = 3;
+  ctx.beginPath(); ctx.ellipse(0, 0, r * 1.2, r, 0, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+  ctx.strokeStyle = '#E0609A'; ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.moveTo(0, -r * .95); ctx.lineTo(0, -r * .45); ctx.moveTo(-r * .6, -r * .7); ctx.quadraticCurveTo(-r * .35, -r * .45, -r * .55, -r * .2); ctx.stroke();
+  [[-.38, -.05], [.38, -.05]].forEach(([ex, ey]) => {
+    ctx.fillStyle = '#fff'; ctx.strokeStyle = '#1B1B3A'; ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.arc(ex * r, ey * r, r * .3, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+    ctx.fillStyle = '#1B1B3A'; ctx.beginPath(); ctx.arc(ex * r + r * .07, ey * r, r * .15, 0, Math.PI * 2); ctx.fill();
+  });
+  ctx.strokeStyle = '#1B1B3A'; ctx.lineWidth = 2.5; ctx.beginPath(); ctx.arc(0, r * .3, r * .28, .15 * Math.PI, .85 * Math.PI); ctx.stroke();
+  ctx.restore();
+}
+function hudText(ctx, text, x, y, size, align = 'center') {
+  ctx.font = `800 ${size}px "Baloo 2", system-ui, sans-serif`; ctx.textAlign = align; ctx.textBaseline = 'middle';
+  ctx.lineWidth = Math.max(3, size / 7); ctx.strokeStyle = '#1B1B3A'; ctx.strokeText(text, x, y);
+  ctx.fillStyle = '#fff'; ctx.fillText(text, x, y);
+}
+
+/* ============ ARCADE: Flappy Brain ============ */
+function flappyGame(el, end, setScore) {
+  el.innerHTML = `<canvas class="arc-cv" aria-label="Flappy Brain"></canvas><p class="arc-tip">Tap, click or press Space to flap</p>`;
+  const cv = el.querySelector('canvas'), W = Math.min(el.clientWidth - 20, 440), H = Math.round(W * 1.3), ctx = setupCanvas(cv, W, H);
+  const s = W / 360, g = 1500 * s, flapV = -430 * s, speed = 150 * s, gap = 152 * s, pw = 62 * s, bx = W * .3, br = 15 * s, ground = H - 34 * s;
+  let y = H * .45, vy = 0, pipes = [], score = 0, state = 'ready', t = 0, spawn = 0, raf = 0, last = null, alive = true;
+  const clouds = range(4).map(i => ({ x: Math.random() * W, y: 30 + Math.random() * H * .4, r: 18 + Math.random() * 18 }));
+  setScore('0');
+  const flap = () => { if (state === 'dead') return; if (state === 'ready') state = 'play'; vy = flapV; tone(700, .06, 'square', .05, 1.6); };
+  const onKey = e => { if (e.code === 'Space' || e.key === 'ArrowUp') { e.preventDefault(); flap(); } };
+  cv.addEventListener('pointerdown', e => { e.preventDefault(); flap(); });
+  document.addEventListener('keydown', onKey);
+  function die() {
+    if (state === 'dead') return;
+    state = 'dead'; SFX.bad();
+    setTimeout(() => { if (alive) end(score, score >= 15 ? 'Flying high! 🚀' : score >= 5 ? 'Nice flying!' : 'Splat!'); }, 1000);
+  }
+  function draw() {
+    const sky = ctx.createLinearGradient(0, 0, 0, H); sky.addColorStop(0, '#8FD3FF'); sky.addColorStop(1, '#E6F5FF');
+    ctx.fillStyle = sky; ctx.fillRect(0, 0, W, H);
+    ctx.fillStyle = 'rgba(255,255,255,.9)';
+    clouds.forEach(c => { ctx.beginPath(); ctx.arc(c.x, c.y, c.r, 0, 7); ctx.arc(c.x + c.r, c.y + 4, c.r * .8, 0, 7); ctx.arc(c.x - c.r, c.y + 6, c.r * .7, 0, 7); ctx.fill(); });
+    pipes.forEach(p => {
+      ctx.fillStyle = '#5BD16A'; ctx.strokeStyle = '#1B1B3A'; ctx.lineWidth = 3;
+      [[0, p.gy], [p.gy + gap, ground - p.gy - gap]].forEach(([py, ph]) => { ctx.fillRect(p.x, py, pw, ph); ctx.strokeRect(p.x, py, pw, ph); });
+      ctx.fillStyle = '#3FBF55';
+      [[p.gy - 22 * s], [p.gy + gap]].forEach(([cy]) => { ctx.fillRect(p.x - 5 * s, cy, pw + 10 * s, 22 * s); ctx.strokeRect(p.x - 5 * s, cy, pw + 10 * s, 22 * s); });
+    });
+    ctx.fillStyle = '#E8C07A'; ctx.fillRect(0, ground, W, H - ground);
+    ctx.fillStyle = '#7BC86C'; ctx.fillRect(0, ground, W, 8 * s);
+    ctx.strokeStyle = '#1B1B3A'; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(0, ground); ctx.lineTo(W, ground); ctx.stroke();
+    drawBrain(ctx, bx, y, br, Math.max(-.5, Math.min(1.1, vy / (900 * s))));
+    hudText(ctx, String(score), W / 2, 48 * s, 44 * s);
+    if (state === 'ready') hudText(ctx, 'Tap to start', W / 2, H * .62, 26 * s);
+  }
+  function frame(ts) {
+    if (!alive) return;
+    if (last === null) last = ts;
+    const dt = Math.min(.033, (ts - last) / 1000); last = ts; t += dt;
+    clouds.forEach(c => { c.x -= 12 * s * dt; if (c.x < -60) c.x = W + 60; });
+    if (state === 'play') {
+      vy += g * dt; y += vy * dt; spawn -= dt;
+      if (spawn <= 0) { spawn = 1.45; pipes.push({ x: W + pw, gy: rand(Math.round(70 * s), Math.round(ground - 70 * s - gap)), passed: false }); }
+      pipes.forEach(p => { p.x -= speed * dt; if (!p.passed && p.x + pw < bx - br) { p.passed = true; score++; setScore(String(score)); tone(1046, .08, 'triangle', .1); } });
+      pipes = pipes.filter(p => p.x > -pw - 20);
+      if (y + br > ground || y - br < 0) die();
+      for (const p of pipes) if (bx + br * 1.1 > p.x && bx - br * 1.1 < p.x + pw && (y - br < p.gy || y + br > p.gy + gap)) { die(); break; }
+    } else if (state === 'ready') y = H * .45 + Math.sin(t * 4) * 8 * s;
+    else { vy += g * dt; y = Math.min(ground - br, y + vy * dt); }
+    draw();
+    raf = requestAnimationFrame(frame);
+  }
+  raf = requestAnimationFrame(frame);
+  return () => { alive = false; cancelAnimationFrame(raf); document.removeEventListener('keydown', onKey); };
+}
+
+/* ============ ARCADE: Fruit Slice ============ */
+function sliceGame(el, end, setScore) {
+  el.innerHTML = `<canvas class="arc-cv" aria-label="Fruit Slice"></canvas><p class="arc-tip">Swipe across the fruit. Miss 3 or hit a 💣 and it's over.</p>`;
+  const cv = el.querySelector('canvas'), W = Math.min(el.clientWidth - 20, 440), H = Math.round(W * 1.25), ctx = setupCanvas(cv, W, H);
+  const s = W / 360, g = 760 * s;
+  const KINDS = [['🍉', '#FF4F6B'], ['🍍', '#FFD60A'], ['🍎', '#E63946'], ['🍊', '#FF9F1C'], ['🍋', '#FFE66D'], ['🥭', '#FFB703'], ['🍓', '#E5383B'], ['🍑', '#FFAFCC'], ['🥥', '#FFFFFF'], ['🍌', '#FFE873']];
+  let fruits = [], halves = [], drops = [], trail = [], floats = [], lives = 3, score = 0, t = 0, waveIn = .6, over = false, alive = true, down = false, lastP = null, swipe = 0, raf = 0, last = null;
+  setScore('0');
+  function launch(bomb) {
+    const x = rand(Math.round(W * .2), Math.round(W * .8)), h = H * (.55 + Math.random() * .3), vy = -Math.sqrt(2 * g * h);
+    const vx = (W / 2 - x) * (.5 + Math.random() * .6) + (Math.random() - .5) * 50 * s;
+    const [e, c] = pick(KINDS);
+    fruits.push({ x, y: H + 30 * s, vx, vy, r: 28 * s, e: bomb ? '💣' : e, c, bomb, rot: 0, vr: (Math.random() - .5) * 5, cut: false });
+  }
+  const segDist = (p, a, b) => { const dx = b.x - a.x, dy = b.y - a.y, l = dx * dx + dy * dy; let k = l ? ((p.x - a.x) * dx + (p.y - a.y) * dy) / l : 0; k = Math.max(0, Math.min(1, k)); return Math.hypot(p.x - (a.x + k * dx), p.y - (a.y + k * dy)); };
+  function finish(title) { if (over) return; over = true; setTimeout(() => { if (alive) end(score, title); }, 1100); }
+  function cut(f) {
+    f.cut = true;
+    if (f.bomb) { SFX.bad(); for (let i = 0; i < 30; i++) drops.push({ x: f.x, y: f.y, vx: (Math.random() - .5) * 600 * s, vy: (Math.random() - .5) * 600 * s, c: pick(['#FF7A1A', '#FFD60A', '#1B1B3A']), life: 1 }); finish('Boom! 💥'); return; }
+    score++; swipe++; setScore(String(score));
+    tone(500 + swipe * 90, .08, 'triangle', .14, 1.5);
+    [-1, 1].forEach(side => halves.push({ x: f.x, y: f.y, vx: f.vx * .4 + side * 90 * s, vy: Math.min(f.vy, 0) * .3 - 60 * s, rot: f.rot, vr: side * 4, e: f.e, r: f.r, side, life: 1.4 }));
+    for (let i = 0; i < 12; i++) drops.push({ x: f.x, y: f.y, vx: (Math.random() - .5) * 400 * s, vy: (Math.random() - .7) * 400 * s, c: f.c, life: .8 });
+  }
+  const move = p => {
+    if (!down || over) return;
+    if (lastP) fruits.forEach(f => { if (!f.cut && segDist(f, lastP, p) <= f.r) cut(f); });
+    trail.push({ x: p.x, y: p.y, life: .25 }); lastP = p;
+  };
+  const up = () => {
+    if (down && swipe >= 3 && !over) { const bonus = swipe - 1; score += bonus; setScore(String(score)); floats.push({ x: lastP.x, y: lastP.y, text: `Combo ×${swipe}! +${bonus}`, life: 1 }); SFX.level(); }
+    down = false; lastP = null; swipe = 0;
+  };
+  cv.addEventListener('pointerdown', e => { e.preventDefault(); cv.setPointerCapture(e.pointerId); down = true; swipe = 0; lastP = canvasPoint(cv, W, e); });
+  cv.addEventListener('pointermove', e => move(canvasPoint(cv, W, e)));
+  cv.addEventListener('pointerup', up); cv.addEventListener('pointercancel', up);
+  function frame(ts) {
+    if (!alive) return;
+    if (last === null) last = ts;
+    const dt = Math.min(.033, (ts - last) / 1000); last = ts; t += dt;
+    if (!over) {
+      waveIn -= dt;
+      if (waveIn <= 0) {
+        const n = Math.random() < Math.min(.6, t / 40) ? rand(2, 3) : 1;
+        for (let i = 0; i < n; i++) launch(t > 6 && Math.random() < .17 && i === n - 1);
+        waveIn = Math.max(.75, 1.5 - t * .012);
+      }
+    }
+    fruits.forEach(f => { f.vy += g * dt; f.x += f.vx * dt; f.y += f.vy * dt; f.rot += f.vr * dt; });
+    fruits = fruits.filter(f => {
+      if (f.cut) return false;
+      if (f.vy > 0 && f.y > H + 50 * s) {
+        if (!f.bomb && !over) { lives--; SFX.hmm(); floats.push({ x: Math.max(30, Math.min(W - 30, f.x)), y: H - 40 * s, text: '✗', life: .8 }); if (lives <= 0) finish('Out of lives'); }
+        return false;
+      }
+      return true;
+    });
+    halves.forEach(h => { h.vy += g * dt; h.x += h.vx * dt; h.y += h.vy * dt; h.rot += h.vr * dt; h.life -= dt; });
+    halves = halves.filter(h => h.life > 0 && h.y < H + 80);
+    drops.forEach(d => { d.vy += g * .6 * dt; d.x += d.vx * dt; d.y += d.vy * dt; d.life -= dt; });
+    drops = drops.filter(d => d.life > 0);
+    trail.forEach(p => p.life -= dt); trail = trail.filter(p => p.life > 0);
+    floats.forEach(f => { f.life -= dt; f.y -= 40 * dt; }); floats = floats.filter(f => f.life > 0);
+    // draw
+    ctx.fillStyle = '#9C6B3F'; ctx.fillRect(0, 0, W, H);
+    ctx.strokeStyle = 'rgba(0,0,0,.18)'; ctx.lineWidth = 2;
+    for (let x = W / 5; x < W; x += W / 5) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); }
+    drops.forEach(d => { ctx.globalAlpha = Math.max(0, d.life); ctx.fillStyle = d.c; ctx.beginPath(); ctx.arc(d.x, d.y, 4 * s, 0, 7); ctx.fill(); });
+    ctx.globalAlpha = 1;
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    fruits.forEach(f => { ctx.save(); ctx.translate(f.x, f.y); ctx.rotate(f.rot); ctx.font = `${f.r * 2}px serif`; ctx.fillText(f.e, 0, 0); ctx.restore(); });
+    halves.forEach(h => {
+      ctx.save(); ctx.translate(h.x, h.y); ctx.rotate(h.rot);
+      ctx.beginPath(); ctx.rect(h.side < 0 ? -h.r * 1.4 : 0, -h.r * 1.4, h.r * 1.4, h.r * 2.8); ctx.clip();
+      ctx.font = `${h.r * 2}px serif`; ctx.fillText(h.e, 0, 0); ctx.restore();
+    });
+    if (trail.length > 1) {
+      ctx.strokeStyle = 'rgba(255,255,255,.9)'; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+      for (let i = 1; i < trail.length; i++) { ctx.lineWidth = 8 * s * (trail[i].life / .25); ctx.beginPath(); ctx.moveTo(trail[i - 1].x, trail[i - 1].y); ctx.lineTo(trail[i].x, trail[i].y); ctx.stroke(); }
+    }
+    floats.forEach(f => { ctx.globalAlpha = Math.min(1, f.life * 2); hudText(ctx, f.text, f.x, f.y, 24 * s); });
+    ctx.globalAlpha = 1;
+    hudText(ctx, String(score), 18 * s, 34 * s, 36 * s, 'left');
+    ctx.font = `${22 * s}px serif`; ctx.textAlign = 'right';
+    ctx.fillText(range(3).map(i => i < lives ? '❤️' : '🖤').join(''), W - 12 * s, 34 * s);
+    raf = requestAnimationFrame(frame);
+  }
+  raf = requestAnimationFrame(frame);
+  return () => { alive = false; cancelAnimationFrame(raf); };
+}
+
+/* ============ ARCADE: Colour Sort ============ */
+const SORTC = ['#FF4F8B', '#2EA8FF', '#22C55E', '#FFD60A', '#7C5CFF', '#FF7A1A', '#8D5524', '#9CA3AF'];
+function sortSolvable(start, cap) {
+  const key = ts => ts.map(t => t.join(',')).sort().join('|');
+  const done = ts => ts.every(t => !t.length || (t.length === cap && t.every(c => c === t[0])));
+  const seen = new Set([key(start)]), stack = [start];
+  let nodes = 0;
+  while (stack.length) {
+    const ts = stack.pop();
+    if (done(ts)) return 'yes';
+    if (++nodes > 40000) return 'unknown';
+    const firstEmpty = ts.findIndex(t => !t.length);   // all empty tubes are alike, so only try one
+    for (let a = 0; a < ts.length; a++) {
+      const A = ts[a]; if (!A.length) continue;
+      const top = A[A.length - 1];
+      if (A.length === cap && A.every(c => c === top)) continue;
+      for (let b = 0; b < ts.length; b++) {
+        if (a === b) continue;
+        const B = ts[b];
+        if (B.length >= cap || (B.length && B[B.length - 1] !== top)) continue;
+        if (!B.length && (b !== firstEmpty || A.every(c => c === top))) continue;
+        const nt = ts.map(t => t.slice());
+        while (nt[a].length && nt[a][nt[a].length - 1] === top && nt[b].length < cap) nt[b].push(nt[a].pop());
+        const k = key(nt);
+        if (!seen.has(k)) { seen.add(k); stack.push(nt); }
+      }
+    }
+  }
+  return 'no';
+}
+function genSort(nC, cap) {
+  for (let tries = 0; ; tries++) {
+    const balls = shuffle(range(nC).flatMap(c => Array(cap).fill(c)));
+    const tubes = [...range(nC).map(i => balls.slice(i * cap, (i + 1) * cap)), [], []];
+    if (tubes.some(t => t.length === cap && t.every(c => c === t[0]))) continue;
+    const r = sortSolvable(tubes, cap);
+    if (r === 'yes' || (r === 'unknown' && tries > 12)) return tubes;
+  }
+}
+function sortGame(el, end, setScore) {
+  const lvl = store.arcade.sortLevel || 0, nC = Math.min(4 + Math.floor(lvl / 2), 8), cap = 4;
+  const start = genSort(nC, cap);
+  let tubes = start.map(t => t.slice()), hist = [], sel = null, moves = 0, won = false, alive = true;
+  setScore(`Level ${lvl + 1}`);
+  el.innerHTML = `<p class="arc-tip">Tap a tube, then tap where to pour. Make every tube one colour.</p><div class="tubes"></div><div class="sort-bar"><button class="btn ghost sm" type="button">Undo</button><button class="btn ghost sm" type="button">Restart</button><span class="meta">0 moves</span></div>`;
+  const box = el.querySelector('.tubes'), [undoB, restartB] = el.querySelectorAll('.sort-bar .btn'), mv = el.querySelector('.sort-bar .meta');
+  const full = t => t.length === cap && t.every(c => c === t[0]);
+  const canPour = (a, b) => { const A = tubes[a], B = tubes[b]; return A.length && B.length < cap && (!B.length || B[B.length - 1] === A[A.length - 1]); };
+  function render() {
+    box.innerHTML = tubes.map((t, i) => `<button class="tube${sel === i ? ' sel' : ''}${full(t) ? ' done' : ''}" data-i="${i}" aria-label="Tube ${i + 1}">${t.map(c => `<span class="ball" style="background:${SORTC[c]}"></span>`).join('')}</button>`).join('');
+    box.querySelectorAll('.tube').forEach(b => b.onclick = () => tap(Number(b.dataset.i)));
+    mv.textContent = `${moves} move${moves === 1 ? '' : 's'}`;
+  }
+  function tap(i) {
+    if (won) return;
+    if (sel === null) { if (tubes[i].length && !full(tubes[i])) { sel = i; SFX.tap(); } }
+    else if (sel === i) sel = null;
+    else if (canPour(sel, i)) {
+      hist.push(tubes.map(t => t.slice()));
+      const top = tubes[sel][tubes[sel].length - 1];
+      while (tubes[sel].length && tubes[sel][tubes[sel].length - 1] === top && tubes[i].length < cap) tubes[i].push(tubes[sel].pop());
+      moves++; sel = null; tone(330, .12, 'sine', .14, 1.8);
+      if (full(tubes[i])) SFX.step();
+      if (tubes.every(t => !t.length || full(t))) {
+        won = true; store.arcade.sortLevel = lvl + 1; save(); SFX.win(); confetti(90);
+        setTimeout(() => { if (alive) end(lvl + 1, 'Sorted! 🎉'); }, 1300);
+      }
+    } else { SFX.hmm(); sel = tubes[i].length && !full(tubes[i]) ? i : null; }
+    render();
+  }
+  undoB.onclick = () => { if (won || !hist.length) return; tubes = hist.pop(); moves++; sel = null; render(); };
+  restartB.onclick = () => { if (won) return; tubes = start.map(t => t.slice()); hist = []; sel = null; moves = 0; render(); };
+  render();
+  return () => { alive = false; };
+}
+
+/* ============ ARCADE: Whot! vs Brain ============ */
+const WSHAPE = {
+  circle: '<circle cx="20" cy="20" r="16"/>',
+  triangle: '<polygon points="20,3 38,36 2,36"/>',
+  cross: '<path d="M14 2h12v12h12v12H26v12H14V26H2V14h12z"/>',
+  square: '<rect x="4" y="4" width="32" height="32"/>',
+  star: '<polygon points="20,1 25,14 39,14 28,23 32,38 20,29 8,38 12,23 1,14 15,14"/>'
+};
+const WNUMS = { circle: [1, 2, 3, 4, 5, 7, 8, 10, 11, 12, 13, 14], triangle: [1, 2, 3, 4, 5, 7, 8, 10, 11, 12, 13, 14], cross: [1, 2, 3, 5, 7, 10, 11, 13, 14], square: [1, 2, 3, 5, 7, 10, 11, 13, 14], star: [1, 2, 3, 4, 5, 7, 8] };
+const wsvg = sh => `<svg viewBox="0 0 40 40" aria-hidden="true">${WSHAPE[sh]}</svg>`;
+function wcardHTML(c, cls = '') {
+  if (c.n === 20) return `<span class="wn">20</span><span class="ww">WHOT</span><span class="wn2">20</span>`;
+  return `<span class="wn">${c.n}</span>${wsvg(c.s)}<span class="wn2">${c.n}</span>`;
+}
+function whotGame(el, end, setScore) {
+  let deck = shuffle([...Object.entries(WNUMS).flatMap(([s, ns]) => ns.map(n => ({ s, n }))), ...range(5).map(() => ({ s: 'whot', n: 20 }))]);
+  const hands = { you: [], brain: [] };
+  for (let i = 0; i < 5; i++) { hands.you.push(deck.pop()); hands.brain.push(deck.pop()); }
+  const firstIdx = deck.findIndex(c => ![1, 2, 8, 14, 20].includes(c.n));
+  const pile = [deck.splice(firstIdx, 1)[0]];
+  let need = null, turn = 'you', over = false, alive = true, status = 'Your turn. Match the shape or the number.', picking = false;
+  const timers = new Set();
+  const later = (fn, ms) => { const t = setTimeout(() => { timers.delete(t); if (alive && !over) fn(); }, ms); timers.add(t); };
+  const top = () => pile[pile.length - 1];
+  const canPlay = c => c.n === 20 || (need ? c.s === need : (c.s === top().s || c.n === top().n));
+  const SPECIAL = { 1: 'Hold on!', 2: 'Pick two!', 8: 'Suspension!', 14: 'General market!', 20: 'WHOT!' };
+  const name = w => w === 'you' ? 'You' : 'Brain';
+  setScore('');
+  function drawCards(who, n) {
+    for (let i = 0; i < n; i++) {
+      if (!deck.length) { const keep = pile.pop(); deck = shuffle(pile.splice(0)); pile.push(keep); }
+      if (!deck.length) return endByCount();
+      hands[who].push(deck.pop());
+    }
+  }
+  function endByCount() {
+    if (over) return;
+    const sum = h => h.reduce((t, c) => t + c.n, 0), a = sum(hands.you), b = sum(hands.brain);
+    finish(a <= b ? 'you' : 'brain', `The market ran out. Card count: you ${a}, Brain ${b}.`);
+  }
+  function finish(who, why) {
+    over = true;
+    status = why || (who === 'you' ? 'You played your last card!' : 'Brain played its last card.');
+    render();
+    if (who === 'you') { SFX.win(); confetti(100); } else SFX.bad();
+    setTimeout(() => { if (alive) end(who === 'you' ? 1 : 0, who === 'you' ? 'You won! 🎉' : 'Brain won this time'); }, 1600);
+  }
+  function play(who, idx, shape) {
+    const c = hands[who].splice(idx, 1)[0], other = who === 'you' ? 'brain' : 'you';
+    pile.push(c); need = c.n === 20 ? shape : null;
+    tone(520, .06, 'triangle', .12);
+    if (!hands[who].length) return finish(who);
+    if (hands[who].length === 1) toast(`${name(who)}: Last card!`);
+    let again = false, msg = `${name(who)} played ${c.n === 20 ? 'WHOT' : c.n}.`;
+    if (c.n === 1 || c.n === 8) { again = true; msg = `${SPECIAL[c.n]} ${name(who)} ${who === 'you' ? 'go' : 'goes'} again.`; }
+    else if (c.n === 2) { drawCards(other, 2); again = true; msg = `Pick two! ${other === 'you' ? 'You pick' : 'Brain picks'} 2 cards.`; }
+    else if (c.n === 14) { drawCards(other, 1); again = true; msg = `General market! ${other === 'you' ? 'You pick' : 'Brain picks'} 1 card.`; }
+    else if (c.n === 20) msg = `WHOT! ${name(who)} asked for ${shape}s.`;
+    if (over) return;
+    if (SPECIAL[c.n]) { if (who === 'brain') mood(el.querySelector('.wtop'), 'happy', 900); }
+    turn = again ? who : other;
+    status = msg + (turn === 'you' ? ' Your turn.' : '');
+    render();
+    if (turn === 'brain') later(brainMove, 1100);
+  }
+  function brainMove() {
+    const h = hands.brain, opts = h.map((c, i) => i).filter(i => canPlay(h[i]));
+    if (!opts.length) {
+      drawCards('brain', 1); if (over) return;
+      turn = 'you'; status = 'Brain went to market. Your turn.'; render(); return;
+    }
+    const count = sh => h.filter(c => c.s === sh).length;
+    const score = i => { const c = h[i]; let v = count(c.s); if ((c.n === 2 || c.n === 14) && hands.you.length <= 2) v += 6; if (c.n === 1 || c.n === 8) v += opts.length > 1 ? 3 : 0; if (c.n === 20) v -= 10; return v + Math.random(); };
+    const best = opts.sort((a, b) => score(b) - score(a))[0];
+    let shape = null;
+    if (h[best].n === 20) { const rest = h.filter((_, i) => i !== best && h[i].n !== 20); shape = rest.length ? Object.keys(WNUMS).sort((a, b) => rest.filter(c => c.s === b).length - rest.filter(c => c.s === a).length)[0] : pick(Object.keys(WNUMS)); }
+    play('brain', best, shape);
+  }
+  function toast(text) { const t = document.createElement('div'); t.className = 'toast'; t.textContent = text; el.append(t); setTimeout(() => t.remove(), 1450); }
+  function youTap(i, btn) {
+    if (turn !== 'you' || over || picking) return;
+    const c = hands.you[i];
+    if (!canPlay(c)) { btn.classList.remove('nope'); void btn.offsetWidth; btn.classList.add('nope'); SFX.hmm(); status = need ? `Brain asked for ${need}s. Play a ${need} or a WHOT.` : `That doesn't match. Match the shape or the number, or go to market.`; renderStatus(); return; }
+    if (c.n === 20) {
+      picking = true;
+      const box = document.createElement('div');
+      box.className = 'wpickbox';
+      box.innerHTML = `<p class="q">Call a shape</p><div class="wpick">${Object.keys(WNUMS).map(s => `<button data-s="${s}" aria-label="${s}">${wsvg(s)}</button>`).join('')}</div>`;
+      box.querySelectorAll('button').forEach(b => b.onclick = () => { picking = false; box.remove(); play('you', i, b.dataset.s); });
+      el.querySelector('.whot').append(box);
+      return;
+    }
+    play('you', i);
+  }
+  function market() {
+    if (turn !== 'you' || over || picking) return;
+    drawCards('you', 1); if (over) return;
+    tone(260, .1, 'triangle', .1);
+    turn = 'brain'; status = 'You went to market. Brain is thinking…'; render();
+    later(brainMove, 1000);
+  }
+  function renderStatus() { const s = el.querySelector('.wstatus'); if (s) s.textContent = status; }
+  function render() {
+    const yourTurn = turn === 'you' && !over;
+    el.innerHTML = `<div class="whot">
+      <div class="wtop">${mascotSVG()}<div class="wrow opp">${hands.brain.map(() => '<span class="wcard back small"></span>').join('')}</div><span class="meta">${hands.brain.length} card${hands.brain.length === 1 ? '' : 's'}</span></div>
+      <div class="wmid">
+        <div class="wpile"><button class="wcard back big" id="wMarket" ${yourTurn ? '' : 'disabled'} aria-label="Go to market"></button>Market · ${deck.length}</div>
+        <div class="wpile"><div class="wcard big">${wcardHTML(top())}</div>Pile</div>
+        ${need ? `<span class="wneed">Need ${wsvg(need)} ${need}</span>` : ''}
+      </div>
+      <p class="wstatus"></p>
+      <div class="wrow hand">${hands.you.map((c, i) => `<button class="wcard${yourTurn && canPlay(c) ? ' ok' : ''}" data-i="${i}" aria-label="${c.n === 20 ? 'Whot 20' : `${c.s} ${c.n}`}">${wcardHTML(c)}</button>`).join('')}</div>
+      <p class="arc-tip">${yourTurn ? 'Glowing cards can be played. No match? Tap the market to draw.' : over ? '' : 'Brain is thinking…'}</p>
+    </div>`;
+    renderStatus();
+    el.querySelectorAll('.hand .wcard').forEach(b => b.onclick = () => youTap(Number(b.dataset.i), b));
+    el.querySelector('#wMarket').onclick = market;
+  }
+  render();
+  return () => { alive = false; timers.forEach(clearTimeout); };
+}
+
+const ARCADE = [
+  { id: 'whot', name: 'Whot! vs Brain', e: '🃏', color: '#8B1E3F', run: whotGame, blurb: 'The card game. Empty your hand before Brain does.',
+    record: s => { store.arcade.whotWins = (store.arcade.whotWins || 0) + s; store.arcade.whotPlays = (store.arcade.whotPlays || 0) + 1; },
+    scoreText: s => s ? 'You beat Brain!' : 'Better luck next game.', best: () => store.arcade.whotPlays ? `${store.arcade.whotWins || 0} win${store.arcade.whotWins === 1 ? '' : 's'} so far` : '' },
+  { id: 'slice', name: 'Fruit Slice', e: '🍉', color: '#1F9D55', run: sliceGame, blurb: 'Swipe the fruit, dodge the bombs.',
+    record: s => { store.arcade.slice = Math.max(store.arcade.slice || 0, s); }, scoreText: s => `${s} fruit sliced`, best: () => store.arcade.slice ? `Best: ${store.arcade.slice}` : '' },
+  { id: 'flappy', name: 'Flappy Brain', e: '🐤', color: '#1E88E5', run: flappyGame, blurb: 'Tap to fly Brain through the gaps.',
+    record: s => { store.arcade.flappy = Math.max(store.arcade.flappy || 0, s); }, scoreText: s => `${s} pipe${s === 1 ? '' : 's'} passed`, best: () => store.arcade.flappy ? `Best: ${store.arcade.flappy}` : '' },
+  { id: 'sort', name: 'Colour Sort', e: '🧪', color: '#6A4FD6', run: sortGame, blurb: 'Pour until every tube is one colour.',
+    record: () => {}, scoreText: s => `Level ${s} cleared`, best: () => store.arcade.sortLevel ? `Next: level ${store.arcade.sortLevel + 1}` : '' }
+];
+
 /* ---------- catalogue ---------- */
 const CATS = [
   { id: 'words', name: 'Word problems', color: 'math', weak: 'Word problems held you back. Before you calculate, picture the bars: who has more, and is there a total?' },
@@ -1354,7 +1951,12 @@ function createPlayer(name, avatar) {
   db.profiles[id] = p;
   login(id);
 }
-function login(id) { db.current = id; store = db.profiles[id]; store.last = Date.now(); save(); renderHome(); }
+function login(id) {
+  db.current = id; store = db.profiles[id]; store.last = Date.now();
+  // players made before the arcade existed get a 10-ticket welcome gift
+  if (store.tickets == null) { store.tickets = 10; store.stickers = {}; store.arcade = {}; }
+  save(); renderHome();
+}
 function logout() { db.current = null; store = null; session = null; save(); renderWho(); }
 
 function renderHome() {
@@ -1366,8 +1968,12 @@ function renderHome() {
   $('#pXP').style.width = next ? `${100 * (store.xp - RANKS[r][0]) / (next[0] - RANKS[r][0])}%` : '100%';
   $('#pNext').textContent = next ? `${(next[0] - store.xp).toLocaleString()} XP to ${next[1]} ${next[2]}` : 'Top rank reached';
   $('#resetConfirm').hidden = true;
+  $('#pTix').textContent = `🎟️ ${store.tickets}`;
+  const plays = Math.floor(store.tickets / TICKET_COST);
+  $('#arcadeHint').textContent = plays ? `${plays} game${plays > 1 ? 's' : ''} ready to play` : `${TICKET_COST - store.tickets} more 🎟️ for a game`;
+  $('#albumCount').textContent = `${STICKERS.filter((_, i) => store.stickers[i]).length} of ${STICKERS.length} collected`;
 
-  const ws = store.history.filter(x => x.mode === 'workout');
+  const ws =store.history.filter(x => x.mode === 'workout');
   $('#homeStats').innerHTML = ws.length ? `<div class="stat"><b>${ws[ws.length - 1].index}%</b><small>Last workout</small></div><div class="stat"><b>${Math.max(...ws.map(x => x.index))}%</b><small>Best</small></div><div class="stat"><b>${ws.length}</b><small>Workouts done</small></div>` : '';
 
   $('#skills').innerHTML = `<span class="label" style="font-size:18px">Skills</span>` + CATS.map(c => {
@@ -1428,7 +2034,7 @@ function play() {
   $('#combo').className = 'combo';
   $('#hudMascot').innerHTML = mascotSVG();
 
-  const stats = { perfect: 0, assisted: 0, failed: 0, points: 0, streak: 0, bestStreak: 0, done: 0 };
+  const stats = { perfect: 0, assisted: 0, failed: 0, points: 0, streak: 0, bestStreak: 0, done: 0, tickets: 0 };
   const run = { g, stats, live: true, timers: new Set(), rafs: new Set(), peak: startLevel };
   cur = run;
   let prog = 0;
@@ -1458,6 +2064,7 @@ function play() {
       stats.points += pts;
       const p = centerOf(at);
       floatText(p, `+${pts}`); burst(p);
+      stats.tickets += 2; floatText({ x: p.x + 50, y: p.y + 34 }, '+2 🎟️', 'small');
       SFX.good(stats.streak);
       mood('#hudMascot', 'happy', 700);
       flash(true); paintScore(true);
@@ -1468,7 +2075,9 @@ function play() {
       if (!api.live()) return;
       stats.assisted++;
       stats.points += base;
-      floatText(centerOf(at), `+${base}`, 'small');
+      const p = centerOf(at);
+      floatText(p, `+${base}`, 'small');
+      stats.tickets += 1; floatText({ x: p.x + 50, y: p.y + 34 }, '+1 🎟️', 'small');
       SFX.good(0); mood('#hudMascot', 'wow', 700);
       flash(true); paintScore(true);
     },
@@ -1540,8 +2149,12 @@ function finish() {
   const rankBefore = rankOf(store.xp);
   store.xp += stats.points;
   const rankAfter = rankOf(store.xp);
+  store.tickets += stats.tickets;
+  if (stars === 3) rollSticker();
+  if (rankAfter !== rankBefore) rollSticker('rare');
   store.last = Date.now();
   save();
+  $('#resTix').textContent = `+${stats.tickets} 🎟️ · you have ${store.tickets}`;
 
   $('#resChip').textContent = CAT[g.cat].name;
   $('#resName').textContent = g.name;
@@ -1567,6 +2180,7 @@ function finish() {
   }
   show('result');
   $('#resNext').focus({ preventScroll: true });
+  if (rewardQueue.length) setTimeout(() => showRewards(), 1300);
 }
 
 function verdict(i) {
@@ -1586,7 +2200,10 @@ function final() {
   const prevBest = ws.length ? Math.max(...ws.map(x => x.index)) : null;
   store.history.push({ t: Date.now(), mode: 'workout', index, scores: Object.fromEntries(CATS.map(c => [c.id, val(c)])) });
   store.history = store.history.slice(-60);
+  store.tickets += 5;
+  rollSticker();
   save();
+  $('#finTix').textContent = `Workout bonus: +5 🎟️ and a sticker · you have ${store.tickets}`;
 
   countUp($('#finIndex'), index, 1200);
   $('#finVerdict').textContent = verdict(index);
@@ -1603,6 +2220,7 @@ function final() {
   if (index >= 60 || (prevBest != null && index > prevBest)) { SFX.win(); confetti(140); }
   $('#finAgain').onclick = startWorkout;
   show('final');
+  setTimeout(() => showRewards(), 1500);
 }
 
 function startWorkout() {
@@ -1622,6 +2240,11 @@ function start() {
   $('#mutePlay').onclick = toggleMute;
   $('#homeMascot').onclick = () => { audio(); SFX.good(4); mood('#homeMascot', 'happy', 900); };
   $('#logout').onclick = () => { SFX.tap(); logout(); };
+  $('#openArcade').onclick = () => { audio(); SFX.tap(); renderArcade(); };
+  $('#openAlbum').onclick = () => { audio(); SFX.tap(); renderAlbum(); };
+  $('#arcBack').onclick = renderHome;
+  $('#albumBack').onclick = renderHome;
+  $('#arcExit').onclick = () => { SFX.tap(); exitArcade(); };
   $('#resetBtn').onclick = () => { $('#rcName').textContent = store.name; $('#resetConfirm').hidden = false; $('#rcNo').focus({ preventScroll: true }); };
   $('#rcNo').onclick = () => { $('#resetConfirm').hidden = true; };
   $('#rcReset').onclick = () => { Object.assign(store, blankProgress()); save(); SFX.bad(); renderHome(); };

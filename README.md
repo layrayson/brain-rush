@@ -42,6 +42,19 @@ Logic training for maths, built for an SS1 student who can do the sums but finds
 - **Practise one game:** continue from your saved level, or restart at level 1.
 - Progress is saved per player in the browser: levels, XP and ranks, best scores, and a chart of workout scores. Log out to switch players. Reset clears or deletes a player. Nothing leaves the device.
 
+## Playing on more than one device
+
+Players are made with a name and a 4-digit PIN and saved online, so progress carries across phones and laptops. On a new device, choose **I already have a player** and enter the same name and PIN. Progress saves automatically a moment after each change. When the device is offline it keeps working and catches up once it reconnects. Players made before online saves existed show a **Save online** link on the home screen.
+
+The save server is `api/player.js`, a Vercel function (project `brain-rush` on the layraysons-projects team, https://brain-rush-ochre.vercel.app) backed by a private Vercel Blob store:
+
+- One JSON file per player, keyed by a SHA-256 of the lower-cased name.
+- PINs are stored as salted scrypt hashes. After login the client keeps an HMAC token (secret `TOKEN_SECRET`) so it can save without asking for the PIN again.
+- Five wrong PINs lock a player for 15 minutes.
+- CORS allows `https://layrayson.github.io` and `http://localhost:4175` only.
+
+Deploy API changes with `vercel deploy --prod` from this folder.
+
 ## Running it
 
-It's a single `index.html` with no build step. Open it in a browser, or serve the folder with any static server.
+The game is a single `index.html` with no build step. Open it in a browser, or serve the folder with any static server. Online saves only work from the allowed origins above.

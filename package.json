@@ -1,0 +1,9 @@
+{
+  "name": "brain-rush",
+  "private": true,
+  "type": "module",
+  "description": "Logic training for maths, with cloud saves for players.",
+  "dependencies": {
+    "@vercel/blob": "2.8.0"
+  }
+}
